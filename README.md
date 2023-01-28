@@ -54,6 +54,57 @@ During game play, you can attempt to trade.
 - You meet another emigrant who wants 1 wagon tongue. He will trade you 25 pounds of food.
 - You meet another emigrant who wants 1 ox. She will trade you 1 set of clothing.
 
+
+## Crossing Rivers
+
+During game play, there are four (4) river crossings.
+Depending on the weather and river data, the crossing can vary anywhere between harmless and cause of death.
+
+Possible river crossing outcomes:
+
+- safe crossing
+- swamping
+- overturning
+- swept away
+- stuck in mud (It was a muddy crossing, but you did not get stuck.)
+
+https://www.died-of-dysentery.com/stories/crossing-rivers.html
+
+![fording a river](documentation/ot-river-fording.png)
+
+Algorithm for fording a river:
+- **D** = depth
+- **BT** = bottom type (smooth and firm || muddy || rocky and uneven)
+
+![fording algorithm](documentation/ot-river-fording-algorithm.png)
+
+Hiring an Indian:
+- **D** = depth
+- **S** = swiftness
+- **BT** = bottom type (smooth and firm || muddy || rocky and uneven)
+
+![river swiftness](documentation/ot-river-hire-indian.png)
+
+
+### Caulking the Wagon
+
+The chances of successfully caulking the wagon to cross a river depends on the water level,
+speed of the current, and condition of the wagon, but can be raised if the player uses pelt to seal the wagon.
+The maximum amount of pelts that can be used depends on the river being crossed.
+Also, like the "ford" option, the player can rest before crossing the river to wait for more suitable crossing conditions.
+
+### Fording
+
+Unless the player is crossing an extremely shallow river, **fording** a river always has a 0% chance of success.
+The chance of success can be raised using the same methods as when the player caulks the wagon.
+
+### Ferry
+
+The ferry costs money to use, although it is the only method that immediately has a 100% chance of success.
+The cost of a ferry crossing starts at $5 per oxen and person, although can be lowered through haggling.
+There is also a three day interval between the player paying for the ferry, and actually crossing.
+
+---
 ## Reminders
 
 * Your code must be placed in the `run.py` file
