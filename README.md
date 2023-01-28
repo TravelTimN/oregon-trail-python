@@ -681,6 +681,39 @@ This is not enough to qualify for
 the Oregon Top Ten.
 
 ---
+
+## Scoring
+
+On arriving in Oregon, your most important resources is the people you have with you.
+You receive points for each member of your party who arrives safely;
+you receive more points if they arrive in good health!
+
+| Health of Party | Points per Person |
+| --- | :---: |
+| good | 500 |
+| fair | 400 |
+| poor | 300 |
+| very poor | 200 |
+
+On arriving in Oregon, the resources you arrive with will help you get started in the new land.
+You receive points for each item you bring safely to Oregon.
+
+| Resources of Party | Points per Item |
+| --- | :---: |
+| wagon | 50 |
+| ox | 4 |
+| spare wagon part | 2 |
+| set of clothing | 2 |
+| bullets (each 50) | 1 |
+| food (each 25 pounds) | 1 |
+| cash (each 5 dollars) | 1 |
+
+On arriving in Oregon, you receive points for your occupation in the new land.
+Because more farmers and carpenters were needed than bankers, you receive **double** points upon
+arriving in Oregon as a carpenter, and **triple** points for arriving as a farmer.
+
+---
+
 ## Reminders
 
 * Your code must be placed in the `run.py` file
