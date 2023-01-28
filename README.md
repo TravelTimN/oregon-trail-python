@@ -33,6 +33,27 @@
 - can_buy_supplies? (bool)
 
 ---
+
+## Stopping to Rest
+
+During game play, you can stop to rest between 1-9 days.
+
+Resting will continue to deplete your food, and the normal day/weather cycles persist for each day.
+
+## Trading
+
+During game play, you can attempt to trade.
+
+- No one wants to trade with you today.
+- You meet another emigrant who wants 1 set of clothing. He will trade you 30 pounds of food.
+- You meet another emigrant who wants 1 ox. He will trade you 1 set of clothing.
+- You meet another emigrant who wants 1 wagon wheel. He will trade you 26 pounds of food.
+- You meet another emigrant who wants 1 ox. She will trade you 104 bullets.
+- You meet another emigrant who wants 1 set of clothing. She will trade you 47 bullets.
+- You meet another emigrant who wants 1 wagon tongue. He will trade you 73 bullets.
+- You meet another emigrant who wants 1 wagon tongue. He will trade you 25 pounds of food.
+- You meet another emigrant who wants 1 ox. She will trade you 1 set of clothing.
+
 ## Reminders
 
 * Your code must be placed in the `run.py` file
