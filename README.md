@@ -105,6 +105,94 @@ The cost of a ferry crossing starts at $5 per oxen and person, although can be l
 There is also a three day interval between the player paying for the ferry, and actually crossing.
 
 ---
+
+## Random Names
+
+Should you decide not to select your family/friends' names, there's a predefined list of names:
+
+| Females | Males |
+| --- | --- |
+| Anna | Henry |
+| Beth | Jed |
+| Emily | Joey |
+| Mary | John |
+| Sara | Zeke |
+
+---
+
+## Supplies
+
+You will be required to carry supplies with you to help make the arduous journey to Oregon.
+
+| Resource | Min | Max | Notes |
+| --- | :---: | :---: | --- |
+| wagon | 1 | 1 | |
+| yoke | 1 | 9 | 1 yoke = 2 oxen |
+| food | 1,000 | 2,000 | pounds of food |
+| clothing | 10 | 99 | sets of clothing |
+| ammunition | 1 | 99 | 1 box = 20 bullets |
+| wagon wheel | 0 | 3 | |
+| wagon axel | 0 | 3 | |
+| wagon tongue | 0 | 3 | |
+
+---
+
+## Health
+
+While alive, there are four (4) different health states you and your party can encounter:
+
+- good
+- fair
+- poor
+- very poor
+
+---
+
+## Travel Pace
+
+During game play, you are able to adjust the pace at which your party travels to Oregon.
+
+| Pace | Distance (miles per day) |
+| --- | :---: |
+| steady | 18 mi/day |
+| strenuous | 30 mi/day |
+| grueling | 36 mi/day |
+
+---
+
+## Food Consumption
+
+During game play, you are able to adjust the food rationing; the rate at which your party consumes food.
+
+| Ration | Amount | Consumed (pounds per day) |
+| --- | --- | :---: |
+| filling | meals are large and generous | 15 lbs/day |
+| meager | meals are small, but adequate | 10 lbs/day |
+| bare bones | meals are very small; everyone stays hungry | 5 lbs/day |
+
+---
+
+## Weather
+
+As the player travels along the trail, each day’s weather is based on the current month,
+and the player’s current location along the trail.
+
+The simulation retrieves the corresponding average temperature, and adds or subtracts a random deviation.
+The simulation also retrieves the odds of rainfall, and then generates conditions that may be
+dry, rainy, or very rainy.
+
+If the weather is very cold, then snow replaces rain.
+
+- cool
+- hot
+- warm
+- cold
+- rainy / snowy
+- very rainy / very snowy
+- severe thunderstorm (lose 1 day)
+
+---
+
 ## Reminders
 
 * Your code must be placed in the `run.py` file
