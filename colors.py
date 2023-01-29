@@ -30,6 +30,14 @@ def brown(text):
     return colored(158, 97, 56, text)
 
 
+def gold(text):
+    """
+    Changes text to gold in terminal
+    #D4AF37
+    """
+    return colored(212, 175, 55, text)
+
+
 def green(text):
     """
     Changes text to green in terminal
@@ -52,6 +60,14 @@ def peach(text):
     #FFC7A6
     """
     return colored(255, 199, 166, text)
+
+
+def pink(text):
+    """
+    Changes text to pink in terminal
+    #FF10F0
+    """
+    return colored(255, 16, 240, text)
 
 
 def red(text):
