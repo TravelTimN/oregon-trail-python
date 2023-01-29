@@ -2,7 +2,7 @@ from colors import red, grey
 from utils import clear, LINE, CENT
 
 
-def validate_user_input(user_input, choices):
+def validate_menu_input(user_input, choices):
     """
     Checks if the user selected a valid option from the choices provided.
     If not, it raises a value error.
