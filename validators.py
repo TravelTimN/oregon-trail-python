@@ -13,12 +13,10 @@ def validate_menu_input(user_input, choices):
             raise ValueError
     except ValueError:
         clear()
-        input(
-            red(LINE) + "\n" +
-            red(CENT(f"\"{user_input}\" is not valid!")) + "\n" +
-            grey(CENT("Press ENTER to proceed.")) +
-            "\n" + red(LINE) + "\n"
-        )
+        print(red(LINE))
+        print(red(CENT(f'Error: "{user_input}" is not valid!')))
+        print(red(LINE))
+        input(f'{grey(CENT("Press ENTER to proceed."))}\n')
         clear()
         return False
 
