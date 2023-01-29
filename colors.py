@@ -1,4 +1,8 @@
 def colored(r, g, b, text):
+    """
+    https://www.grepper.com/tpc/python+all+text+in+color
+    https://www.geeksforgeeks.org/how-to-add-colour-to-text-python
+    """
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 
