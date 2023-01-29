@@ -1,8 +1,43 @@
-from colors import peach, red, green, brown
+import time
+from colors import brown, gold, green, peach, red
 from credits import credits
 from learn import learn_about_trail
 from utils import clear, CENT, LINE, ot_title, end_game
 from validators import validate_menu_input
+
+
+def leaderboard_menu():
+    while True:
+        clear()
+        print(gold(LINE))
+        print(gold(CENT("The Oregon Top Ten")))
+        print(gold(LINE))
+
+        print("\n\tYou may:\n")
+        print("\t\t1. See the current Top Ten list")
+        print("\t\t2. See the original Top Ten list")
+        print("\t\t3. Return to the main menu")
+
+        user_input = input("\n\tWhat is your choice? ")
+        choices = ["1", "2", "3"]
+
+        # validate if the user selected a valid option
+        if validate_menu_input(user_input, choices):
+            break
+
+    clear()
+    if user_input == "1":
+        print(gold("... retrieving top 10 players list ..."))
+        time.sleep(2)
+        clear()
+        print("TBD: Top 10 Players")
+        time.sleep(2)
+    elif user_input == "2":
+        print(gold("... retrieving top 10 original overlanders ..."))
+        time.sleep(2)
+        clear()
+        print("TBD: Top 10 original overlanders")
+        time.sleep(2)
 
 
 def main_menu():
@@ -44,7 +79,8 @@ def main_menu():
         learn_about_trail()
         main_menu()
     elif user_input == "3":
-        print("3 selected")
+        leaderboard_menu()
+        main_menu()
     elif user_input == "4":
         credits()
         main_menu()
