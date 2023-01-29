@@ -6,6 +6,22 @@ def colored(r, g, b, text):
     return "\033[38;2;{};{};{}m{}\033[38;2;255;255;255m".format(r, g, b, text)
 
 
+def aqua(text):
+    """
+    Changes text to aqua in terminal
+    #00FFFF
+    """
+    return colored(0, 255, 255, text)
+
+
+def blue(text):
+    """
+    Changes text to blue in terminal
+    #0000FF
+    """
+    return colored(0, 0, 255, text)
+
+
 def brown(text):
     """
     Changes text to brown in terminal
@@ -44,6 +60,14 @@ def red(text):
     #FF0000
     """
     return colored(255, 0, 0, text)
+
+
+def yellow(text):
+    """
+    Changes text to yellow in terminal
+    #FFFF00
+    """
+    return colored(255, 255, 0, text)
 
 
 def white(text):
