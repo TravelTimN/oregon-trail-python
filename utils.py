@@ -1,6 +1,8 @@
 import os
 import datetime
-from colors import brown, peach
+import sys
+import time
+from colors import brown, green, peach
 
 
 def clear():
@@ -21,6 +23,22 @@ def ot_title():
     print(brown(LINE))
     print(peach(CENT("The Python Oregon Trail")))
     print(brown(LINE))
+
+
+def end_game():
+    """
+    Function to completely stop the app running.
+    """
+    time.sleep(0.25)
+    print(green(LINE))
+    time.sleep(0.25)
+    print(green(CENT("Thanks for playing The Python Oregon Trail.")))
+    time.sleep(0.25)
+    print(green(CENT("Hopefully you didn't die of dysentery!")))
+    time.sleep(0.25)
+    print(green(LINE))
+    time.sleep(1)
+    sys.exit()
 
 
 def set_start_date():
