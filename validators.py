@@ -2,6 +2,25 @@ from colors import red, grey
 from utils import clear, LINE, CENT
 
 
+def validate_name(user_input):
+    """
+    Checks if the user input valid alpha characters (with min/max length)
+    """
+    try:
+        if not user_input.isalpha() or len(user_input) < 2 or len(user_input) > 15:  # noqa
+            raise ValueError
+    except ValueError:
+        clear()
+        print(red(LINE))
+        print(red(CENT(f'Error: "{user_input}" is not 2-15 letters!')))
+        print(red(LINE))
+        input(f'{grey(CENT("Press ENTER to proceed."))}\n')
+        clear()
+        return False
+
+    return True
+
+
 def validate_menu_input(user_input, choices):
     """
     Checks if the user selected a valid option from the choices provided.
@@ -9,7 +28,7 @@ def validate_menu_input(user_input, choices):
     """
 
     try:
-        if (user_input not in choices):
+        if user_input not in choices:
             raise ValueError
     except ValueError:
         clear()
