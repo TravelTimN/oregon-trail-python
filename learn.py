@@ -1,4 +1,4 @@
-from colors import green, grey, pink
+from colors import green, grey, pink, yellow
 from utils import clear, ot_title, CENT, LINE
 
 
@@ -100,4 +100,26 @@ def learn_about_professions():
     print(CENT("and the banker earns the least."))
     print("")
     print(pink(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
+def learn_about_months():
+    """
+    Displays advice about when to consider leaving Independence.
+    """
+    clear()
+    print(yellow(LINE))
+    print(yellow(CENT("Advice on when to leave")))
+    print(yellow(LINE))
+    print("")
+    print(CENT("You attend a public meeting held for \"folks with the"))
+    print(CENT("California-Oregon fever\". You're told:"))
+    print("")
+    print(CENT("If you leave too early, there won't be any grass for"))
+    print(CENT("your oxen to eat. If you leave too late, you may not"))
+    print(CENT("get into Oregon before winter comes. If you leave"))
+    print(CENT("at just the right time, there will be green grass,"))
+    print(CENT("and the weather will still be cool."))
+    print("")
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
