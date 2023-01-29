@@ -1,4 +1,4 @@
-# Python Oregon Trail
+# Oregon Trail (Python)
 
 ![Oregon Trail Wagon](documentation/ot-wagon-02.jpg)
 
@@ -127,7 +127,7 @@ You will be required to carry supplies with you to help make the arduous journey
 | Resource | Min | Max | Notes |
 | --- | :---: | :---: | --- |
 | wagon | 1 | 1 | |
-| yoke | 1 | 9 | 1 yoke = 2 oxen |
+| oxen yoke | 1 | 9 | 1 yoke = 2 oxen |
 | food | 1,000 | 2,000 | pounds of food |
 | clothing | 10 | 99 | sets of clothing |
 | ammunition | 1 | 99 | 1 box = 20 bullets |
