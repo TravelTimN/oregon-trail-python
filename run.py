@@ -1,11 +1,7 @@
 import time
 # import pyfiglet
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
-from animate_wagon import animate_wagon
-from colors import brown, peach, white
 from menus import main_menu
-from utils import clear, CENT, LINE, set_start_date
+from utils import clear
 
 
 # f = pyfiglet.FigletFont.getFonts()
@@ -16,5 +12,9 @@ from utils import clear, CENT, LINE, set_start_date
 
 if __name__ == "__main__":
     clear()
-    while True:
-        main_menu()
+
+    # for name in dir():
+    #     if not name.startswith("_"):
+    #         del globals()[name]
+
+    main_menu()
