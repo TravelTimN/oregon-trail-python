@@ -17,6 +17,12 @@ CENT = "{:^80}".format
 LINE = "━" * 80
 
 
+def ot_title():
+    print(brown(LINE))
+    print(peach(CENT("The Python Oregon Trail")))
+    print(brown(LINE))
+
+
 def set_start_date():
     """
     Using the player's input, set the start date of
