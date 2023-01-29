@@ -1,6 +1,40 @@
 # Oregon Trail (Python)
 
+![Oregon Trail Wagon](documentation/ot-wagon-01.png)
+
+## Features
+
+### Wagon Animation
+
+Using [text-image](https://www.text-image.com/convert/ascii.html) to convert an image to ASCII art, I've created a 4-second animation of the traditional "Oregon Trail ox and wagon" trekking across the screen.
+
+Original image used:
+
 ![Oregon Trail Wagon](documentation/ot-wagon-02.jpg)
+
+Output:
+
+```
+          .^7?!^...      :~7~~:    .~~^~:..         . .:^!JY7::::.              
+ .^..:^~!?YGPYPG5PP?7~~7JY5PPBGY77YPG#BBBYGPY7:.:^~!~~7JJYPGG55P5Y?~~^.   .:^~^7
+JYY??JYY5YYY7~?JJJ?~!?JYYYYJ?~^~7JYJJJYYYYPPYJ!~7!?Y?!?YYY?7JJJYYJYY5G55G5Y5P55P
+J??!!!!!!!^^:  ........^^^^..   ......:^^^^~:.!!^!????7!!!!!!~^~~!!?YYJJJ7!~^^^^
+                                                                    ...         
+                                              :YGGBGGBPJJ!^.~~~.^?JJYGGGBY      
+                                              .GG!B@@@@@@@#G@@@G#@@@@@@@@P      
+                                               :#7 Y@@@@@@#B@@@B#@@@@@@@G       
+                             :^.:7.             !&~ #@@@@@#B@@@B#@@@@@@G:       
+                             ~5##@J75P557Y5Y!.  .J~:5PPGBG55GGG5PPPGBGG!        
+                             7J5BBB&@@@@@@@@G^^^^7J?~?5?JPJJ7JY?~J5?JPJ7        
+                                .J@@BY5Y7##&5    :~ ^Y?GG5JY.~! ^GJGG55G.       
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^~G555^::JB!5&J^^^^:^^7PG?PY~^^:^^!PBJ5P!^^^^^^^^
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+```
 
 ## Objects / Classes
 
