@@ -1,6 +1,6 @@
-# Oregon Trail (Python)
+![Oregon Trail Wagon](documentation/ot-logo-python.png)
 
-![Oregon Trail Wagon](documentation/ot-wagon-01.png)
+# The Oregon Trail (Python)
 
 ## Features
 
@@ -747,6 +747,16 @@ Because more farmers and carpenters were needed than bankers, you receive **doub
 arriving in Oregon as a carpenter, and **triple** points for arriving as a farmer.
 
 ---
+
+## Credits
+
+| Source (URL) | Notes |
+| --- | --- |
+| [fontspace](https://www.fontspace.com/category/oregon-trail) | The Oregon Trail logo |
+| [Wikimedia](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png) | Python logo |
+| [text-image](https://www.text-image.com/convert/ascii.html) | ASCII ox/wagon |
+| [StackOverflow](https://stackoverflow.com/a/45391019) | Centering text 80-wide |
+| [StackOverflow](https://stackoverflow.com/a/2084628) | Clearing the terminal |
 
 ## Reminders
 
