@@ -23,13 +23,14 @@ def ot_title():
     print(brown(LINE))
 
 
-def set_start_date():
+def set_start_date(month):
     """
     Using the player's input, set the start date of
     the game in 1848 from either March, April, May, June, or July
     """
-    date = datetime.datetime(1848, 3, 1)
-    date += datetime.timedelta(days=-1)  # set date back to original (-1)
-    for i in range(5):
-        date += datetime.timedelta(days=1)
-        print(date.strftime("%B %d, %Y"))
+    date = datetime.datetime(1848, month, 1)
+    # date += datetime.timedelta(days=-1)  # set date back to original (-1)
+    # for i in range(5):
+    #     date += datetime.timedelta(days=1)
+    #     print(date.strftime("%B %d, %Y"))
+    return date.strftime("%B %d, %Y")
