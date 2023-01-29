@@ -1,8 +1,7 @@
-import time
-import sys
-from learn import learn_about_trail
-from utils import clear, CENT, LINE, ot_title
 from colors import peach, red, green, brown
+from credits import credits
+from learn import learn_about_trail
+from utils import clear, CENT, LINE, ot_title, end_game
 from validators import validate_menu_input
 
 
@@ -47,13 +46,7 @@ def main_menu():
     elif user_input == "3":
         print("3 selected")
     elif user_input == "4":
-        print("4 selected")
+        credits()
+        main_menu()
     elif user_input == "5":
-        print(
-            green(LINE) + "\n" +
-            green(CENT("Thanks for playing The Python Oregon Trail.")) +
-            "\n" +
-            green(CENT("Hopefully you didn't die of dysentery!")) +
-            "\n" + green(LINE) + "\n"
-        )
-        sys.exit()
+        end_game()
