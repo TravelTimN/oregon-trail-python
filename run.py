@@ -1,24 +1,20 @@
 import time
 # import pyfiglet
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
 from animate_wagon import animate_wagon
-from utils import clear
+from colors import brown, peach, white
+from menus import main_menu
+from utils import clear, CENT, LINE, set_start_date
+
+
+# f = pyfiglet.FigletFont.getFonts()
+# for a in f[:10]:
+#     print(a)
+#     print(pyfiglet.figlet_format("The Oregon Trail", font=a))
 
 
 if __name__ == "__main__":
     clear()
-    animate_wagon()
-    clear()
-    print("The Oregon Trail")
-    print("-----------------")
-    print("You may:\n")
-    print("\t1. Travel the trail")
-    print("\t2. Learn about the trail")
-    print("\t3. See the Oregon Top Ten")
-    print("\t4. End")
-    input("\nWhat is your choice?")
-
-    # f = pyfiglet.FigletFont.getFonts()
-    # for a in f[:10]:
-    #     print(a)
-    #     print(pyfiglet.figlet_format("The Oregon Trail", font=a))
-
+    while True:
+        main_menu()
