@@ -209,20 +209,40 @@ def matts_store_buy_item(item, cost, text, question, min, max):
     existing_item = getattr(INVENTORY, item)
     if existing_item != 0:
         setattr(INVENTORY, item, 0)
+        # deduct from the current bill
         if item == "oxen":
             PLAYER.bill -= (int(existing_item) / 2) * cost
         elif item == "bullets":
             PLAYER.bill -= (int(existing_item) / 20) * cost
         else:
             PLAYER.bill -= int(existing_item) * cost
-    # update inventory/bill
-    if item == "oxen":
-        setattr(INVENTORY, item, int(buy_item) * 2)
-    elif item == "bullets":
-        setattr(INVENTORY, item, int(buy_item) * 20)
-    else:
-        setattr(INVENTORY, item, int(buy_item))
+
+    # increment player bill with the item * cost
     PLAYER.bill += int(buy_item) * cost
+    remaining = PLAYER.cash - PLAYER.bill
+    if remaining >= 0:  # player has money remaining
+        # update inventory/bill
+        if item == "oxen":
+            setattr(INVENTORY, item, int(buy_item) * 2)
+        elif item == "bullets":
+            setattr(INVENTORY, item, int(buy_item) * 20)
+        else:
+            setattr(INVENTORY, item, int(buy_item))
+    else:
+        # player cannot afford the item/quantity
+        PLAYER.bill -= int(buy_item) * cost  # give them back their money
+        remaining = PLAYER.cash + PLAYER.bill
+        setattr(INVENTORY, item, existing_item)  # set back to original qty
+        # deduct the value from the current bill
+        if item == "oxen":
+            PLAYER.bill += (int(existing_item) / 2) * cost
+        elif item == "bullets":
+            PLAYER.bill += (int(existing_item) / 20) * cost
+        else:
+            PLAYER.bill += int(existing_item) * cost
+        # display error message
+        print(red(CENT(f"You cannot afford {buy_item} {item}")))
+        input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
 def matts_store_receipt():
@@ -236,6 +256,8 @@ def matts_store_receipt():
         food = INVENTORY.food * 0.2
         clothing = INVENTORY.clothing * 10
         bullets = (INVENTORY.bullets / 20) * 2
+        spare_parts = INVENTORY.wheels + INVENTORY.axles + INVENTORY.tongues
+        spares_cost = spare_parts * 10
         remaining = PLAYER.cash - PLAYER.bill
 
         clear()
@@ -248,14 +270,11 @@ def matts_store_receipt():
         print(f"\t\t\t{red('2. ') + 'Food':<60}${food:.2f} ({INVENTORY.food})")
         print(f"\t\t\t{red('3. ') + 'Clothing':<60}${clothing:.2f} ({INVENTORY.clothing})")  # noqa
         print(f"\t\t\t{red('4. ') + 'Ammunition':<60}${bullets:.2f} ({INVENTORY.bullets})")  # noqa
-        print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${'0.00'} ({INVENTORY.wheels})")  # noqa
+        print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${spares_cost:.2f} ({spare_parts})")  # noqa
         print(f"\t\t\t{red('6. ') + 'Leave Store'}")
         print(red(LINE))
         print(f"\t\t\t{'Total bill:':<26}${PLAYER.bill:>2.2f}")
-        if remaining > 0:
-            print(f"\t\t\t{'Amount remaining:':<26}${green(f'{remaining:>2.2f}')}")  # noqa
-        elif remaining <= 0:
-            print(f"\t\t\t{'Amount remaining:':<26}${red(f'{remaining:>2.2f}')}")  # noqa
+        print(f"\t\t\t{'Amount remaining:':<26}${remaining:>2.2f}")  # noqa
 
         user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ")  # noqa
         choices = ["1", "2", "3", "4", "5", "6"]
@@ -268,8 +287,7 @@ def matts_store_receipt():
                 cost = 40.00
                 text = (f"""
 {CENT("There are 2 oxen in a yoke; I recommend at least 3 yoke.")}
-{CENT(f"I charge ${cost:.2f} a yoke.")}
-                """)
+{CENT(f"I charge ${cost:.2f} a yoke.")}""")
                 question = f"\n\t\t\tHow many yoke do you want? {red('[1-9]')} "  # noqa
                 matts_store_buy_item("oxen", cost, text, question, 1, 9)
             elif user_input == "2":  # food
@@ -278,8 +296,7 @@ def matts_store_receipt():
 {CENT("I recommend you take at least 200 pounds of food")}
 {CENT("for each person in your family. I see that you have")}
 {CENT("5 people in all. You'll need flour, sugar, bacon,")}
-{CENT(f"and coffee. My price is ${cost:.2f} a pound.")}
-                """)
+{CENT(f"and coffee. My price is ${cost:.2f} a pound.")}""")
                 question = f"\n\t\tHow many pounds of food do you want? {red('[1000-2000]')} "  # noqa
                 matts_store_buy_item("food", cost, text, question, 1000, 2000)
             elif user_input == "3":  # clothing
@@ -287,18 +304,29 @@ def matts_store_receipt():
                 text = (f"""
 {CENT("You'll need warm clothing in the mountains.")}
 {CENT("I recommend taking at least 2 sets of clothes")}
-{CENT(f"per person. Each set is ${cost:.2f}.")}
-                """)
+{CENT(f"per person. Each set is ${cost:.2f}.")}""")
                 question = f"\n\t\tHow many sets of clothes do you want? {red('[10-99]')} "  # noqa
                 matts_store_buy_item("clothing", cost, text, question, 10, 99)
             elif user_input == "4":  # bullets
                 cost = 2.00
                 text = (f"""
 {CENT("I sell ammunition in boxes of 20 bullets.")}
-{CENT(f"Each box costs ${cost:.2f}.")}
-                """)
+{CENT(f"Each box costs ${cost:.2f}.")}""")
                 question = f"\n\t\t\tHow many boxes do you want? {red('[1-99]')} "  # noqa
                 matts_store_buy_item("bullets", cost, text, question, 1, 99)
+            elif user_input == "5":  # spare parts
+                parts = ["wheels", "axles", "tongues"]
+                cost = 10
+                text = (f"""
+{CENT("It's a good idea to have a few spare parts")}
+{CENT("for your wagon. Here are the prices:")}
+
+{CENT(f"wagon wheel  - ${cost} each")}
+{CENT(f"wagon axle   - ${cost} each")}
+{CENT(f"wagon tongue - ${cost} each")}""")
+                for part in parts:
+                    question = f"\n\t\t\tHow many wagon {part}? {red('[0-3]')} "  # noqa
+                    matts_store_buy_item(part, cost, text, question, 0, 3)
             elif user_input == "6":
                 break
 
