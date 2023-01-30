@@ -758,6 +758,7 @@ arriving in Oregon as a carpenter, and **triple** points for arriving as a farme
 | [StackOverflow](https://stackoverflow.com/a/45391019) | Centering text 80-wide |
 | [StackOverflow](https://stackoverflow.com/a/2084628) | Clearing the terminal |
 | [StackOverflow](https://stackoverflow.com/a/44423183) | Alignment with decimal points |
+| [StackOverflow](https://stackoverflow.com/a/2612615) | Get/Set object attributes dynamically |
 
 ## Reminders
 
