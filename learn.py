@@ -1,4 +1,4 @@
-from colors import green, grey, pink, yellow
+from colors import grey, yellow
 from utils import clear, ot_title, CENT, LINE
 
 
@@ -6,9 +6,9 @@ def learn_trail_title():
     """
     Displays the header text for learning about the trail.
     """
-    print(green(LINE))
-    print(green(CENT('Learn about "The Oregon Trail"')))
-    print(green(LINE))
+    print(yellow(LINE))
+    print(yellow(CENT('Learn about "The Oregon Trail"')))
+    print(yellow(LINE))
     print("")
 
 
@@ -26,7 +26,7 @@ def learn_about_trail():
     print(CENT("mud and water-filled ruts, or will you plod"))
     print(CENT("through dust six inches deep?"))
     print("")
-    print(green(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
@@ -37,7 +37,7 @@ def learn_about_trail():
     print(CENT("Or, you can ford the river and hope you"))
     print(CENT("and your wagon aren't swallowed alive!"))
     print("")
-    print(green(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
@@ -47,7 +47,7 @@ def learn_about_trail():
     print(CENT("You might get a buffalo... you might."))
     print(CENT("And there are bears in the mountains."))
     print("")
-    print(green(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
@@ -57,7 +57,7 @@ def learn_about_trail():
     print(CENT("the rapids with a makeshift raft makes"))
     print(CENT("you queasy, better take the Barlow Road."))
     print("")
-    print(green(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
@@ -69,7 +69,7 @@ def learn_about_trail():
     print(CENT("until your name is up with the others on"))
     print(CENT("The Oregon Top Ten."))
     print("")
-    print(green(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
@@ -79,9 +79,9 @@ def learn_about_professions():
     things about the three professions.
     """
     clear()
-    print(pink(LINE))
-    print(pink(CENT("Learn about the Professions")))
-    print(pink(LINE))
+    print(yellow(LINE))
+    print(yellow(CENT("Learn about the Professions")))
+    print(yellow(LINE))
     print("")
     print(CENT("Traveling to Oregon isn't easy!"))
     print(CENT("But if you're a banker, you'll have more money for supplies"))
@@ -92,7 +92,7 @@ def learn_about_professions():
     print(CENT("Therefore, the farmer earns the greatest number of points,"))
     print(CENT("and the banker earns the least."))
     print("")
-    print(pink(LINE))
+    print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
