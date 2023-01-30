@@ -2,12 +2,14 @@ import sys
 import time
 from colors import aqua, brown, green, grey, peach, pink, red, yellow
 from learn import learn_about_months
-from objects import Game, Person, Player
+from objects import Game, Inventory, Person, Player
 from utils import clear, LINE, CENT
-from validators import validate_menu_input, validate_name, validate_yes_no
+from validators import (
+    validate_choice, validate_name, validate_yes_no, validate_minmax
+)
 
 
-PLAYER = GAME = None
+PLAYER = GAME = INVENTORY = None
 
 
 def end_game():
@@ -17,11 +19,11 @@ def end_game():
     time.sleep(0.25)
     print(red(LINE))
     time.sleep(0.25)
-    print(red(CENT("Thanks for playing The Python Oregon Trail.")))
+    print(CENT("Thanks for playing The Python Oregon Trail."))
     time.sleep(0.25)
-    print(red(CENT("Hopefully you didn't die of dysentery!")))
+    print(CENT("Hopefully you didn't die of dysentery!"))
     time.sleep(0.25)
-    print(red(LINE))
+    print(red(LINE), "\n")
     time.sleep(1)
     sys.exit()
 
@@ -81,7 +83,7 @@ def confirm_names():
             choices = ["1", "2", "3", "4", "5"]
 
             # validate 1-5
-            if validate_menu_input(update_name, choices):
+            if validate_choice(update_name, choices):
                 break
 
         if update_name == "1":  # wagon leader
@@ -118,7 +120,7 @@ def pick_start_month():
         choices = ["1", "2", "3", "4", "5", "6"]
 
         # validate if the user selected a valid option
-        if validate_menu_input(user_input, choices):
+        if validate_choice(user_input, choices):
             # break
 
             if user_input == "1":
@@ -161,7 +163,7 @@ def populate_family():
         choices = ["1", "2"]
 
         # validate if the user selected a valid option
-        if validate_menu_input(choose_names, choices):
+        if validate_choice(choose_names, choices):
             break
 
     # player's family members (4 other instances of Person)
@@ -181,28 +183,79 @@ def populate_family():
     confirm_names()
 
 
-def matts_store():
+def matts_store_buy_oxen():
+    """
+    Buying oxen (2 per yoke) from Matt's General Store.
+    """
+    global PLAYER, INVENTORY
+
+    cost_yoke = 40.00
+
+    while True:
+        clear()
+        print(red(LINE))
+        print(CENT("Matt's General Store"))
+        print(CENT("Independence, Missouri"))
+        print(red(LINE))
+        print("")
+        print(CENT("There are 2 oxen in a yoke; I recommend at least 3 yoke."))
+        print(CENT(f"I charge ${cost_yoke:.2f} a yoke."))
+        print("")
+        print(CENT(f"Bill so far: ${PLAYER.bill:.2f}"))
+
+        buy_oxen = input(f"\n\t\t\tHow many yoke do you want? {red('[1-9]')} ")
+
+        # validate if the user selected a valid option
+        if validate_minmax(buy_oxen, 1, 9):
+            break
+
+    # players who return for more oxen, reset back to 0 initially
+    existing_oxen = INVENTORY.oxen
+    if existing_oxen != 0:
+        INVENTORY.oxen = 0
+        PLAYER.bill -= (int(existing_oxen) / 2) * cost_yoke
+    # update inventory/bill
+    INVENTORY.oxen = int(buy_oxen) * 2
+    PLAYER.bill += int(buy_oxen) * cost_yoke
+
+
+def matts_store_receipt():
     """
     Displays Matt's General Store purchases before leaving Independence.
     """
-    global PLAYER, GAME
+    global PLAYER, GAME, INVENTORY
 
-    clear()
-    print(red(LINE))
-    print(CENT("Matt's General Store"))
-    print(CENT("Independence, Missouri"))
-    print(CENT(f"{GAME.date}"))
-    print(red(LINE))
-    print(f"\t\t\t{red('1. ') + 'Oxen':<50}{'$0.00':>15}")
-    print(f"\t\t\t{red('2. ') + 'Food':<50}{'$0.00':>15}")
-    print(f"\t\t\t{red('3. ') + 'Clothing':<50}{'$0.00':>15}")
-    print(f"\t\t\t{red('4. ') + 'Ammunition':<50}{'$0.00':>15}")
-    print(f"\t\t\t{red('5. ') + 'Spare parts':<50}{'$0.00':>15}")
-    print(red(LINE))
-    print(CENT(f"Total bill: $0.00"))
-    print("")
-    print(CENT(f"Amount you have: ${PLAYER.cash:.2f}"))
-    print("")
+    while True:
+        oxen = (INVENTORY.oxen / 2) * 40
+        remaining = PLAYER.cash - PLAYER.bill
+
+        clear()
+        print(red(LINE))
+        print(CENT("Matt's General Store"))
+        print(CENT("Independence, Missouri"))
+        print(CENT(f"{GAME.date}"))
+        print(red(LINE))
+        print(f"\t\t\t{red('1. ') + 'Oxen':<60}${oxen:.2f}")
+        print(f"\t\t\t{red('2. ') + 'Food':<60}${'0.00'}")
+        print(f"\t\t\t{red('3. ') + 'Clothing':<60}${'0.00'}")
+        print(f"\t\t\t{red('4. ') + 'Ammunition':<60}${'0.00'}")
+        print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${'0.00'}")
+        print(f"\t\t\t{red('6. ') + 'Leave Store'}")
+        print(red(LINE))
+        print(f"\t\t\t{'Total bill:':<26}${PLAYER.bill:>2.2f}")
+        print(f"\t\t\t{'Amount you have:':<26}${remaining:>2.2f}")
+
+        user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ")  # noqa
+        choices = ["1", "2", "3", "4", "5", "6"]
+
+        # validate if the user selected a valid option
+        if validate_choice(user_input, choices):
+            # break
+
+            if user_input == "1":
+                matts_store_buy_oxen()
+            elif user_input == "6":
+                break
 
 
 def purchase_inventory():
@@ -241,18 +294,19 @@ def purchase_inventory():
     print(green(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    matts_store()
-    input("pause")
+    # start generating Matt's shopping receipt
+    matts_store_receipt()
 
 
 def start_game(profession):
     """
     Player begins defining their game data.
     """
-    global PLAYER, GAME
+    global PLAYER, GAME, INVENTORY
 
-    # initialize a new instance of the Game()
+    # initialize a new instance of the Game() and Inventory()
     GAME = Game()
+    INVENTORY = Inventory()
     # initialize a new instance of the Player() with profession
     PLAYER = Player(profession)
     # set the starter cash based on profession
