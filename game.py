@@ -1,6 +1,6 @@
 import sys
 import time
-from colors import aqua, brown, green, grey, peach, pink, red, yellow
+from colors import aqua, green, grey, red
 from learn import learn_about_months
 from objects import Game, Inventory, Person, Player
 from utils import clear, LINE, CENT
@@ -183,13 +183,11 @@ def populate_family():
     confirm_names()
 
 
-def matts_store_buy_oxen():
+def matts_store_buy_item(item, cost, text, question, min, max):
     """
-    Buying oxen (2 per yoke) from Matt's General Store.
+    Helper function to buy items from Matt's General Store.
     """
     global PLAYER, INVENTORY
-
-    cost_yoke = 40.00
 
     while True:
         clear()
@@ -197,26 +195,34 @@ def matts_store_buy_oxen():
         print(CENT("Matt's General Store"))
         print(CENT("Independence, Missouri"))
         print(red(LINE))
-        print("")
-        print(CENT("There are 2 oxen in a yoke; I recommend at least 3 yoke."))
-        print(CENT(f"I charge ${cost_yoke:.2f} a yoke."))
+        print(text)
         print("")
         print(CENT(f"Bill so far: ${PLAYER.bill:.2f}"))
 
-        buy_oxen = input(f"\n\t\t\tHow many yoke do you want? {red('[1-9]')} ")
+        buy_item = input(question)
 
         # validate if the user selected a valid option
-        if validate_minmax(buy_oxen, 1, 9):
+        if validate_minmax(buy_item, min, max):
             break
 
-    # players who return for more oxen, reset back to 0 initially
-    existing_oxen = INVENTORY.oxen
-    if existing_oxen != 0:
-        INVENTORY.oxen = 0
-        PLAYER.bill -= (int(existing_oxen) / 2) * cost_yoke
+    # players who return for more of same item, reset back to 0 initially
+    existing_item = getattr(INVENTORY, item)
+    if existing_item != 0:
+        setattr(INVENTORY, item, 0)
+        if item == "oxen":
+            PLAYER.bill -= (int(existing_item) / 2) * cost
+        elif item == "bullets":
+            PLAYER.bill -= (int(existing_item) / 20) * cost
+        else:
+            PLAYER.bill -= int(existing_item) * cost
     # update inventory/bill
-    INVENTORY.oxen = int(buy_oxen) * 2
-    PLAYER.bill += int(buy_oxen) * cost_yoke
+    if item == "oxen":
+        setattr(INVENTORY, item, int(buy_item) * 2)
+    elif item == "bullets":
+        setattr(INVENTORY, item, int(buy_item) * 20)
+    else:
+        setattr(INVENTORY, item, int(buy_item))
+    PLAYER.bill += int(buy_item) * cost
 
 
 def matts_store_receipt():
@@ -227,6 +233,9 @@ def matts_store_receipt():
 
     while True:
         oxen = (INVENTORY.oxen / 2) * 40
+        food = INVENTORY.food * 0.2
+        clothing = INVENTORY.clothing * 10
+        bullets = (INVENTORY.bullets / 20) * 2
         remaining = PLAYER.cash - PLAYER.bill
 
         clear()
@@ -235,15 +244,18 @@ def matts_store_receipt():
         print(CENT("Independence, Missouri"))
         print(CENT(f"{GAME.date}"))
         print(red(LINE))
-        print(f"\t\t\t{red('1. ') + 'Oxen':<60}${oxen:.2f}")
-        print(f"\t\t\t{red('2. ') + 'Food':<60}${'0.00'}")
-        print(f"\t\t\t{red('3. ') + 'Clothing':<60}${'0.00'}")
-        print(f"\t\t\t{red('4. ') + 'Ammunition':<60}${'0.00'}")
-        print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${'0.00'}")
+        print(f"\t\t\t{red('1. ') + 'Oxen':<60}${oxen:.2f} ({INVENTORY.oxen})")
+        print(f"\t\t\t{red('2. ') + 'Food':<60}${food:.2f} ({INVENTORY.food})")
+        print(f"\t\t\t{red('3. ') + 'Clothing':<60}${clothing:.2f} ({INVENTORY.clothing})")  # noqa
+        print(f"\t\t\t{red('4. ') + 'Ammunition':<60}${bullets:.2f} ({INVENTORY.bullets})")  # noqa
+        print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${'0.00'} ({INVENTORY.wheels})")  # noqa
         print(f"\t\t\t{red('6. ') + 'Leave Store'}")
         print(red(LINE))
         print(f"\t\t\t{'Total bill:':<26}${PLAYER.bill:>2.2f}")
-        print(f"\t\t\t{'Amount you have:':<26}${remaining:>2.2f}")
+        if remaining > 0:
+            print(f"\t\t\t{'Amount remaining:':<26}${green(f'{remaining:>2.2f}')}")  # noqa
+        elif remaining <= 0:
+            print(f"\t\t\t{'Amount remaining:':<26}${red(f'{remaining:>2.2f}')}")  # noqa
 
         user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ")  # noqa
         choices = ["1", "2", "3", "4", "5", "6"]
@@ -252,8 +264,41 @@ def matts_store_receipt():
         if validate_choice(user_input, choices):
             # break
 
-            if user_input == "1":
-                matts_store_buy_oxen()
+            if user_input == "1":  # oxen
+                cost = 40.00
+                text = (f"""
+{CENT("There are 2 oxen in a yoke; I recommend at least 3 yoke.")}
+{CENT(f"I charge ${cost:.2f} a yoke.")}
+                """)
+                question = f"\n\t\t\tHow many yoke do you want? {red('[1-9]')} "  # noqa
+                matts_store_buy_item("oxen", cost, text, question, 1, 9)
+            elif user_input == "2":  # food
+                cost = 0.20
+                text = (f"""
+{CENT("I recommend you take at least 200 pounds of food")}
+{CENT("for each person in your family. I see that you have")}
+{CENT("5 people in all. You'll need flour, sugar, bacon,")}
+{CENT(f"and coffee. My price is ${cost:.2f} a pound.")}
+                """)
+                question = f"\n\t\tHow many pounds of food do you want? {red('[1000-2000]')} "  # noqa
+                matts_store_buy_item("food", cost, text, question, 1000, 2000)
+            elif user_input == "3":  # clothing
+                cost = 10.00
+                text = (f"""
+{CENT("You'll need warm clothing in the mountains.")}
+{CENT("I recommend taking at least 2 sets of clothes")}
+{CENT(f"per person. Each set is ${cost:.2f}.")}
+                """)
+                question = f"\n\t\tHow many sets of clothes do you want? {red('[10-99]')} "  # noqa
+                matts_store_buy_item("clothing", cost, text, question, 10, 99)
+            elif user_input == "4":  # bullets
+                cost = 2.00
+                text = (f"""
+{CENT("I sell ammunition in boxes of 20 bullets.")}
+{CENT(f"Each box costs ${cost:.2f}.")}
+                """)
+                question = f"\n\t\t\tHow many boxes do you want? {red('[1-99]')} "  # noqa
+                matts_store_buy_item("bullets", cost, text, question, 1, 99)
             elif user_input == "6":
                 break
 
