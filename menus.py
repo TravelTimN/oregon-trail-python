@@ -4,7 +4,7 @@ from credits import credits
 from game import start_game, end_game
 from learn import learn_about_trail, learn_about_professions
 from utils import clear, CENT, LINE, ot_title
-from validators import validate_menu_input
+from validators import validate_choice
 
 
 def pick_profession():
@@ -28,7 +28,7 @@ def pick_profession():
         choices = ["1", "2", "3", "4"]
 
         # validate if the user selected a valid option
-        if validate_menu_input(user_input, choices):
+        if validate_choice(user_input, choices):
             break
 
     clear()
@@ -63,7 +63,7 @@ def leaderboard_menu():
         choices = ["1", "2", "3"]
 
         # validate if the user selected a valid option
-        if validate_menu_input(user_input, choices):
+        if validate_choice(user_input, choices):
             break
 
     clear()
@@ -113,7 +113,7 @@ def main_menu():
         choices = ["1", "2", "3", "4", "5"]
 
         # validate if the user selected a valid option
-        if validate_menu_input(user_input, choices):
+        if validate_choice(user_input, choices):
             break
 
     clear()
