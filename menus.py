@@ -1,5 +1,5 @@
 import time
-from colors import brown, gold, red, pink
+from colors import brown, gold, green, red
 from credits import credits
 from game import start_game, end_game
 from learn import learn_about_trail, learn_about_professions
@@ -13,18 +13,18 @@ def pick_profession():
     """
     while True:
         clear()
-        print(pink(LINE))
-        print(pink(CENT("Pick your Profession")))
-        print(pink(LINE))
+        print(green(LINE))
+        print(green(CENT("Pick your Profession")))
+        print(green(LINE))
 
         print("\n\tMany kinds of people made the trip to Oregon.")
         print("\n\tYou may:\n")
-        print(f'\t\t{pink("1. ")}{"Be a banker from Boston"}')
-        print(f'\t\t{pink("2. ")}{"Be a carpenter from Ohio"}')
-        print(f'\t\t{pink("3. ")}{"Be a farmer from Illinois"}')
-        print(f'\t\t{pink("4. ")}{"Find out the differences between these choices"}')  # noqa
+        print(f'\t\t{green("1. ")}{"Be a banker from Boston"}')
+        print(f'\t\t{green("2. ")}{"Be a carpenter from Ohio"}')
+        print(f'\t\t{green("3. ")}{"Be a farmer from Illinois"}')
+        print(f'\t\t{green("4. ")}{"Find out the differences between these choices"}')  # noqa
 
-        user_input = input(f"\n\t\tWhat is your choice? {pink('[1-4]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
         choices = ["1", "2", "3", "4"]
 
         # validate if the user selected a valid option
