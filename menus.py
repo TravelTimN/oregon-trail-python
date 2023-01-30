@@ -24,7 +24,7 @@ def pick_profession():
         print(f'\t\t{pink("3. ")}{"Be a farmer from Illinois"}')
         print(f'\t\t{pink("4. ")}{"Find out the differences between these choices"}')  # noqa
 
-        user_input = input("\n\tWhat is your choice? ")
+        user_input = input(f"\n\t\tWhat is your choice? {pink('[1-4]')} ")
         choices = ["1", "2", "3", "4"]
 
         # validate if the user selected a valid option
@@ -59,7 +59,7 @@ def leaderboard_menu():
         print(f'\t\t{gold("2. ")}{"See the original Top Ten list"}')
         print(f'\t\t{gold("3. ")}{"Return to the main menu"}')
 
-        user_input = input("\n\tWhat is your choice? ")
+        user_input = input(f"\n\t\tWhat is your choice? {gold('[1-3]')} ")
         choices = ["1", "2", "3"]
 
         # validate if the user selected a valid option
@@ -109,7 +109,7 @@ def main_menu():
         # print("\n")
         # ------------------------------------
 
-        user_input = input("\n\tWhat is your choice? ")
+        user_input = input(f"\n\t\tWhat is your choice? {brown('[1-5]')} ")
         choices = ["1", "2", "3", "4", "5"]
 
         # validate if the user selected a valid option
