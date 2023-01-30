@@ -7,7 +7,7 @@ def validate_minmax(user_input, min, max):
     Checks if the user input is valid using a min/max value
     """
     try:
-        if int(user_input) < min and int(user_input) > max:
+        if int(user_input) < min or int(user_input) > max:
             raise ValueError
     except ValueError:
         clear()
