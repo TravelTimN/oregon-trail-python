@@ -1,3 +1,4 @@
+import datetime
 import random
 
 
@@ -47,15 +48,32 @@ class Player(Person):
     def __init__(self, profession):
         self.profession = profession
         self.family = []
-        self.cash = 0
+        self.cash = float(0.00)
 
     def profession_starter_cash(self):
         """
         Sets the initial cash-value, depending on the player's profession
         """
         if self.profession == "banker":
-            self.cash = int(1600)
+            self.cash = float(1600.00)
         elif self.profession == "carpenter":
-            self.cash = int(800)
+            self.cash = float(800.00)
         elif self.profession == "farmer":
-            self.cash = int(400)
+            self.cash = float(400.00)
+
+
+class Game():
+    """
+    The current in-progress game instance.
+    """
+    def __init__(self):
+        self.date = 0
+
+    def set_start_date(self, month):
+        """
+        Set the start date of the game in 1848.
+        March, April, May, June, or July
+        """
+        self.month = month
+        self.date = datetime.datetime(1848, self.month, 1)
+        return self.date.strftime("%B %d, %Y")
