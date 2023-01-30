@@ -143,17 +143,33 @@ def start_game(profession):
     player.profession_starter_cash()
     # ask for the player's name
     player.name = ""
-    print(brown(LINE))
-    print(peach(CENT("Your Wagon Party")))
-    print(brown(LINE))
-    print("\n")
+    list_player_family(player)
     player.name = ask_name(player, "What is the first name of the wagon leader? ")  # noqa
 
-    # build the player's family of 4 more persons
+    # ask if the player would like random names, or to choose their own
+    while True:
+        list_player_family(player)
+        print("\tPick your own family names, or randomly selected names?\n")
+        print(f'\t\t{peach("1. ")}{"Choose my own wagon party"}')
+        print(f'\t\t{peach("2. ")}{"Randomly selected wagon party"}')
+
+        choose_names = input(f"\n\t\tWhat is your choice? {peach('[1-2]')} ")
+        choices = ["1", "2"]
+
+        # validate if the user selected a valid option
+        if validate_menu_input(choose_names, choices):
+            break
+
+    # player's family members (4 other instances of Person)
     for i in range(0, 4):
         list_player_family(player)
         family_member = Person(None)
-        family_member.name = ask_name(player, "What is the first name of the next family member? ")  # noqa
+        if choose_names == "1":
+            # build the player's family of 4 more persons
+            family_member.name = ask_name(player, "What is the first name of the next family member? ")  # noqa
+        elif choose_names == "2":
+            # pick randomly selected names for the player's family
+            family_member.name = family_member.get_random_name()
         player.family.append(family_member)
     list_player_family(player)
 
