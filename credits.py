@@ -3,6 +3,9 @@ from utils import clear, ot_title, CENT, LINE
 
 
 def credits():
+    """
+    Displays a page that lists the credits and helpful links.
+    """
     clear()
     print(aqua(LINE))
     print(aqua(CENT("Credits")))

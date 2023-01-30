@@ -3,6 +3,9 @@ from utils import clear
 
 
 def animate_wagon():
+    """
+    A 4-second animation of the ox pulling the wagon across the screen.
+    """
     print(f"""
                                                                         ...
                                                   :YGGBGGBPJJ!^.~~~.^?JJYGGGBY

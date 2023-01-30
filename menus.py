@@ -82,6 +82,9 @@ def leaderboard_menu():
 
 
 def main_menu():
+    """
+    Starts the main game play menu.
+    """
     while True:
         clear()
         ot_title()

@@ -73,23 +73,16 @@ def learn_about_trail():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
-def learn_professions_title():
-    """
-    Displays the header text for learning about professions.
-    """
-    print(pink(LINE))
-    print(pink(CENT("Learn about the Professions")))
-    print(pink(LINE))
-    print("")
-
-
 def learn_about_professions():
     """
     Displays a series of pages that explain a few
     things about the three professions.
     """
     clear()
-    learn_professions_title()
+    print(pink(LINE))
+    print(pink(CENT("Learn about the Professions")))
+    print(pink(LINE))
+    print("")
     print(CENT("Traveling to Oregon isn't easy!"))
     print(CENT("But if you're a banker, you'll have more money for supplies"))
     print(CENT("and services than a carpenter or a farmer."))

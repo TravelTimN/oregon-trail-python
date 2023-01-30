@@ -18,6 +18,9 @@ LINE = "━" * 80
 
 
 def ot_title():
+    """
+    Prints the header title for the game itself.
+    """
     print(brown(LINE))
     print(peach(CENT("The Python Oregon Trail")))
     print(brown(LINE))

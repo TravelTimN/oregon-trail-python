@@ -1,4 +1,7 @@
 class Person:
+    """
+    A person is an instance of the main player, plus their 4 family members.
+    """
     def __init__(self, name):
         self.name = name
         self.illness = None
@@ -8,6 +11,9 @@ class Person:
 
 
 class Inventory:
+    """
+    Inventory that the player will manage throughout the journey to Oregon.
+    """
     def __init__(self):
         self.food = 0
         self.bullets = 0
@@ -19,6 +25,9 @@ class Inventory:
 
 
 class Player(Person):
+    """
+    The individual player instance, which extends from Person.
+    """
     def __init__(self, profession):
         self.profession = profession
         self.family = []
