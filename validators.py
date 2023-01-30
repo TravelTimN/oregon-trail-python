@@ -2,6 +2,25 @@ from colors import red, grey
 from utils import clear, LINE, CENT
 
 
+def validate_minmax(user_input, min, max):
+    """
+    Checks if the user input is valid using a min/max value
+    """
+    try:
+        if int(user_input) < min and int(user_input) > max:
+            raise ValueError
+    except ValueError:
+        clear()
+        print(red(LINE))
+        print(red(CENT(f'Error: "{user_input}" is not between {min}-{max}!')))
+        print(red(LINE))
+        input(f'{grey(CENT("Press ENTER to proceed."))}\n')
+        clear()
+        return False
+
+    return True
+
+
 def validate_yes_no(user_input):
     """
     Checks if the user input is valid (yes/no)
@@ -40,7 +59,7 @@ def validate_name(user_input):
     return True
 
 
-def validate_menu_input(user_input, choices):
+def validate_choice(user_input, choices):
     """
     Checks if the user selected a valid option from the choices provided.
     If not, it raises a value error.
