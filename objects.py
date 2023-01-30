@@ -32,10 +32,10 @@ class Inventory:
     Inventory that the player will manage throughout the journey to Oregon.
     """
     def __init__(self):
-        self.food = 0
-        self.bullets = 0
         self.oxen = 0
+        self.food = 0
         self.clothing = 0
+        self.bullets = 0
         self.wheels = 0
         self.axles = 0
         self.tongues = 0
@@ -49,6 +49,7 @@ class Player(Person):
         self.profession = profession
         self.family = []
         self.cash = float(0.00)
+        self.bill = float(0.00)
 
     def profession_starter_cash(self):
         """
