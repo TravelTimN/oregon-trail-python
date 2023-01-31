@@ -1,6 +1,6 @@
 import sys
 import time
-from colors import aqua, green, grey, red
+from colors import aqua, green, grey, pink, red
 from learn import learn_about_months
 from objects import Game, Inventory, Person, Player
 from utils import clear, LINE, CENT
@@ -351,9 +351,9 @@ def purchase_inventory():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
-    print(green(LINE))
-    print(green(CENT("Buying Supplies")))
-    print(green(LINE))
+    print(pink(LINE))
+    print(pink(CENT("Talking to Matt")))
+    print(pink(LINE))
     print("")
     print(CENT("Hello, I'm Matt. So you're going to Oregon!"))
     print(CENT("I can fix you up with what you need:"))
@@ -364,7 +364,7 @@ def purchase_inventory():
     print("\t\t\t- ammunition for your rifles")
     print("\t\t\t- spare parts for your wagon")
     print("")
-    print(green(LINE))
+    print(pink(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     # start generating Matt's shopping receipt
