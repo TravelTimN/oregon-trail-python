@@ -422,4 +422,18 @@ def start_game(profession):
     # buy supplies
     purchase_inventory()
 
-    # print(f"Name: {PLAYER.name}\nProfession: {PLAYER.profession}\nCash: ${PLAYER.cash}")  # noqa
+    # start the game (loading the wagon)
+    clear()
+    print(green(LINE))
+    print(green(CENT("Loading the Wagon")))
+    print(green(LINE))
+    print("")
+    print(CENT("Please Wait"))
+    print("")
+    print(CENT("Supplies and oxen being loaded with your wagon."))
+    print("")
+    print(CENT("Safe travels!"))
+    print("")
+    print(green(LINE))
+    time.sleep(5)
+    clear()
