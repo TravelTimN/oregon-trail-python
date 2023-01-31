@@ -1,7 +1,7 @@
 import time
 from colors import gold, green, orange, red
 from credits import credits
-from game import start_game, end_game
+from independence import start_game, end_game
 from learn import learn_about_trail, learn_about_professions
 from utils import clear, CENT, LINE, ot_title
 from validators import validate_choice
