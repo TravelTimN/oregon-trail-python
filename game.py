@@ -328,7 +328,31 @@ def matts_store_receipt():
                     question = f"\n\t\t\tHow many wagon {part}? {red('[0-3]')} "  # noqa
                     matts_store_buy_item(part, cost, text, question, 0, 3)
             elif user_input == "6":
-                break
+                clear()
+                print(pink(LINE))
+                print(CENT("Talking to Matt"))
+                print(pink(LINE))
+                print("")
+                if INVENTORY.oxen == 0 or INVENTORY.food == 0 or INVENTORY.clothing == 0 or INVENTORY.bullets == 0:  # noqa
+                    if INVENTORY.oxen == 0:
+                        msg = "Don't forget, you'll need oxen to pull your wagon."  # noqa
+                    elif INVENTORY.food == 0:
+                        msg = "Although you can hunt, there's no guarantee you'll get any food."  # noqa
+                    elif INVENTORY.clothing == 0:
+                        msg = "You'll need extra layers of clothing to stay warm in the mountains."  # noqa
+                    elif INVENTORY.bullets == 0:
+                        msg = "Ammunition is necessary for hunting, and against potential bandits."  # noqa
+                    print(CENT(msg))
+                    print("")
+                    print(pink(LINE))
+                    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                else:
+                    print(CENT("Well then, you're ready to start. Good luck!"))
+                    print(CENT("You have a long and difficult journey ahead of you."))  # noqa
+                    print("")
+                    print(pink(LINE))
+                    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                    break
 
 
 def purchase_inventory():
