@@ -50,10 +50,14 @@ class Player(Person):
         self.family = []
         self.cash = float(0.00)
         self.bill = float(0.00)
+        self.pace = "steady"  # steady || strenuous || grueling
+        self.pace_miles_per_day = 18  # 18 || 30 || 36
+        self.rations = "filling"  # filling || meager || bear bones
+        self.rations_pounds_per_day = 15  # 15 || 10 || 5
 
     def profession_starter_cash(self):
         """
-        Sets the initial cash-value, depending on the player's profession
+        Sets the initial cash-value, depending on the player's profession.
         """
         if self.profession == "banker":
             self.cash = float(1600.00)
@@ -61,6 +65,28 @@ class Player(Person):
             self.cash = float(800.00)
         elif self.profession == "farmer":
             self.cash = float(400.00)
+
+    def update_pace(self):
+        """
+        Updates the pace (miles per day) based on user selection.
+        """
+        if self.pace == "steady":
+            self.pace_miles_per_day = 18
+        elif self.pace == "strenuous":
+            self.pace_miles_per_day = 30
+        elif self.pace == "grueling":
+            self.pace_miles_per_day = 36
+
+    def update_rations(self):
+        """
+        Updates the rations (pounds per day) based on user selection.
+        """
+        if self.rations == "filling":
+            self.rations_pounds_per_day = 15
+        elif self.rations == "meager":
+            self.rations_pounds_per_day = 10
+        elif self.rations == "bear bones":
+            self.rations_pounds_per_day = 5
 
 
 class Game():
