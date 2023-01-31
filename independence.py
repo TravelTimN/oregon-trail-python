@@ -3,7 +3,7 @@ import time
 from colors import aqua, green, grey, pink, red
 from learn import learn_about_months
 from objects import Game, Inventory, Person, Player
-from utils import clear, LINE, CENT
+from utils import clear, LINE, CENT, generate_title
 from validators import (
     validate_choice, validate_name, validate_yes_no, validate_minmax
 )
@@ -50,10 +50,7 @@ def list_player_family():
     global PLAYER
 
     clear()
-    print(green(LINE))
-    print(green(CENT("Your Wagon Party")))
-    print(green(LINE))
-    print("")
+    generate_title(green, "Your Wagon Party")
     if PLAYER.name != "":
         print(f"\t{aqua('1)')} {PLAYER.name} {aqua('[you]')}")
     for i, person in enumerate(PLAYER.family):
@@ -102,10 +99,7 @@ def pick_start_month():
 
     while True:
         clear()
-        print(green(LINE))
-        print(green(CENT("Pick your Departure Month")))
-        print(green(LINE))
-        print("")
+        generate_title(green, "Pick your Departure Month")
         print(CENT("It is 1848. Your jumping off place for Oregon"))
         print(CENT("is Independence, Missouri. You must decide which"))
         print(CENT("month to leave Independence.\n"))
@@ -329,10 +323,7 @@ def matts_store_receipt():
                     matts_store_buy_item(part, cost, text, question, 0, 3)
             elif user_input == "6":
                 clear()
-                print(pink(LINE))
-                print(CENT("Talking to Matt"))
-                print(pink(LINE))
-                print("")
+                generate_title(pink, "Talking to Matt")
                 if INVENTORY.oxen == 0 or INVENTORY.food == 0 or INVENTORY.clothing == 0 or INVENTORY.bullets == 0:  # noqa
                     if INVENTORY.oxen == 0:
                         msg = "Don't forget, you'll need oxen to pull your wagon."  # noqa
@@ -362,10 +353,7 @@ def purchase_inventory():
     global PLAYER
 
     clear()
-    print(green(LINE))
-    print(green(CENT("Buying Supplies")))
-    print(green(LINE))
-    print("")
+    generate_title(green, "Buying Supplies")
     print(CENT("Before leaving Independence, you should buy"))
     print(CENT(f"equipment and supplies. You have ${PLAYER.cash:.2f} in cash,"))  # noqa
     print(CENT("but you don't have to spend it all now.\n"))
@@ -375,10 +363,7 @@ def purchase_inventory():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     clear()
-    print(pink(LINE))
-    print(pink(CENT("Talking to Matt")))
-    print(pink(LINE))
-    print("")
+    generate_title(pink, "Talking to Matt")
     print(CENT("Hello, I'm Matt. So you're going to Oregon!"))
     print(CENT("I can fix you up with what you need:"))
     print("")
@@ -424,10 +409,7 @@ def start_game(profession):
 
     # start the game (loading the wagon)
     clear()
-    print(green(LINE))
-    print(green(CENT("Loading the Wagon")))
-    print(green(LINE))
-    print("")
+    generate_title(green, "Loading the Wagon")
     print(CENT("Please Wait"))
     print("")
     print(CENT("Supplies and oxen being loaded with your wagon."))

@@ -1,5 +1,5 @@
 from colors import aqua, blue, grey, yellow
-from utils import clear, ot_title, CENT, LINE
+from utils import clear, generate_title, CENT, LINE
 
 
 def credits():
@@ -7,10 +7,7 @@ def credits():
     Displays a page that lists the credits and helpful links.
     """
     clear()
-    print(aqua(LINE))
-    print(aqua(CENT("Credits")))
-    print(aqua(LINE))
-    print("")
+    generate_title(aqua, "Credits")
     print(f'\t{"Developer:":<15}{aqua("Tim Nelson")}')
     print(f'\t{"":<15}{blue("https://github.com/TravelTimN")}')
     print("")

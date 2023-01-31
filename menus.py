@@ -3,7 +3,7 @@ from colors import gold, green, orange, red
 from credits import credits
 from independence import start_game, end_game
 from learn import learn_about_trail, learn_about_professions
-from utils import clear, CENT, LINE, ot_title
+from utils import clear, CENT, LINE, generate_title
 from validators import validate_choice
 
 
@@ -13,11 +13,9 @@ def pick_profession():
     """
     while True:
         clear()
-        print(green(LINE))
-        print(green(CENT("Pick your Profession")))
-        print(green(LINE))
+        generate_title(green, "Pick your Profession")
 
-        print("\n\tMany kinds of people made the trip to Oregon.")
+        print("\tMany kinds of people made the trip to Oregon.")
         print("\n\tYou may:\n")
         print(f'\t\t{green("1. ")}{"Be a banker from Boston"}')
         print(f'\t\t{green("2. ")}{"Be a carpenter from Ohio"}')
@@ -50,11 +48,9 @@ def leaderboard_menu():
     """
     while True:
         clear()
-        print(gold(LINE))
-        print(gold(CENT("The Oregon Top Ten")))
-        print(gold(LINE))
+        generate_title(gold, "The Oregon Top Ten")
 
-        print("\n\tYou may:\n")
+        print("\tYou may:\n")
         print(f'\t\t{gold("1. ")}{"See the current Top Ten list"}')
         print(f'\t\t{gold("2. ")}{"See the original Top Ten list"}')
         print(f'\t\t{gold("3. ")}{"Return to the main menu"}')
@@ -87,9 +83,9 @@ def main_menu():
     """
     while True:
         clear()
-        ot_title()
+        generate_title(orange, "The Python Oregon Trail")
 
-        print("\n\tYou may:\n")
+        print("\tYou may:\n")
         print(f'\t\t{orange("1. ")}{"Travel the trail"}')
         print(f'\t\t{orange("2. ")}{"Learn about the trail"}')
         print(f'\t\t{orange("3. ")}{"See the Oregon Top Ten"}')

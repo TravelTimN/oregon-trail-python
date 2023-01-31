@@ -1,15 +1,12 @@
 from colors import grey, yellow
-from utils import clear, ot_title, CENT, LINE
+from utils import clear, CENT, LINE, generate_title
 
 
 def learn_trail_title():
     """
     Displays the header text for learning about the trail.
     """
-    print(yellow(LINE))
-    print(yellow(CENT('Learn about "The Oregon Trail"')))
-    print(yellow(LINE))
-    print("")
+    generate_title(yellow, "Learn about The Oregon Trail")
 
 
 def learn_about_trail():
@@ -79,10 +76,7 @@ def learn_about_professions():
     things about the three professions.
     """
     clear()
-    print(yellow(LINE))
-    print(yellow(CENT("Learn about the Professions")))
-    print(yellow(LINE))
-    print("")
+    generate_title(yellow, "Learn about the Professions")
     print(CENT("Traveling to Oregon isn't easy!"))
     print(CENT("But if you're a banker, you'll have more money for supplies"))
     print(CENT("and services than a carpenter or a farmer."))
@@ -101,10 +95,7 @@ def learn_about_months():
     Displays advice about when to consider leaving Independence.
     """
     clear()
-    print(yellow(LINE))
-    print(yellow(CENT("Advice on when to leave")))
-    print(yellow(LINE))
-    print("")
+    generate_title(yellow, "Advice on when to leave")
     print(CENT("You attend a public meeting held for \"folks with the"))
     print(CENT("California-Oregon fever\". You're told:"))
     print("")
