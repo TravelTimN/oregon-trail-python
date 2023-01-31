@@ -89,7 +89,7 @@ def confirm_names():
         if update_name == "1":  # wagon leader
             PLAYER.name = ask_name("What is the correct name of the wagon leader? ")  # noqa
         else:  # family members
-            PLAYER.family[int(update_name) - 2].name = ask_name(f"What is the correct name for {aqua(player.family[int(update_name) - 2].name)}? ")  # noqa
+            PLAYER.family[int(update_name) - 2].name = ask_name(f"What is the correct name for {aqua(PLAYER.family[int(update_name) - 2].name)}? ")  # noqa
         confirm_names()
 
 
