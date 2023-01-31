@@ -1,6 +1,6 @@
 import os
 import datetime
-from colors import brown, peach
+from colors import orange
 
 
 def clear():
@@ -21,6 +21,6 @@ def ot_title():
     """
     Prints the header title for the game itself.
     """
-    print(brown(LINE))
-    print(peach(CENT("The Python Oregon Trail")))
-    print(brown(LINE))
+    print(orange(LINE))
+    print(orange(CENT("The Python Oregon Trail")))
+    print(orange(LINE))
