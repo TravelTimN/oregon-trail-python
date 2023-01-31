@@ -118,3 +118,44 @@ class Game():
     #     #     date += datetime.timedelta(days=1)
     #     #     print(date.strftime("%B %d, %Y"))
     #     return date.strftime("%B %d, %Y")
+
+
+class Landmark():
+    """
+    The landmark instances (forts, rivers, miscellaneous).
+    """
+    def __init__(self, name):
+        self.name = name
+        self.category = None
+        self.next_destination_name = None
+        self.next_destination_distance = 0
+        self.conversations = []
+
+
+class River(Landmark):
+    """
+    The river crossing instances.
+    """
+    def __init__(self):
+        self.can_hire_ferry = False
+        self.can_hire_indian = False
+        self.depth_min = 0
+        self.depth_max = 0
+        self.width_min = 0
+        self.width_max = 0
+        self.swiftness = 0
+        self.bottom_type = None  # smooth and firm || muddy || rocky and uneven
+
+
+class Fort(Landmark):
+    """
+    The fort instances.
+    """
+    def __init__(self):
+        self.cost_oxen = 0
+        self.cost_food = 0
+        self.cost_clothing = 0
+        self.cost_ammunition = 0
+        self.cost_wagon_wheels = 0
+        self.cost_wagon_axles = 0
+        self.cost_wagon_tongues = 0
