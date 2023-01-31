@@ -353,7 +353,7 @@ Choices:
 - Big Louie tells you:
     - "The Platte River valley forms a natural roadway from Fort Kearney to Fort Laramie. Travelers bound for California, Utah, and Oregon all takes this road. Could be the easiest stretch of the whole trip. Should see antelope and plenty of buffalo."
 - A Fort Kearney scout tells you:
-    - "The game is still plentiful along here, but gettin' harder to find. Wish so many overlanders, I don't expect it to last more'n a few years. Folks shoot the game for sport, take a small piece, and let the rest rot in the sun."
+    - "The game is still plentiful along here, but gettin' harder to find. With so many overlanders, I don't expect it to last more'n a few years. Folks shoot the game for sport, take a small piece, and let the rest rot in the sun."
 
 #### Buy Supplies
 | Resource | Price | Amount |
@@ -485,7 +485,7 @@ Choices:
 - A young boy tells you:
     - "My family didn't buy enough food in Independence. We have been eating very small rations since Fort Laramie. Because of that our health is poor. My sister has mountain fever, so we're stopped here for a while."
 - A Shoshoni Indian tells you:
-    - "When wagons first started coming through here, we did not mind. We even found it good to trade game and fish with the travelers and help them cross the rivers. Now there are too many white men and too little land for gazing."
+    - "When wagons first started coming through here, we did not mind. We even found it good to trade game and fish with the travelers and help them cross the rivers. Now there are too many white men and too little land for grazing."
 
 ### **Fort Bridger**
 
@@ -545,7 +545,7 @@ Choices:
 #### Talk to People
 
 - Aunt Rebecca Sims tells you:
-    - "Hear there's mountain sheep around here. Enough water too, buy hardly a stick of wood. Thank heaven for Fort Hall! But I'm real sorry to be saying goodbye to cousin Miles and all the folks heading for California."
+    - "Hear there's mountain sheep around here. Enough water too, but hardly a stick of wood. Thank heaven for Fort Hall! But I'm real sorry to be saying goodbye to cousin Miles and all the folks heading for California."
 - A fellow traveler tells you:
     - "Fort Hall is a busy fort! The wide stretches of meadow grass here are just what our tired animals need. As for me, I'll fix up the wagon leaks. Amanda's real anxious to wash all the clothes and linens in one of those clear streams."
 - Miles Hendrick tells you:
@@ -656,9 +656,9 @@ What is your choice?
 #### Talk to People
 
 - A Cayuse Indian tells you:
-    - "You ask about the Whitman massacre. I ask you why Doctor Whitman's medicines did not cure my people's children? Many caught the measles from the strangers. Why did the medicine poison our children and cure the children of white people?"
+    - "You ask about the Whitman massacre? I ask you why Doctor Whitman's medicines did not cure my people's children? Many caught the measles from the strangers. Why did the medicine poison our children, yet cure the children of white people?"
 - A young mother tells you:
-    - "I've traveled in fear of Indians since our journey began. As of yet we've seen few. Those we met helped us cross rivers or sold us vegetables. Still I fear. I've read grave markers and heard stories of killings in these mountains."
+    - "I've traveled in fear of Indians since our journey began. As of yet we've seen few. Those we met helped us cross rivers or sold us vegetables. Still, I fear. I've read grave markers and heard stories of killings in these mountains."
 - Amy Witherspoon tells you:
     - "My cousin Catherine was one of six children orphaned and left at Whitman's Mission. Lived with them for three years -- until the massacre last November. She has survived snakebites, stampedes, falls, fights -- not to mention a massacre."
 
