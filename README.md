@@ -243,7 +243,7 @@ However, in a typical game, the player passes just 16 landmarks and travels 15 t
 | L06 | Fort Laramie | Fort | Independence Rock | 190 miles | ✅ | | |
 | L07 | Independence Rock | Misc | South Pass | 102 miles | | | |
 | L08 | South Pass | Misc | Green River Crossing | 57 miles | | | |
-| | | Fort Bridger | 125 miles | | | |
+| | | | Fort Bridger | 125 miles | | | |
 | L09 | Green River Crossing | River | Soda Springs | 143 miles | | ❌ | ✅ |
 | L10 | Fort Bridger | Fort | Soda Springs | 162 miles | ✅ | | |
 | L11 | Soda Springs | Misc | Fort Hall | 57 miles | | | |
@@ -251,7 +251,7 @@ However, in a typical game, the player passes just 16 landmarks and travels 15 t
 | L13 | Snake River Crossing | River | Fort Boise | 113 miles | | ✅ | ❌ |
 | L14 | Fort Boise | Fort | Blue Mountains | 160 miles | ✅ | | |
 | L15 | Blue Mountains | Misc | Fort Walla Walla | 55 miles | | |
-| | | The Dalles | 125 miles | | | |
+| | | | The Dalles | 125 miles | | | |
 | L16 | Fort Walla Walla | Fort | The Dalles | 120 miles | ✅ | | |
 | L17 | The Dalles | Misc | Willamette Valley, Oregon | 100 miles | | | |
 | L18 | Willamette Valley, Oregon | END | | | | | |
