@@ -1,5 +1,5 @@
 import time
-from colors import brown, gold, green, red
+from colors import gold, green, orange, red
 from credits import credits
 from game import start_game, end_game
 from learn import learn_about_trail, learn_about_professions
@@ -90,11 +90,11 @@ def main_menu():
         ot_title()
 
         print("\n\tYou may:\n")
-        print(f'\t\t{brown("1. ")}{"Travel the trail"}')
-        print(f'\t\t{brown("2. ")}{"Learn about the trail"}')
-        print(f'\t\t{brown("3. ")}{"See the Oregon Top Ten"}')
-        print(f'\t\t{brown("4. ")}{"Credits"}')
-        print(f'\t\t{brown("5. ")}{"End"}')
+        print(f'\t\t{orange("1. ")}{"Travel the trail"}')
+        print(f'\t\t{orange("2. ")}{"Learn about the trail"}')
+        print(f'\t\t{orange("3. ")}{"See the Oregon Top Ten"}')
+        print(f'\t\t{orange("4. ")}{"Credits"}')
+        print(f'\t\t{orange("5. ")}{"End"}')
 
         # ------------------------------------
         # testing f-string alignment
@@ -109,7 +109,7 @@ def main_menu():
         # print("\n")
         # ------------------------------------
 
-        user_input = input(f"\n\t\tWhat is your choice? {brown('[1-5]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {orange('[1-5]')} ")
         choices = ["1", "2", "3", "4", "5"]
 
         # validate if the user selected a valid option
