@@ -2,6 +2,7 @@ import time
 # import pyfiglet
 from menus import main_menu
 from utils import clear
+# from landmarks import landmarks
 
 
 # f = pyfiglet.FigletFont.getFonts()
@@ -12,6 +13,13 @@ from utils import clear
 
 if __name__ == "__main__":
     clear()
+
+    # for landmark in landmarks:
+    #     for conversation in landmark["conversations"]:
+    #         if conversation["speech"] != "":
+    #             print(conversation["speech"])
+    #             print("")
+    # input("")
 
     # for name in dir():
     #     if not name.startswith("_"):
