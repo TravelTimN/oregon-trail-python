@@ -95,6 +95,8 @@ class Game():
     """
     def __init__(self):
         self.date = 0
+        self.weather = None
+        self.distance_traveled = 0
 
     def set_start_date(self, month):
         """
