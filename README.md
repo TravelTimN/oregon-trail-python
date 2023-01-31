@@ -748,6 +748,22 @@ arriving in Oregon as a carpenter, and **triple** points for arriving as a farme
 
 ---
 
+## Colors
+
+| Color | HEX | RGB | Notes |
+| --- | :---: | :---: | --- |
+| aqua | `#00FFFF` | `0, 255, 255` | Credits & River Crossings |
+| blue | `#0000FF` | `0, 0, 255` | Links |
+| gold | `#D4AF37` | `212, 175, 55` | Leaderboard |
+| green | `#00FF00` | `0, 255, 0` | Game Play |
+| grey | `#BBBBBB` | `187, 187, 187` | Press ENTER to continue |
+| orange | `#D46300` | `212, 99, 0` | Logo & Titles |
+| pink | `#FFB6C1` | `255, 182, 193` | Talking to People |
+| red | `#FF0000` | `255, 0, 0` | Error Messages & Matt's General Store |
+| yellow | `#FFFF00` | `255, 255, 0` | Learning & Info |
+
+---
+
 ## Credits
 
 | Source (URL) | Notes |
