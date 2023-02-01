@@ -6,7 +6,6 @@ def credits():
     """
     Displays a page that lists the credits and helpful links.
     """
-    clear()
     generate_title(aqua, "Credits")
     print(f'\t{"Developer:":<15}{aqua("Tim Nelson")}')
     print(f'\t{"":<15}{blue("https://github.com/TravelTimN")}')

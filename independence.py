@@ -17,7 +17,6 @@ def pick_profession():
     Creates a menu for player to pick their profession.
     """
     while True:
-        clear()
         generate_title(green, "Pick your Profession")
 
         print("\tMany kinds of people made the trip to Oregon.")
@@ -68,13 +67,12 @@ def list_player_family():
     """
     global PLAYER
 
-    clear()
     generate_title(green, "Your Wagon Party")
     if PLAYER.name != "":
         print(f"\t{aqua('1)')} {PLAYER.name} {aqua('[you]')}")
-    for i, person in enumerate(PLAYER.family):
-        print(f"\t{aqua(str(i+2)+')')} {person.name}")
-    print("")
+        for i, person in enumerate(PLAYER.family):
+            print(f"\t{aqua(str(i+2)+')')} {person.name}")
+        print("")
 
 
 def confirm_names():
@@ -117,7 +115,6 @@ def pick_start_month():
     global GAME
 
     while True:
-        clear()
         generate_title(green, "Pick your Departure Month")
         print(CENT("It is 1848. Your jumping off place for Oregon"))
         print(CENT("is Independence, Missouri. You must decide which"))
@@ -341,7 +338,7 @@ def matts_store_receipt():
                     question = f"\n\t\t\tHow many wagon {part}? {red('[0-3]')} "  # noqa
                     matts_store_buy_item(part, cost, text, question, 0, 3)
             elif user_input == "6":
-                clear()
+
                 generate_title(pink, "Talking to Matt")
                 if INVENTORY.oxen == 0 or INVENTORY.food == 0 or INVENTORY.clothing == 0 or INVENTORY.bullets == 0:  # noqa
                     if INVENTORY.oxen == 0:
@@ -371,7 +368,6 @@ def purchase_inventory():
     """
     global PLAYER
 
-    clear()
     generate_title(green, "Buying Supplies")
     print(CENT("Before leaving Independence, you should buy"))
     print(CENT(f"equipment and supplies. You have ${PLAYER.cash:.2f} in cash,"))  # noqa
@@ -381,7 +377,6 @@ def purchase_inventory():
     print(green(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    clear()
     generate_title(pink, "Talking to Matt")
     print(CENT("Hello, I'm Matt. So you're going to Oregon!"))
     print(CENT("I can fix you up with what you need:"))
@@ -427,7 +422,6 @@ def start_game(profession):
     purchase_inventory()
 
     # start the game (loading the wagon)
-    clear()
     generate_title(green, "Loading the Wagon")
     print(CENT("Please Wait"))
     print("")

@@ -9,7 +9,6 @@ def leaderboard_menu():
     Creates a menu for players to check the leaderboards.
     """
     while True:
-        clear()
         generate_title(gold, "The Oregon Top Ten")
 
         print("\tYou may:\n")

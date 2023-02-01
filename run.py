@@ -22,7 +22,6 @@ def main_menu():
     Starts the main game play menu.
     """
     while True:
-        clear()
         generate_title(orange, "The Python Oregon Trail")
 
         print("\tYou may:\n")
