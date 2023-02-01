@@ -28,14 +28,14 @@ def start_cycle(GAME, INVENTORY, PLAYER):
     Starts the main game play in Independence.
     """
     while True:
-        clear()
         generate_title_date(green, GAME.current_location, GAME.date)
 
-        print(f"Weather: {GAME.weather}")
-        print(f"Health: {PLAYER.health}")
-        print(f"Pace: {PLAYER.pace}")
-        print(f"Rations: {PLAYER.rations}")
+        print(f"\t\t\t{'Weather:':<24}{GAME.weather}")
+        print(f"\t\t\t{'Health:':<24}{PLAYER.health}")
+        print(f"\t\t\t{'Pace:':<24}{PLAYER.pace}")
+        print(f"\t\t\t{'Rations:':<24}{PLAYER.rations}")
         print(green(LINE))
+
         print("\tYou may:\n")
         print(f'\t\t{green("1. ")}{"Continue trail"}')
         print(f'\t\t{green("2. ")}{"Check supplies"}')
