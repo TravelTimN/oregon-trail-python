@@ -25,3 +25,14 @@ def generate_title(color, text):
     print(color(CENT(text)))
     print(color(LINE))
     print("")
+
+
+def generate_title_date(color, location, date):
+    """
+    Prints the header title and current date with specified color and text.
+    """
+    print(color(LINE))
+    print(color(CENT(location)))
+    print(color(CENT(date)))
+    print(color(LINE))
+    print("")
