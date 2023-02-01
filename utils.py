@@ -35,4 +35,3 @@ def generate_title_date(color, location, date):
     print(color(CENT(location)))
     print(color(CENT(date)))
     print(color(LINE))
-    print("")
