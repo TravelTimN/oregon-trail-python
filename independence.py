@@ -1,7 +1,7 @@
 import sys
 import time
 from colors import aqua, green, grey, pink, red
-from learn import learn_about_months
+from learn import learn_about_months, learn_about_professions
 from objects import Game, Inventory, Person, Player
 from utils import clear, LINE, CENT, generate_title
 from validators import (
@@ -26,6 +26,41 @@ def end_game():
     print(red(LINE), "\n")
     time.sleep(1)
     sys.exit()
+
+
+def pick_profession():
+    """
+    Creates a menu for player to pick their profession.
+    """
+    while True:
+        clear()
+        generate_title(green, "Pick your Profession")
+
+        print("\tMany kinds of people made the trip to Oregon.")
+        print("\n\tYou may:\n")
+        print(f'\t\t{green("1. ")}{"Be a banker from Boston"}')
+        print(f'\t\t{green("2. ")}{"Be a carpenter from Ohio"}')
+        print(f'\t\t{green("3. ")}{"Be a farmer from Illinois"}')
+        print(f'\t\t{green("4. ")}{"Find out the differences between these choices"}')  # noqa
+
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
+        choices = ["1", "2", "3", "4"]
+
+        # validate if the user selected a valid option
+        if validate_choice(user_input, choices):
+            break
+
+    clear()
+    # start the game with the user's selected profession
+    if user_input == "1":
+        start_game("banker")
+    elif user_input == "2":
+        start_game("carpenter")
+    elif user_input == "3":
+        start_game("farmer")
+    elif user_input == "4":
+        learn_about_professions()
+        pick_profession()
 
 
 def ask_name(question):
