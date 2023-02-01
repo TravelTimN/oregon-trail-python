@@ -2,7 +2,8 @@ import time
 # import pyfiglet
 from colors import orange
 from credits import credits
-from independence import end_game, pick_profession
+from game import end_game
+from independence import pick_profession
 # from landmarks import landmarks
 from leaderboard import leaderboard_menu
 from learn import learn_about_trail
@@ -49,22 +50,19 @@ def main_menu():
 
         # validate if the user selected a valid option
         if validate_choice(user_input, choices):
-            break
 
-    clear()
-    if user_input == "1":  # starts the game
-        pick_profession()
-    elif user_input == "2":  # learn about the trail
-        learn_about_trail()
-        main_menu()
-    elif user_input == "3":  # check the leaderboard
-        leaderboard_menu()
-        main_menu()
-    elif user_input == "4":  # see credits
-        credits()
-        main_menu()
-    elif user_input == "5":  # ends the game
-        end_game()
+            clear()
+            if user_input == "1":  # starts the game
+                pick_profession()
+                break  # TODO: stops at end: need cycle to reset first!!
+            elif user_input == "2":  # learn about the trail
+                learn_about_trail()
+            elif user_input == "3":  # check the leaderboard
+                leaderboard_menu()
+            elif user_input == "4":  # see credits
+                credits()
+            elif user_input == "5":  # ends the game
+                end_game()
 
 
 if __name__ == "__main__":
