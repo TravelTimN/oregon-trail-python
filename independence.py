@@ -1,6 +1,6 @@
-import sys
 import time
 from colors import aqua, green, grey, pink, red
+from game import start_cycle, end_game
 from learn import learn_about_months, learn_about_professions
 from objects import Game, Inventory, Person, Player
 from utils import clear, LINE, CENT, generate_title
@@ -10,22 +10,6 @@ from validators import (
 
 
 PLAYER = GAME = INVENTORY = None
-
-
-def end_game():
-    """
-    Function to completely stop the app running.
-    """
-    time.sleep(0.25)
-    print(red(LINE))
-    time.sleep(0.25)
-    print(CENT("Thanks for playing The Python Oregon Trail."))
-    time.sleep(0.25)
-    print(CENT("Hopefully you didn't die of dysentery!"))
-    time.sleep(0.25)
-    print(red(LINE), "\n")
-    time.sleep(1)
-    sys.exit()
 
 
 def pick_profession():
@@ -453,4 +437,5 @@ def start_game(profession):
     print("")
     print(green(LINE))
     time.sleep(5)
-    clear()
+    # start the game cycle
+    start_cycle(GAME, INVENTORY, PLAYER)
