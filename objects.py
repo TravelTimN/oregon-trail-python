@@ -77,7 +77,8 @@ class Player(Person):
     """
     The individual player instance, which extends from Person.
     """
-    def __init__(self, profession):
+    def __init__(self, profession, name):
+        super().__init__(name)
         self.profession = profession
         self.family = []
         self.cash = float(0.00)
