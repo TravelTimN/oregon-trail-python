@@ -2,6 +2,52 @@ import datetime
 import random
 
 
+class Game():
+    """
+    The current in-progress game instance.
+    """
+    def __init__(self):
+        self.date = 0
+        self.weather = None
+        self.distance_traveled = 0
+        self.current_location = "Independence"
+
+    def set_start_date(self, month):
+        """
+        Set the start date of the game in 1848.
+        March, April, May, June, or July
+        """
+        self.month = month
+        self.date = datetime.datetime(1848, self.month, 1)
+        return self.date.strftime("%B %d, %Y")
+
+    # def set_start_date(month):
+    #     """
+    #     Using the player's input, set the start date of
+    #     the game in 1848 from either March, April, May, June, or July
+    #     """
+    #     date = datetime.datetime(1848, month, 1)
+    #     # date += datetime.timedelta(days=-1)  # set date back to original (-1)
+    #     # for i in range(5):
+    #     #     date += datetime.timedelta(days=1)
+    #     #     print(date.strftime("%B %d, %Y"))
+    #     return date.strftime("%B %d, %Y")
+
+
+class Inventory:
+    """
+    Inventory that the player will manage throughout the journey to Oregon.
+    """
+    def __init__(self):
+        self.oxen = 0
+        self.food = 0
+        self.clothing = 0
+        self.bullets = 0
+        self.wheels = 0
+        self.axles = 0
+        self.tongues = 0
+
+
 class Person:
     """
     A person is an instance of the main player, plus their 4 family members.
@@ -25,20 +71,6 @@ class Person:
         first_name_selected = self.names[0]
         self.names.pop(0)
         return first_name_selected
-
-
-class Inventory:
-    """
-    Inventory that the player will manage throughout the journey to Oregon.
-    """
-    def __init__(self):
-        self.oxen = 0
-        self.food = 0
-        self.clothing = 0
-        self.bullets = 0
-        self.wheels = 0
-        self.axles = 0
-        self.tongues = 0
 
 
 class Player(Person):
@@ -87,37 +119,6 @@ class Player(Person):
             self.rations_pounds_per_day = 10
         elif self.rations == "bear bones":
             self.rations_pounds_per_day = 5
-
-
-class Game():
-    """
-    The current in-progress game instance.
-    """
-    def __init__(self):
-        self.date = 0
-        self.weather = None
-        self.distance_traveled = 0
-
-    def set_start_date(self, month):
-        """
-        Set the start date of the game in 1848.
-        March, April, May, June, or July
-        """
-        self.month = month
-        self.date = datetime.datetime(1848, self.month, 1)
-        return self.date.strftime("%B %d, %Y")
-
-    # def set_start_date(month):
-    #     """
-    #     Using the player's input, set the start date of
-    #     the game in 1848 from either March, April, May, June, or July
-    #     """
-    #     date = datetime.datetime(1848, month, 1)
-    #     # date += datetime.timedelta(days=-1)  # set date back to original (-1)
-    #     # for i in range(5):
-    #     #     date += datetime.timedelta(days=1)
-    #     #     print(date.strftime("%B %d, %Y"))
-    #     return date.strftime("%B %d, %Y")
 
 
 class Landmark():
