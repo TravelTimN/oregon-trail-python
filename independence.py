@@ -409,7 +409,7 @@ def start_game(profession):
     GAME = Game()
     INVENTORY = Inventory()
     # initialize a new instance of the Player() with profession
-    PLAYER = Player(profession)
+    PLAYER = Player(profession, "")
     # set the starter cash based on profession
     PLAYER.profession_starter_cash()
     # ask for the player's name
