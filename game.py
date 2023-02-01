@@ -31,10 +31,6 @@ def start_cycle(GAME, INVENTORY, PLAYER):
         clear()
         generate_title_date(green, GAME.current_location, GAME.date)
 
-        print(PLAYER.name)
-        print(PLAYER.accident)
-        print(PLAYER.illness)
-        print(PLAYER.is_alive)
         print(f"Weather: {GAME.weather}")
         print(f"Health: {PLAYER.health}")
         print(f"Pace: {PLAYER.pace}")
