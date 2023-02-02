@@ -20,6 +20,13 @@ def blue(text):
     return colored(0, 0, 255, text)
 
 
+def brown(text):
+    """
+    Changes text to brown in terminal (#613704)
+    """
+    return colored(97, 55, 4, text)
+
+
 def gold(text):
     """
     Changes text to gold in terminal (#D4AF37)
