@@ -41,6 +41,35 @@ def check_supplies(INVENTORY, PLAYER):
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
+def show_map():
+    """
+    Weak attempt to create a visible map representation.
+    TODO: needs work!!!
+    """
+    generate_title(yellow, "Map of the Oregon Trail")
+    print("Start ☆\t\tFort 🞓\t\tRiver ⌇⌇\tOther ▪\t\tEnd ✪\n")
+    print("☆  Independence, Missouri")
+    print("┗━❱ ⌇⌇ Kansas River Crossing")
+    print("   ┗━❱ ⌇⌇ Big Blue River Crossing")
+    print("      ┗━❱ 🞓  Fort Kearney")
+    print("         ┗━❱ ▪ Chimney Rock")
+    print("            ┗━❱ 🞓  Fort Laramie")
+    print("               ┗━❱ ▪ Independence Rock")
+    print("               ┗━❱ ▪ South Pass")
+    print("                  ┗━❱ ⌇⌇ Green River Crossing")
+    print("                  ┗━❱ 🞓  Fort Bridger")
+    print("                     ┗━❱ ▪ Soda Springs")
+    print("                        ┗━❱ 🞓  Fort Hall")
+    print("                           ┗━❱ ⌇⌇ Snake River Crossing")
+    print("                              ┗━❱ 🞓  Fort Boise")
+    print("                                 ┗━❱ ▪ Blue Mountains")
+    print("                                    ┗━❱ 🞓  Fort Walla Walla")
+    print("                                    ┗━❱ ▪ The Dalles")
+    print("                                       ┗━❱ ✪ Willamette Valley, Oregon\n")  # noqa
+    print(yellow(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
