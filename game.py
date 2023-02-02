@@ -23,6 +23,24 @@ def end_game():
     sys.exit()
 
 
+def check_supplies(INVENTORY, PLAYER):
+    """
+    Displays the user's oxen, clothes, bullets, spare parts, food, and cash.
+    """
+    generate_title(yellow, "Your Supplies")
+    print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
+    print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")
+    print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
+    print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
+    print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
+    print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")
+    print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+    print(f"\t\t\t{'money left':<24}${PLAYER.cash:.2f}")
+    print("")
+    print(yellow(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
