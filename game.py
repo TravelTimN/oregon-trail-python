@@ -105,6 +105,36 @@ def change_pace(PLAYER):
                 learn_about_pace()
 
 
+def change_ration(PLAYER):
+    """
+    Allows player to change their food rations.
+    Options: filling || meager || bear bones
+    """
+    while True:
+        generate_title(green, "Change Food Rations")
+
+        print(f"\tCurrent Rations: {green(PLAYER.rations)}\n")
+        print("\tThe amount of food the people in your party eat each day can change.")  # noqa
+        print("\tYour choices are:\n")
+        print(f'\t\t{green("1. ")}{"filling - meals are large and generous."}')
+        print(f'\t\t{green("2. ")}{"meager - meals are small, but adequate."}')
+        print(f'\t\t{green("3. ")}{"bear bones - meals are very small; everyone stays hungry."}')  # noqa
+
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-3]')} ")
+        choices = ["1", "2", "3"]
+
+        # validate if the user selected a valid option
+        if validate_choice(user_input, choices):
+            break
+
+    if user_input == "1":
+        PLAYER.rations = "filling"
+    elif user_input == "2":
+        PLAYER.rations = "meager"
+    elif user_input == "3":
+        PLAYER.rations = "bear bones"
+
+
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
