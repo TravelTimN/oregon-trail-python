@@ -20,11 +20,17 @@ def pick_profession():
         generate_title(green, "Pick your Profession")
 
         print("\tMany kinds of people made the trip to Oregon.")
+        time.sleep(0.05)
         print("\n\tYou may:\n")
+        time.sleep(0.05)
         print(f'\t\t{green("1. ")}{"Be a banker from Boston"}')
+        time.sleep(0.05)
         print(f'\t\t{green("2. ")}{"Be a carpenter from Ohio"}')
+        time.sleep(0.05)
         print(f'\t\t{green("3. ")}{"Be a farmer from Illinois"}')
+        time.sleep(0.05)
         print(f'\t\t{green("4. ")}{"Find out the differences between these choices"}')  # noqa
+        # time.sleep(0.05)
 
         user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
         choices = ["1", "2", "3", "4"]
@@ -117,14 +123,23 @@ def pick_start_month():
     while True:
         generate_title(green, "Pick your Departure Month")
         print(CENT("It is 1848. Your jumping off place for Oregon"))
+        time.sleep(0.05)
         print(CENT("is Independence, Missouri. You must decide which"))
+        time.sleep(0.05)
         print(CENT("month to leave Independence.\n"))
+        time.sleep(0.05)
         print(f'\t\t\t{green("1. ")}{"March"}')
+        time.sleep(0.05)
         print(f'\t\t\t{green("2. ")}{"April"}')
+        time.sleep(0.05)
         print(f'\t\t\t{green("3. ")}{"May"}')
+        time.sleep(0.05)
         print(f'\t\t\t{green("4. ")}{"June"}')
+        time.sleep(0.05)
         print(f'\t\t\t{green("5. ")}{"July"}')
+        time.sleep(0.05)
         print(f'\t\t\t{green("6. ")}{"Ask for advice"}')
+        time.sleep(0.05)
 
         user_input = input(f"\n\t\tWhat is your choice? {green('[1-6]')} ")
         choices = ["1", "2", "3", "4", "5", "6"]
@@ -202,12 +217,19 @@ def matts_store_buy_item(item, cost, text, question, min, max):
     while True:
         clear()
         print(red(LINE))
+        time.sleep(0.05)
         print(CENT("Matt's General Store"))
+        time.sleep(0.05)
         print(CENT("Independence, Missouri"))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         print(text)
+        time.sleep(0.05)
         print("")
+        time.sleep(0.05)
         print(CENT(f"Bill so far: ${PLAYER.bill:.2f}"))
+        time.sleep(0.05)
 
         buy_item = input(question)
 
@@ -272,19 +294,33 @@ def matts_store_receipt():
 
         clear()
         print(red(LINE))
+        time.sleep(0.05)
         print(CENT("Matt's General Store"))
+        time.sleep(0.05)
         print(CENT("Independence, Missouri"))
+        time.sleep(0.05)
         print(CENT(f"{GAME.date}"))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         print(f"\t\t\t{red('1. ') + 'Oxen':<60}${oxen:.2f} ({INVENTORY.oxen})")
+        time.sleep(0.05)
         print(f"\t\t\t{red('2. ') + 'Food':<60}${food:.2f} ({INVENTORY.food})")
+        time.sleep(0.05)
         print(f"\t\t\t{red('3. ') + 'Clothing':<60}${clothing:.2f} ({INVENTORY.clothing})")  # noqa
+        time.sleep(0.05)
         print(f"\t\t\t{red('4. ') + 'Ammunition':<60}${bullets:.2f} ({INVENTORY.bullets})")  # noqa
+        time.sleep(0.05)
         print(f"\t\t\t{red('5. ') + 'Spare parts':<60}${spares_cost:.2f} ({spare_parts})")  # noqa
+        time.sleep(0.05)
         print(f"\t\t\t{red('6. ') + 'Leave Store'}")
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         print(f"\t\t\t{'Total bill:':<26}${PLAYER.bill:>2.2f}")
+        time.sleep(0.05)
         print(f"\t\t\t{'Amount remaining:':<26}${remaining:>2.2f}")  # noqa
+        time.sleep(0.05)
 
         user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ")  # noqa
         choices = ["1", "2", "3", "4", "5", "6"]
@@ -339,6 +375,7 @@ def matts_store_receipt():
             elif user_input == "6":
 
                 generate_title(pink, "Talking to Matt")
+                time.sleep(0.05)
                 if INVENTORY.oxen == 0 or INVENTORY.food == 0 or INVENTORY.clothing == 0 or INVENTORY.bullets == 0:  # noqa
                     if INVENTORY.oxen == 0:
                         msg = "Don't forget, you'll need oxen to pull your wagon."  # noqa
@@ -349,16 +386,23 @@ def matts_store_receipt():
                     elif INVENTORY.bullets == 0:
                         msg = "Ammunition is necessary for hunting, and against potential bandits."  # noqa
                     print(CENT(msg))
+                    time.sleep(0.05)
                     print("")
+                    time.sleep(0.05)
                     print(pink(LINE))
+                    time.sleep(0.05)
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
                 else:
                     PLAYER.cash = remaining  # deduce the purchases
                     PLAYER.bill = 0  # reset bill for next shop at forts
                     print(CENT("Well then, you're ready to start. Good luck!"))
+                    time.sleep(0.05)
                     print(CENT("You have a long and difficult journey ahead of you."))  # noqa
+                    time.sleep(0.05)
                     print("")
+                    time.sleep(0.05)
                     print(pink(LINE))
+                    time.sleep(0.05)
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
                     break
 
@@ -371,24 +415,40 @@ def purchase_inventory():
 
     generate_title(green, "Buying Supplies")
     print(CENT("Before leaving Independence, you should buy"))
+    time.sleep(0.05)
     print(CENT(f"equipment and supplies. You have ${PLAYER.cash:.2f} in cash,"))  # noqa
+    time.sleep(0.05)
     print(CENT("but you don't have to spend it all now.\n"))
+    time.sleep(0.05)
     print(CENT("You can buy whatever you need at Matt's General Store."))
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print(green(LINE))
+    time.sleep(0.05)
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     generate_title(pink, "Talking to Matt")
     print(CENT("Hello, I'm Matt. So you're going to Oregon!"))
+    time.sleep(0.05)
     print(CENT("I can fix you up with what you need:"))
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print("\t\t\t- a team of oxen to pull your wagon")
+    time.sleep(0.05)
     print("\t\t\t- clothing for both summer and winter")
+    time.sleep(0.05)
     print("\t\t\t- plenty of food for the trip")
+    time.sleep(0.05)
     print("\t\t\t- ammunition for your rifles")
+    time.sleep(0.05)
     print("\t\t\t- spare parts for your wagon")
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print(pink(LINE))
+    time.sleep(0.05)
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     # start generating Matt's shopping receipt
@@ -425,12 +485,19 @@ def start_game(profession):
     # start the game (loading the wagon)
     generate_title(green, "Loading the Wagon")
     print(CENT("Please Wait"))
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print(CENT("Supplies and oxen being loaded with your wagon."))
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print(CENT("Safe travels!"))
+    time.sleep(0.05)
     print("")
+    time.sleep(0.05)
     print(green(LINE))
+    time.sleep(0.05)
     time.sleep(5)
     # start the game cycle
     start_cycle(GAME, INVENTORY, PLAYER)

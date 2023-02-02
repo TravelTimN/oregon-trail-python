@@ -1,3 +1,4 @@
+import time
 from colors import red, grey
 from utils import clear, LINE, CENT
 
@@ -12,8 +13,11 @@ def validate_minmax(user_input, min, max):
     except ValueError:
         clear()
         print(red(LINE))
+        time.sleep(0.05)
         print(red(CENT(f'Error: "{user_input}" is not between {min}-{max}!')))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         input(f'{grey(CENT("Press ENTER to proceed."))}\n')
         clear()
         return False
@@ -31,8 +35,11 @@ def validate_yes_no(user_input):
     except ValueError:
         clear()
         print(red(LINE))
+        time.sleep(0.05)
         print(red(CENT(f'Error: "{user_input}" is not Yes or No!')))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         input(f'{grey(CENT("Press ENTER to proceed."))}\n')
         clear()
         return False
@@ -50,8 +57,11 @@ def validate_name(user_input):
     except ValueError:
         clear()
         print(red(LINE))
+        time.sleep(0.05)
         print(red(CENT(f'Error: "{user_input}" is not 2-15 letters!')))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         input(f'{grey(CENT("Press ENTER to proceed."))}\n')
         clear()
         return False
@@ -72,8 +82,11 @@ def validate_choice(user_input, choices):
         clear()
         print(red(LINE))
         print(red(CENT(f'Error: "{user_input}" is not valid!')))
+        time.sleep(0.05)
         print(red(LINE))
+        time.sleep(0.05)
         input(f'{grey(CENT("Press ENTER to proceed."))}\n')
+        time.sleep(0.05)
         clear()
         return False
 

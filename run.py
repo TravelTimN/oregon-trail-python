@@ -25,11 +25,17 @@ def main_menu():
         generate_title(orange, "The Python Oregon Trail")
 
         print("\tYou may:\n")
+        time.sleep(0.05)
         print(f'\t\t{orange("1. ")}{"Travel the trail"}')
+        time.sleep(0.05)
         print(f'\t\t{orange("2. ")}{"Learn about the trail"}')
+        time.sleep(0.05)
         print(f'\t\t{orange("3. ")}{"See the Oregon Top Ten"}')
+        time.sleep(0.05)
         print(f'\t\t{orange("4. ")}{"Credits"}')
+        time.sleep(0.05)
         print(f'\t\t{orange("5. ")}{"End"}')
+        time.sleep(0.05)
 
         # ------------------------------------
         # testing f-string alignment

@@ -12,9 +12,13 @@ def leaderboard_menu():
         generate_title(gold, "The Oregon Top Ten")
 
         print("\tYou may:\n")
+        time.sleep(0.05)
         print(f'\t\t{gold("1. ")}{"See the current Top Ten list"}')
+        time.sleep(0.05)
         print(f'\t\t{gold("2. ")}{"See the original Top Ten list"}')
+        time.sleep(0.05)
         print(f'\t\t{gold("3. ")}{"Return to the main menu"}')
+        time.sleep(0.05)
 
         user_input = input(f"\n\t\tWhat is your choice? {gold('[1-3]')} ")
         choices = ["1", "2", "3"]
