@@ -1,8 +1,9 @@
 import sys
 import time
 from animation import animate_wagon
-from colors import green, red
+from colors import green, grey, red, yellow
 # from landmarks import landmarks
+from learn import learn_about_pace
 from utils import CENT, clear, generate_title, generate_title_date, LINE
 from validators import validate_choice
 
@@ -170,17 +171,13 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 print("Continue on trail")
                 input("pause")
             elif user_input == "2":  # check supplies
-                print("Check supplies")
-                input("pause")
+                check_supplies(INVENTORY, PLAYER)
             elif user_input == "3":  # look at map
-                print("Look at map")
-                input("pause")
+                show_map()
             elif user_input == "4":  # change pace
-                print("Change pace")
-                input("pause")
+                change_pace(PLAYER)
             elif user_input == "5":  # change food rations
-                print("Change food rations")
-                input("pause")
+                change_ration(PLAYER)
             elif user_input == "6":  # stop to rest
                 print("Stop to rest")
                 input("pause")
