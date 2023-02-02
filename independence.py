@@ -291,7 +291,6 @@ def matts_store_receipt():
 
         # validate if the user selected a valid option
         if validate_choice(user_input, choices):
-            # break
 
             if user_input == "1":  # oxen
                 cost = 40.00
@@ -354,6 +353,8 @@ def matts_store_receipt():
                     print(pink(LINE))
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
                 else:
+                    PLAYER.cash = remaining  # deduce the purchases
+                    PLAYER.bill = 0  # reset bill for next shop at forts
                     print(CENT("Well then, you're ready to start. Good luck!"))
                     print(CENT("You have a long and difficult journey ahead of you."))  # noqa
                     print("")
