@@ -70,6 +70,41 @@ def show_map():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
+def change_pace(PLAYER):
+    """
+    Allows player to change their pace.
+    Options: steady || strenuous || grueling
+    """
+    while True:
+        generate_title(green, "Change Pace")
+
+        print(f"\tCurrent Pace: {green(PLAYER.pace)}\n")
+        print("\tThe pace at which you travel can change.")
+        print("\tYour choices are:\n")
+        print(f'\t\t{green("1. ")}{"a steady pace"}')
+        print(f'\t\t{green("2. ")}{"a strenuous pace"}')
+        print(f'\t\t{green("3. ")}{"a grueling pace"}')
+        print(f'\t\t{green("4. ")}{"find out what these different paces mean"}')  # noqa
+
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
+        choices = ["1", "2", "3", "4"]
+
+        # validate if the user selected a valid option
+        if validate_choice(user_input, choices):
+
+            if user_input == "1":
+                PLAYER.pace = "steady"
+                break
+            elif user_input == "2":
+                PLAYER.pace = "strenuous"
+                break
+            elif user_input == "3":
+                PLAYER.pace = "grueling"
+                break
+            elif user_input == "4":
+                learn_about_pace()
+
+
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
