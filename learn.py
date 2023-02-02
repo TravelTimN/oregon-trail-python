@@ -14,7 +14,6 @@ def learn_about_trail():
     Displays a series of pages that explain a few
     things about the game play.
     """
-    clear()
     learn_trail_title()
     print(CENT("Try taking a journey by covered wagon across"))
     print(CENT("2000 miles of plains, rivers, and mountains."))
@@ -26,7 +25,6 @@ def learn_about_trail():
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    clear()
     learn_trail_title()
     print(CENT("How will you cross the rivers?"))
     print(CENT("If you have money, you might take a ferry."))
@@ -37,7 +35,6 @@ def learn_about_trail():
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    clear()
     learn_trail_title()
     print(CENT("What about supplies?"))
     print(CENT("Well, if you're low on food, you can hunt."))
@@ -47,7 +44,6 @@ def learn_about_trail():
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    clear()
     learn_trail_title()
     print(CENT("At the Dalles, you can try navigating"))
     print(CENT("the Columbia River, but if running"))
@@ -57,7 +53,6 @@ def learn_about_trail():
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    clear()
     learn_trail_title()
     print(CENT("If, for some reason, you don't survive --"))
     print(CENT("your wagon burns, or thieves steal your oxen,"))
@@ -75,7 +70,6 @@ def learn_about_professions():
     Displays a series of pages that explain a few
     things about the three professions.
     """
-    clear()
     generate_title(yellow, "Learn about the Professions")
     print(CENT("Traveling to Oregon isn't easy!"))
     print(CENT("But if you're a banker, you'll have more money for supplies"))
@@ -94,7 +88,6 @@ def learn_about_months():
     """
     Displays advice about when to consider leaving Independence.
     """
-    clear()
     generate_title(yellow, "Advice on when to leave")
     print(CENT("You attend a public meeting held for \"folks with the"))
     print(CENT("California-Oregon fever\". You're told:"))
@@ -104,6 +97,30 @@ def learn_about_months():
     print(CENT("get into Oregon before winter comes. If you leave"))
     print(CENT("at just the right time, there will be green grass,"))
     print(CENT("and the weather will still be cool."))
+    print("")
+    print(yellow(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
+def learn_about_pace():
+    """
+    Displays advice about the different travel paces.
+    """
+    generate_title(yellow, "Learn about Travel Pace")
+    print(yellow(CENT("steady")))
+    print(CENT("You travel about 8 hours a day, taking frequent rests."))
+    print(CENT("You take care not to get too tired."))
+    print("")
+    print(yellow(CENT("strenuous")))
+    print(CENT("You travel about 12 hours a day, starting just after sunrise,"))  # noqa
+    print(CENT("and stopping shortly before sunset. You stop to rest only"))
+    print(CENT("when necessary. You finish each day feeling very tired."))
+    print("")
+    print(yellow(CENT("grueling")))
+    print(CENT("You travel about 16 hours a day, starting before sunrise,"))
+    print(CENT("and continuing until dark. You almost never stop to rest."))
+    print(CENT("You do not get enough sleep at night. You finish each day"))
+    print(CENT("feeling absolutely exhausted, and your health suffers."))
     print("")
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
