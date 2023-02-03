@@ -3,8 +3,10 @@ from utils import CENT
 
 landmarks = [
     {
+        "id": "L01",
         "name": "Independence, Missouri",
         "category": "start",
+        "next_destination_id": "L02",
         "next_destination_name": "Kansas River Crossing",
         "next_destination_distance": 102,
         "conversations": [
@@ -49,8 +51,10 @@ landmarks = [
         "cost_wagon_tongues": 10.00
     },
     {
+        "id": "L02",
         "name": "Kansas River Crossing",
         "category": "river",
+        "next_destination_id": "L03",
         "next_destination_name": "Big Blue River Crossing",
         "next_destination_distance": 82,
         "can_hire_ferry": True,
@@ -96,8 +100,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L03",
         "name": "Big Blue River Crossing",
         "category": "river",
+        "next_destination_id": "L04",
         "next_destination_name": "Fort Kearney",
         "next_destination_distance": 118,
         "can_hire_ferry": False,
@@ -141,8 +147,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L04",
         "name": "Fort Kearney",
         "category": "fort",
+        "next_destination_id": "L05",
         "next_destination_name": "Chimney Rock",
         "next_destination_distance": 250,
         "conversations": [
@@ -185,8 +193,10 @@ landmarks = [
         "cost_wagon_tongues": 12.50
     },
     {
+        "id": "L05",
         "name": "Chimney Rock",
         "category": "misc",
+        "next_destination_id": "L06",
         "next_destination_name": "Fort Laramie",
         "next_destination_distance": 86,
         "conversations": [
@@ -222,8 +232,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L06",
         "name": "Fort Laramie",
         "category": "fort",
+        "next_destination_id": "L07",
         "next_destination_name": "Independence Rock",
         "next_destination_distance": 190,
         "conversations": [
@@ -267,8 +279,10 @@ landmarks = [
         "cost_wagon_tongues": 15.00
     },
     {
+        "id": "L07",
         "name": "Independence Rock",
         "category": "misc",
+        "next_destination_id": "L08",
         "next_destination_name": "South Pass",
         "next_destination_distance": 102,
         "conversations": [
@@ -303,8 +317,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L08",
         "name": "South Pass",
         "category": "misc",
+        "next_destination_id": ["L09", "L10"],
         "next_destination_name": ["Green River Crossing", "Fort Bridger"],
         "next_destination_distance": [57, 125],
         "conversations": [
@@ -339,8 +355,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L09",
         "name": "Green River Crossing",
         "category": "river",
+        "next_destination_id": "L11",
         "next_destination_name": "Soda Springs",
         "next_destination_distance": 143,
         "can_hire_ferry": True,
@@ -384,8 +402,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L10",
         "name": "Fort Bridger",
         "category": "fort",
+        "next_destination_id": "L11",
         "next_destination_name": "Soda Springs",
         "next_destination_distance": 162,
         "conversations": [
@@ -427,8 +447,10 @@ landmarks = [
         "cost_wagon_tongues": 17.50
     },
     {
+        "id": "L11",
         "name": "Soda Springs",
         "category": "misc",
+        "next_destination_id": "L12",
         "next_destination_name": "Fort Hall",
         "next_destination_distance": 57,
         "conversations": [
@@ -465,8 +487,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L12",
         "name": "Fort Hall",
         "category": "fort",
+        "next_destination_id": "L13",
         "next_destination_name": "Snake River Crossing",
         "next_destination_distance": 182,
         "conversations": [
@@ -509,8 +533,10 @@ landmarks = [
         "cost_wagon_tongues": 20.00
     },
     {
+        "id": "L13",
         "name": "Snake River Crossing",
         "category": "river",
+        "next_destination_id": "L14",
         "next_destination_name": "Fort Boise",
         "next_destination_distance": 113,
         "can_hire_ferry": False,
@@ -555,8 +581,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L14",
         "name": "Fort Boise",
         "category": "fort",
+        "next_destination_id": "L15",
         "next_destination_name": "Blue Mountains",
         "next_destination_distance": 160,
         "conversations": [
@@ -600,8 +628,10 @@ landmarks = [
         "cost_wagon_tongues": 22.50
     },
     {
+        "id": "L15",
         "name": "Blue Mountains",
         "category": "misc",
+        "next_destination_id": ["L16", "L17"],
         "next_destination_name": ["Fort Walla Walla", "The Dalles"],
         "next_destination_distance": [55, 125],
         "conversations": [
@@ -638,8 +668,10 @@ landmarks = [
         ]
     },
     {
+        "id": "L16",
         "name": "Fort Walla Walla",
         "category": "fort",
+        "next_destination_id": "L17",
         "next_destination_name": "The Dalles",
         "next_destination_distance": 120,
         "conversations": [
@@ -683,8 +715,10 @@ landmarks = [
         "cost_wagon_tongues": 25.00
     },
     {
+        "id": "L17",
         "name": "The Dalles",
         "category": "misc",
+        "next_destination_id": "L18",
         "next_destination_name": "Willamette Valley, Oregon",
         "next_destination_distance": 100,
         "conversations": [
@@ -718,5 +752,13 @@ landmarks = [
                 """
             }
         ]
+    },
+    {
+        "id": "L18",
+        "name": "Willamette Valley, Oregon",
+        "category": "end",
+        "next_destination_id": "L01",
+        "next_destination_name": "Independence, Missouri",
+        "next_destination_distance": 0,
     }
 ]
