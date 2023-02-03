@@ -10,7 +10,8 @@ class Game():
         self.date = 0
         self.weather = None
         self.distance_traveled = 0
-        self.current_location = "Independence"
+        self.current_location_name = "Independence, Missouri"
+        self.current_location_id = "L01"
 
     def set_start_date(self, month):
         """
@@ -32,6 +33,27 @@ class Game():
     #     #     date += datetime.timedelta(days=1)
     #     #     print(date.strftime("%B %d, %Y"))
     #     return date.strftime("%B %d, %Y")
+
+    def shuffle_conversations(self, conversations):
+        """
+        To add a bit of randomness, the conversations should be
+        randomly shuffled so the user never speaks to the same
+        person the first time, each time playing the game.
+        """
+        # https://stackoverflow.com/questions/17649875/why-does-random-shuffle-return-none
+        # return random.shuffle(conversations)  # returns None
+        return random.sample(conversations, len(conversations))
+
+    def talk_to_people(self, conversations):
+        """
+        Once a player has talked to a person on the trail,
+        the person should be moved to the end of the conversations list,
+        so it's always cycling between three conversations.
+        """
+        first_conversation = conversations[0]
+        conversations.pop(0)
+        conversations.append(first_conversation)
+        return conversations
 
 
 class Inventory:
