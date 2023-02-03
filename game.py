@@ -1,8 +1,8 @@
 import sys
 import time
 from animation import animate_wagon
-from colors import green, grey, red, yellow
-# from landmarks import landmarks
+from colors import green, grey, pink, red, yellow
+from landmarks import landmarks
 from learn import learn_about_pace
 from utils import CENT, clear, generate_title, generate_title_date, LINE
 from validators import validate_choice
@@ -184,8 +184,18 @@ def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
     """
+    # handle new/existing chats to people
+    talked_to_people = False
+    convos = []
+
+    # current location id (eg: L01)
+    current_location_id = GAME.current_location_id
+    # current location (full instance)
+    current_location = next(filter(lambda landmark : landmark["id"] == current_location_id, landmarks))  # noqa
+    next_destination_id = current_location["next_destination_id"]
+
     while True:
-        generate_title_date(green, GAME.current_location, GAME.date)
+        generate_title_date(green, GAME.current_location_name, GAME.date)
 
         print(f"\t\t\t{'Weather:':<24}{GAME.weather}")
         time.sleep(0.05)
@@ -229,20 +239,41 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 animate_wagon()
                 print("Continue on trail")
                 input("pause")
+                talked_to_people = False
+                # TODO: break
+
             elif user_input == "2":  # check supplies
                 check_supplies(INVENTORY, PLAYER)
+
             elif user_input == "3":  # look at map
                 show_map()
+
             elif user_input == "4":  # change pace
                 change_pace(PLAYER)
+
             elif user_input == "5":  # change food rations
                 change_ration(PLAYER)
+
             elif user_input == "6":  # stop to rest
                 print("Stop to rest")
                 input("pause")
+
             elif user_input == "7":  # attempt to trade
                 print("Attempt to trade")
                 input("pause")
+
             elif user_input == "8":  # talk to people
-                print("Talk to people")
-                input("pause")
+
+                # first time talking to people, randomize conversation order
+                if not talked_to_people:
+                    convos = []  # reset
+                    shuffle_conversations = GAME.shuffle_conversations(current_location["conversations"])  # noqa
+                    talked_to_people = True
+                    convos.extend(shuffle_conversations)
+
+                generate_title(pink, f"Talking to {convos[0]['person']}")
+                print(CENT(convos[0]["speech"]))
+                print("")
+                print(pink(LINE))
+                input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                GAME.talk_to_people(convos)  # pop + append convo to end
