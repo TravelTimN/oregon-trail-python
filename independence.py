@@ -217,19 +217,12 @@ def matts_store_buy_item(item, cost, text, question, min, max):
     while True:
         clear()
         print(red(LINE))
-        time.sleep(0.05)
         print(CENT("Matt's General Store"))
-        time.sleep(0.05)
         print(CENT("Independence, Missouri"))
-        time.sleep(0.05)
         print(red(LINE))
-        time.sleep(0.05)
         print(text)
-        time.sleep(0.05)
         print("")
-        time.sleep(0.05)
         print(CENT(f"Bill so far: ${PLAYER.bill:.2f}"))
-        time.sleep(0.05)
 
         buy_item = input(question)
 
@@ -375,7 +368,6 @@ def matts_store_receipt():
             elif user_input == "6":
 
                 generate_title(pink, "Talking to Matt")
-                time.sleep(0.05)
                 if INVENTORY.oxen == 0 or INVENTORY.food == 0 or INVENTORY.clothing == 0 or INVENTORY.bullets == 0:  # noqa
                     if INVENTORY.oxen == 0:
                         msg = "Don't forget, you'll need oxen to pull your wagon."  # noqa
@@ -386,11 +378,8 @@ def matts_store_receipt():
                     elif INVENTORY.bullets == 0:
                         msg = "Ammunition is necessary for hunting, and against potential bandits."  # noqa
                     print(CENT(msg))
-                    time.sleep(0.05)
                     print("")
-                    time.sleep(0.05)
                     print(pink(LINE))
-                    time.sleep(0.05)
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
                 else:
                     PLAYER.cash = remaining  # deduce the purchases
