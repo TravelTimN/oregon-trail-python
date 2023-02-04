@@ -73,13 +73,6 @@ def main_menu():
 if __name__ == "__main__":
     clear()
 
-    # for landmark in landmarks:
-    #     for conversation in landmark["conversations"]:
-    #         if conversation["speech"] != "":
-    #             print(conversation["speech"])
-    #             print("")
-    # input("")
-
     # for name in dir():
     #     if not name.startswith("_"):
     #         del globals()[name]
