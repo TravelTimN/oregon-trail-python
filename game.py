@@ -184,7 +184,7 @@ def change_ration(PLAYER):
     PLAYER.update_rations()
 
 
-def cycle_one_day(GAME, INVENTORY, PLAYER, current_location, rest_day):
+def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day):
     """
     One day's cycle.
     - ✅ increment day on calendar
@@ -194,13 +194,15 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, current_location, rest_day):
     - ❌ misfortunes / accidents
     - ❌ decrement health (?)
     """
+    current_location = GAME.get_current_location()
+
     # deduct food rations
     INVENTORY.food -= PLAYER.rations_pounds_per_day
     if INVENTORY.food <= 0:
         # never get into negative food rations
         INVENTORY.food = 0
 
-    if rest_day:
+    if is_rest_day:
         # visualize daily increments on calendar (only if rest day)
         generate_title_date(green, current_location["name"], GAME.date_string)
         print("")
@@ -213,7 +215,7 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, current_location, rest_day):
         time.sleep(1)
 
 
-def stop_to_rest(GAME, INVENTORY, PLAYER, current_location):
+def stop_to_rest(GAME, INVENTORY, PLAYER):
     """
     Allows player to stop to rest between 1-9 day(s).
     Normal daily cycles/deductions resume.
@@ -230,7 +232,7 @@ def stop_to_rest(GAME, INVENTORY, PLAYER, current_location):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(GAME, INVENTORY, PLAYER, current_location, True)
+        cycle_one_day(GAME, INVENTORY, PLAYER, True)
 
 
 def start_cycle(GAME, INVENTORY, PLAYER):
@@ -241,10 +243,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
     talked_to_people = False
     convos = []
 
-    # current location id (eg: L01)
-    current_location_id = GAME.current_location_id
-    # current location (full instance)
-    current_location = next(filter(lambda landmark: landmark["id"] == current_location_id, landmarks))  # noqa
+    current_location = GAME.get_current_location()
     next_destination_id = current_location["next_destination_id"]
 
     while True:
@@ -298,7 +297,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
             clear()
             if user_input == "1":  # continue on trail
                 animate_wagon()
-                cycle_one_day(GAME, INVENTORY, PLAYER, current_location, False)
+                cycle_one_day(GAME, INVENTORY, PLAYER, False)
                 talked_to_people = False
                 # TODO: break
 
@@ -315,7 +314,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 change_ration(PLAYER)
 
             elif user_input == "6":  # stop to rest
-                stop_to_rest(GAME, INVENTORY, PLAYER, current_location)
+                stop_to_rest(GAME, INVENTORY, PLAYER)
 
             elif user_input == "7":  # attempt to trade
                 print("Attempt to trade")
