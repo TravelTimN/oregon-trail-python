@@ -7,7 +7,7 @@ landmarks = [
         "name": "Independence, Missouri",
         "category": "start",
         "next_destination_id": "L02",
-        "next_destination_name": "Kansas River Crossing",
+        "next_destination_name": "Kansas River crossing",
         "next_destination_distance": 102,
         "conversations": [
             {
@@ -52,10 +52,10 @@ landmarks = [
     },
     {
         "id": "L02",
-        "name": "Kansas River Crossing",
+        "name": "Kansas River crossing",
         "category": "river",
         "next_destination_id": "L03",
-        "next_destination_name": "Big Blue River Crossing",
+        "next_destination_name": "Big Blue River crossing",
         "next_destination_distance": 82,
         "can_hire_ferry": True,
         "can_hire_indian": False,
@@ -101,7 +101,7 @@ landmarks = [
     },
     {
         "id": "L03",
-        "name": "Big Blue River Crossing",
+        "name": "Big Blue River crossing",
         "category": "river",
         "next_destination_id": "L04",
         "next_destination_name": "Fort Kearney",
@@ -321,7 +321,7 @@ landmarks = [
         "name": "South Pass",
         "category": "misc",
         "next_destination_id": ["L09", "L10"],
-        "next_destination_name": ["Green River Crossing", "Fort Bridger"],
+        "next_destination_name": ["Green River crossing", "Fort Bridger"],
         "next_destination_distance": [57, 125],
         "conversations": [
             {
@@ -356,7 +356,7 @@ landmarks = [
     },
     {
         "id": "L09",
-        "name": "Green River Crossing",
+        "name": "Green River crossing",
         "category": "river",
         "next_destination_id": "L11",
         "next_destination_name": "Soda Springs",
@@ -491,7 +491,7 @@ landmarks = [
         "name": "Fort Hall",
         "category": "fort",
         "next_destination_id": "L13",
-        "next_destination_name": "Snake River Crossing",
+        "next_destination_name": "Snake River crossing",
         "next_destination_distance": 182,
         "conversations": [
             {
@@ -534,7 +534,7 @@ landmarks = [
     },
     {
         "id": "L13",
-        "name": "Snake River Crossing",
+        "name": "Snake River crossing",
         "category": "river",
         "next_destination_id": "L14",
         "next_destination_name": "Fort Boise",
