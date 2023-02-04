@@ -249,6 +249,22 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
         cycle_one_day(GAME, INVENTORY, PLAYER, True)
 
 
+def display_distance(current, miles, next):
+    """
+    """
+    # display message about upcoming journey (name/distance)
+    generate_title(yellow, "Continue on trail")
+    message = f"""
+{CENT(f"From {current},")}
+{CENT(f"it is {miles} miles")}
+{CENT(f"to {next}.")}
+    """  # noqa
+    print(message)
+    print("")
+    print(yellow(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
     Starts the main game play in Independence.
@@ -316,7 +332,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
                 # split paths along trail (GH Issue #3)
-                if type(next_destination_distance) == list:
+                if type(current_location["next_destination_id"]) == list:
                     while True:
                         generate_title(yellow, "The trail divides here")
                         print("\tYou may:\n")
@@ -338,6 +354,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                                 next_destination_distance = current_location["next_destination_distance"][0]  # noqa
                                 days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                 GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
+                                display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][0])  # noqa
                                 # set next destination as current
                                 GAME.current_location_id = next_destination_id[0]  # noqa
                                 current_location = GAME.get_current_location()
@@ -347,6 +364,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                                 next_destination_distance = current_location["next_destination_distance"][1]  # noqa
                                 days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                 GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
+                                display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][1])  # noqa
                                 # set next destination as current
                                 GAME.current_location_id = next_destination_id[1]  # noqa
                                 current_location = GAME.get_current_location()
@@ -357,6 +375,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 else:
                     # one option only, no split path
                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                    display_distance(current_location["name"], next_destination_distance, current_location["next_destination_name"])  # noqa
                     # set next destination as current
                     GAME.current_location_id = next_destination_id
                     current_location = GAME.get_current_location()
