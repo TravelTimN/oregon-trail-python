@@ -285,3 +285,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 print(pink(LINE))
                 input(f'{grey(CENT("Press ENTER to continue"))}\n')
                 GAME.talk_to_people(convos)  # pop + append convo to end
+
+            elif user_input == "9":  # buy supplies
+                print("Buy supplies")
+                input("pause")
