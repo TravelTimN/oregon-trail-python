@@ -292,7 +292,7 @@ def matts_store_receipt():
         time.sleep(0.05)
         print(CENT("Independence, Missouri"))
         time.sleep(0.05)
-        print(CENT(f"{GAME.date}"))
+        print(CENT(f"{GAME.date_string}"))
         time.sleep(0.05)
         print(red(LINE))
         time.sleep(0.05)
