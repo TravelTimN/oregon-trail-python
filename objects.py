@@ -11,6 +11,7 @@ class Game():
         self.date = datetime.datetime(1848, 3, 1)
         self.date_string = self.date.strftime("%B %d, %Y")
         self.weather = None
+        self.next_destination_distance = 0
         self.distance_traveled = 0
         self.current_location_id = "L01"
         self.current_location = None
