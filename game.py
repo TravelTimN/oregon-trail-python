@@ -1,7 +1,7 @@
 import math
 import sys
 import time
-from animation import animate_wagon
+from animation import animate_wagon, static_wagon
 from colors import green, grey, pink, red, yellow
 from landmarks import landmarks
 from learn import learn_about_pace
@@ -190,12 +190,13 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day):
     One day's cycle.
     - ✅ increment day on calendar
     - ✅ deduct food rations
-    - ❓❓ travel N-miles (if not resting)
+    - ✅ travel N-miles (if not resting)
     - ❌ weather cycle
     - ❌ misfortunes / accidents
     - ❌ decrement health (?)
     """
     current_location = GAME.get_current_location()
+    static_wagon(GAME, INVENTORY, PLAYER)
 
     # deduct food rations
     INVENTORY.food -= PLAYER.rations_pounds_per_day
@@ -212,8 +213,20 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day):
         time.sleep(1)
     else:
         # not a rest day, so increment miles traveled
-        GAME.distance_traveled += PLAYER.pace_miles_per_day  # TODO: test this
+        GAME.distance_traveled += PLAYER.pace_miles_per_day
+        # deduct miles until next destination
+        GAME.next_destination_distance -= PLAYER.pace_miles_per_day
+        if GAME.next_destination_distance < 0:
+            # if arriving before day's end,
+            # get the absolute abs() value of remaining miles
+            negative_miles = abs(GAME.next_destination_distance)
+            # set next destination hard-coded to 0 remaining
+            GAME.next_destination_distance = 0
+            # deduct the abs() miles from total distance traveled
+            GAME.distance_traveled -= negative_miles
+
         GAME.add_one_day()  # increment the day +1
+        time.sleep(1)
 
 
 def stop_to_rest(GAME, INVENTORY, PLAYER):
@@ -246,6 +259,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
 
     current_location = GAME.get_current_location()
     next_destination_id = current_location["next_destination_id"]
+    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
     while True:
         generate_title_date(green, current_location["name"], GAME.date_string)
@@ -298,11 +312,11 @@ def start_cycle(GAME, INVENTORY, PLAYER):
             clear()
             if user_input == "1":  # continue on trail
                 talked_to_people = False  # reset conversation shuffle
-                distance_to_next_destination = current_location["next_destination_distance"]  # noqa
+                next_destination_distance = current_location["next_destination_distance"]  # noqa
                 current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
                 # split paths along trail (GH Issue #3)
-                if type(distance_to_next_destination) == list:
+                if type(next_destination_distance) == list:
                     while True:
                         generate_title(yellow, "The trail divides here")
                         print("\tYou may:\n")
@@ -321,14 +335,18 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                         if validate_choice(user_input, choices):
 
                             if user_input == "1":
-                                distance_to_next_destination = current_location["next_destination_distance"][0]  # noqa
+                                next_destination_distance = current_location["next_destination_distance"][0]  # noqa
+                                days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                                GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
                                 # set next destination as current
                                 GAME.current_location_id = next_destination_id[0]  # noqa
                                 current_location = GAME.get_current_location()
                                 next_destination_id = current_location["next_destination_id"]  # noqa
                                 break
                             elif user_input == "2":
-                                distance_to_next_destination = current_location["next_destination_distance"][1]  # noqa
+                                next_destination_distance = current_location["next_destination_distance"][1]  # noqa
+                                days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                                GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
                                 # set next destination as current
                                 GAME.current_location_id = next_destination_id[1]  # noqa
                                 current_location = GAME.get_current_location()
@@ -337,18 +355,21 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                             elif user_input == "3":
                                 show_map()
                 else:
-                    # one option only
-                    days_required_to_next_destination = math.ceil(distance_to_next_destination / current_pace)  # noqa# set next destination as current
+                    # one option only, no split path
+                    days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                    # set next destination as current
                     GAME.current_location_id = next_destination_id
                     current_location = GAME.get_current_location()
                     next_destination_id = current_location["next_destination_id"]  # noqa
 
-                animate_wagon()
+                # cycle one day per required day to the next destination
                 for n in range(0, days_required_to_next_destination):
+                    clear()
                     cycle_one_day(GAME, INVENTORY, PLAYER, False)
+                animate_wagon(GAME, INVENTORY, PLAYER)
 
-                print("distance traveled = ", GAME.distance_traveled)
-                input(" - ")
+                # reset distance to next destination
+                GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
                 # TODO: break ?
 
             elif user_input == "2":  # check supplies
