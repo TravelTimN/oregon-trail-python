@@ -6,7 +6,7 @@ from colors import green, grey, pink, red, yellow
 from landmarks import landmarks
 from learn import learn_about_pace
 from utils import CENT, clear, generate_title, generate_title_date, LINE
-from validators import validate_choice
+from validators import validate_choice, validate_yes_no
 
 
 def end_game():
@@ -251,6 +251,8 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
 def display_distance(current, miles, next):
     """
+    Info screen to advise current destination, with
+    the distance and name to the next destination
     """
     # display message about upcoming journey (name/distance)
     generate_title(yellow, "Continue on trail")
@@ -263,6 +265,27 @@ def display_distance(current, miles, next):
     print("")
     print(yellow(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
+def look_around(destination):
+    """
+    Info screen to announce arrival at next destination.
+    Gives the option to look around, or not.
+    """
+    # display message about arrival destination (name/distance)
+    while True:
+        generate_title(yellow, "You have arrived")
+        print(CENT(f"You are now at {destination}."))
+        user_input = input(f"\n\t\tWould you like to look around? {yellow('[yes/no]')} ")  # noqa
+
+        # validate if the user selected a valid option
+        if validate_yes_no(user_input):
+            break
+
+    if user_input[0].lower() == "y":
+        return True
+    else:
+        return False
 
 
 def start_cycle(GAME, INVENTORY, PLAYER):
@@ -325,110 +348,131 @@ def start_cycle(GAME, INVENTORY, PLAYER):
         # validate if the user selected a valid option
         if validate_choice(user_input, choices):
 
-            clear()
-            if user_input == "1":  # continue on trail
-                talked_to_people = False  # reset conversation shuffle
-                next_destination_distance = current_location["next_destination_distance"]  # noqa
-                current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
+            while True:  # used for "look around" looping
 
-                # split paths along trail (GH Issue #3)
-                if type(current_location["next_destination_id"]) == list:
-                    while True:
-                        generate_title(yellow, "The trail divides here")
-                        print("\tYou may:\n")
-                        time.sleep(0.05)
-                        print(f'\t\t{yellow("1. ")}{f"""head for {current_location["next_destination_name"][0]}"""}')  # noqa
-                        time.sleep(0.05)
-                        print(f'\t\t{yellow("2. ")}{f"""head for {current_location["next_destination_name"][1]}"""}')  # noqa
-                        time.sleep(0.05)
-                        print(f'\t\t{yellow("3. ")}{"see the map"}')
-                        time.sleep(0.05)
-                        user_input = input(f"\n\t\tWhat is your choice? {yellow('[1-3]')} ")  # noqa
-                        time.sleep(0.05)
-                        choices = ["1", "2", "3"]
+                clear()
+                if user_input == "1":  # continue on trail
+                    talked_to_people = False  # reset conversation shuffle
+                    next_destination_distance = current_location["next_destination_distance"]  # noqa
+                    current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
-                        # validate if the user selected a valid option
-                        if validate_choice(user_input, choices):
+                    # split paths along trail (GH Issue #3)
+                    if type(current_location["next_destination_id"]) == list:
+                        while True:
+                            generate_title(yellow, "The trail divides here")
+                            print("\tYou may:\n")
+                            time.sleep(0.05)
+                            print(f'\t\t{yellow("1. ")}{f"""head for {current_location["next_destination_name"][0]}"""}')  # noqa
+                            time.sleep(0.05)
+                            print(f'\t\t{yellow("2. ")}{f"""head for {current_location["next_destination_name"][1]}"""}')  # noqa
+                            time.sleep(0.05)
+                            print(f'\t\t{yellow("3. ")}{"see the map"}')
+                            time.sleep(0.05)
+                            user_input = input(f"\n\t\tWhat is your choice? {yellow('[1-3]')} ")  # noqa
+                            time.sleep(0.05)
+                            choices = ["1", "2", "3"]
 
-                            if user_input == "1":
-                                next_destination_distance = current_location["next_destination_distance"][0]  # noqa
-                                days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
-                                GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
-                                display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][0])  # noqa
-                                # set next destination as current
-                                GAME.current_location_id = next_destination_id[0]  # noqa
-                                current_location = GAME.get_current_location()
-                                next_destination_id = current_location["next_destination_id"]  # noqa
-                                break
-                            elif user_input == "2":
-                                next_destination_distance = current_location["next_destination_distance"][1]  # noqa
-                                days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
-                                GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
-                                display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][1])  # noqa
-                                # set next destination as current
-                                GAME.current_location_id = next_destination_id[1]  # noqa
-                                current_location = GAME.get_current_location()
-                                next_destination_id = current_location["next_destination_id"]  # noqa
-                                break
-                            elif user_input == "3":
-                                show_map()
-                else:
-                    # one option only, no split path
-                    days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
-                    display_distance(current_location["name"], next_destination_distance, current_location["next_destination_name"])  # noqa
-                    # set next destination as current
-                    GAME.current_location_id = next_destination_id
-                    current_location = GAME.get_current_location()
-                    next_destination_id = current_location["next_destination_id"]  # noqa
+                            # validate if the user selected a valid option
+                            if validate_choice(user_input, choices):
 
-                # cycle one day per required day to the next destination
-                for n in range(0, days_required_to_next_destination):
-                    clear()
-                    cycle_one_day(GAME, INVENTORY, PLAYER, False)
-                animate_wagon(GAME, INVENTORY, PLAYER)
+                                if user_input == "1":
+                                    next_destination_distance = current_location["next_destination_distance"][0]  # noqa
+                                    days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                                    GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
+                                    display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][0])  # noqa
+                                    # set next destination as current
+                                    GAME.current_location_id = next_destination_id[0]  # noqa
+                                    current_location = GAME.get_current_location()  # noqa
+                                    next_destination_id = current_location["next_destination_id"]  # noqa
+                                    break
+                                elif user_input == "2":
+                                    next_destination_distance = current_location["next_destination_distance"][1]  # noqa
+                                    days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                                    GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
+                                    display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][1])  # noqa
+                                    # set next destination as current
+                                    GAME.current_location_id = next_destination_id[1]  # noqa
+                                    current_location = GAME.get_current_location()  # noqa
+                                    next_destination_id = current_location["next_destination_id"]  # noqa
+                                    break
+                                elif user_input == "3":
+                                    show_map()
+                    else:
+                        # one option only, no split path
+                        days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
+                        display_distance(current_location["name"], next_destination_distance, current_location["next_destination_name"])  # noqa
+                        # set next destination as current
+                        GAME.current_location_id = next_destination_id
+                        current_location = GAME.get_current_location()
+                        next_destination_id = current_location["next_destination_id"]  # noqa
 
-                # reset distance to next destination
-                GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+                    # cycle one day per required day to the next destination
+                    for n in range(0, days_required_to_next_destination):
+                        clear()
+                        cycle_one_day(GAME, INVENTORY, PLAYER, False)
+                    animate_wagon(GAME, INVENTORY, PLAYER)
 
-                if GAME.current_location_id == "L18" and current_location["category"] == "end":  # noqa
-                    # reached Oregon!
+                    # reset distance to next destination
+                    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+
+                    # destination is not the end/Oregon
+                    if current_location["category"] != "end":
+                        # arrived at next destination - look around?
+                        look = look_around(GAME.current_location["name"])
+                        if not look:
+                            # skip stopping at this destination
+                            continue
+                        else:
+                            # have a look at this destination
+                            break
+                    else:
+                        # reached Oregon!
+                        # TODO: needs to break out of outer loop also!!!
+                        break
+
+                elif user_input == "2":  # check supplies
+                    check_supplies(INVENTORY, PLAYER)
                     break
 
-            elif user_input == "2":  # check supplies
-                check_supplies(INVENTORY, PLAYER)
+                elif user_input == "3":  # look at map
+                    show_map()
+                    break
 
-            elif user_input == "3":  # look at map
-                show_map()
+                elif user_input == "4":  # change pace
+                    change_pace(PLAYER)
+                    break
 
-            elif user_input == "4":  # change pace
-                change_pace(PLAYER)
+                elif user_input == "5":  # change food rations
+                    change_ration(PLAYER)
+                    break
 
-            elif user_input == "5":  # change food rations
-                change_ration(PLAYER)
+                elif user_input == "6":  # stop to rest
+                    stop_to_rest(GAME, INVENTORY, PLAYER)
+                    break
 
-            elif user_input == "6":  # stop to rest
-                stop_to_rest(GAME, INVENTORY, PLAYER)
+                elif user_input == "7":  # attempt to trade
+                    print("Attempt to trade")
+                    input("pause")
+                    break
 
-            elif user_input == "7":  # attempt to trade
-                print("Attempt to trade")
-                input("pause")
+                elif user_input == "8":  # talk to people
 
-            elif user_input == "8":  # talk to people
+                    # first time talking to people, randomize conversations
+                    if not talked_to_people:
+                        convos = []  # reset
+                        shuffle_conversations = GAME.shuffle_conversations(current_location["conversations"])  # noqa
+                        talked_to_people = True
+                        convos.extend(shuffle_conversations)
 
-                # first time talking to people, randomize conversation order
-                if not talked_to_people:
-                    convos = []  # reset
-                    shuffle_conversations = GAME.shuffle_conversations(current_location["conversations"])  # noqa
-                    talked_to_people = True
-                    convos.extend(shuffle_conversations)
+                    generate_title(pink, f"Talking to {convos[0]['person']}")
+                    print(CENT(convos[0]["speech"]))
+                    print("")
+                    print(pink(LINE))
+                    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                    GAME.talk_to_people(convos)  # pop + append convo to end
+                    break
 
-                generate_title(pink, f"Talking to {convos[0]['person']}")
-                print(CENT(convos[0]["speech"]))
-                print("")
-                print(pink(LINE))
-                input(f'{grey(CENT("Press ENTER to continue"))}\n')
-                GAME.talk_to_people(convos)  # pop + append convo to end
-
-            elif user_input == "9":  # buy supplies
-                print("Buy supplies")
-                input("pause")
+                elif user_input == "9":  # buy supplies
+                    print("Buy supplies")
+                    input("pause")
+                    break
