@@ -226,10 +226,18 @@ def start_cycle(GAME, INVENTORY, PLAYER):
         time.sleep(0.05)
         print(f'\t\t{green("8. ")}{"Talk to people"}')
         time.sleep(0.05)
+        if current_location["category"] == "start" or current_location["category"] == "fort":  # noqa
+            # Independence and Forts have options to buy supplies
+            print(f'\t\t{green("9. ")}{"Buy supplies"}')
+            time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {green('[1-8]')} ")
-        time.sleep(0.05)
-        choices = ["1", "2", "3", "4", "5", "6", "7", "8"]
+            user_input = input(f"\n\t\tWhat is your choice? {green('[1-9]')} ")
+            time.sleep(0.05)
+            choices = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        else:
+            user_input = input(f"\n\t\tWhat is your choice? {green('[1-8]')} ")
+            time.sleep(0.05)
+            choices = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
         # validate if the user selected a valid option
         if validate_choice(user_input, choices):
