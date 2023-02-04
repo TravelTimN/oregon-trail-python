@@ -1,5 +1,6 @@
 import datetime
 import random
+from landmarks import landmarks
 
 
 class Game():
@@ -12,6 +13,7 @@ class Game():
         self.weather = None
         self.distance_traveled = 0
         self.current_location_id = "L01"
+        self.current_location = None
 
     def set_start_date(self, month):
         """
@@ -29,6 +31,13 @@ class Game():
         self.date += datetime.timedelta(days=1)
         self.date_string = self.date.strftime("%B %d, %Y")
         return self.date
+
+    def get_current_location(self):
+        """
+        Helper function to get the current location data
+        """
+        self.current_location = next(filter(lambda landmark: landmark["id"] == self.current_location_id, landmarks))  # noqa
+        return self.current_location
 
     def shuffle_conversations(self, conversations):
         """
