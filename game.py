@@ -184,6 +184,35 @@ def change_ration(PLAYER):
     PLAYER.update_rations()
 
 
+def cycle_one_day(GAME, INVENTORY, PLAYER, current_location, rest_day):
+    """
+    One day's cycle.
+    - ✅ increment day on calendar
+    - ✅ deduct food rations
+    - ❓❓ travel N-miles (if not resting)
+    - ❌ weather cycle
+    - ❌ misfortunes / accidents
+    - ❌ decrement health (?)
+    """
+    # deduct food rations
+    INVENTORY.food -= PLAYER.rations_pounds_per_day
+    if INVENTORY.food <= 0:
+        # never get into negative food rations
+        INVENTORY.food = 0
+
+    if rest_day:
+        # visualize daily increments on calendar (only if rest day)
+        generate_title_date(green, current_location["name"], GAME.date_string)
+        print("")
+        print(CENT("Stopping to Rest"))
+        GAME.add_one_day()  # increment the day +1
+        time.sleep(1)
+    else:
+        # not a rest day, so increment miles traveled
+        GAME.distance_traveled += PLAYER.pace_miles_per_day  # TODO: test this
+        time.sleep(1)
+
+
 def stop_to_rest(GAME, INVENTORY, PLAYER, current_location):
     """
     Allows player to stop to rest between 1-9 day(s).
@@ -215,11 +244,11 @@ def start_cycle(GAME, INVENTORY, PLAYER):
     # current location id (eg: L01)
     current_location_id = GAME.current_location_id
     # current location (full instance)
-    current_location = next(filter(lambda landmark : landmark["id"] == current_location_id, landmarks))  # noqa
+    current_location = next(filter(lambda landmark: landmark["id"] == current_location_id, landmarks))  # noqa
     next_destination_id = current_location["next_destination_id"]
 
     while True:
-        generate_title_date(green, GAME.current_location_name, GAME.date)
+        generate_title_date(green, current_location["name"], GAME.date_string)
 
         print(f"\t\t\t{'Weather:':<24}{GAME.weather}")
         time.sleep(0.05)
@@ -269,8 +298,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
             clear()
             if user_input == "1":  # continue on trail
                 animate_wagon()
-                print("Continue on trail")
-                input("pause")
+                cycle_one_day(GAME, INVENTORY, PLAYER, current_location, False)
                 talked_to_people = False
                 # TODO: break
 
