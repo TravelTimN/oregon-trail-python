@@ -370,7 +370,10 @@ def start_cycle(GAME, INVENTORY, PLAYER):
 
                 # reset distance to next destination
                 GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
-                # TODO: break ?
+
+                if GAME.current_location_id == "L18" and current_location["category"] == "end":  # noqa
+                    # reached Oregon!
+                    break
 
             elif user_input == "2":  # check supplies
                 check_supplies(INVENTORY, PLAYER)
