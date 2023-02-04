@@ -179,6 +179,25 @@ def change_ration(PLAYER):
     elif user_input == "3":
         PLAYER.rations = "bear bones"
 
+def stop_to_rest(GAME, INVENTORY, PLAYER, current_location):
+    """
+    Allows player to stop to rest between 1-9 day(s).
+    Normal daily cycles/deductions resume.
+    """
+    while True:
+        generate_title(green, "Stop to Rest")
+
+        user_input = input(f"\t\tHow many days would you like to rest? {green('[1-9]')} ")  # noqa
+        choices = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+        # validate if the user selected a valid option
+        if validate_choice(user_input, choices):
+            break
+
+    # cycle the day 'n' number of times
+    for n in range(0, int(user_input)):
+        cycle_one_day(GAME, INVENTORY, PLAYER, current_location, True)
+
 
 def start_cycle(GAME, INVENTORY, PLAYER):
     """
@@ -263,8 +282,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 change_ration(PLAYER)
 
             elif user_input == "6":  # stop to rest
-                print("Stop to rest")
-                input("pause")
+                stop_to_rest(GAME, INVENTORY, PLAYER, current_location)
 
             elif user_input == "7":  # attempt to trade
                 print("Attempt to trade")
