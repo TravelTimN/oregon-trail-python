@@ -133,12 +133,15 @@ def change_pace(PLAYER):
 
             if user_input == "1":
                 PLAYER.pace = "steady"
+                PLAYER.update_pace()
                 break
             elif user_input == "2":
                 PLAYER.pace = "strenuous"
+                PLAYER.update_pace()
                 break
             elif user_input == "3":
                 PLAYER.pace = "grueling"
+                PLAYER.update_pace()
                 break
             elif user_input == "4":
                 learn_about_pace()
@@ -178,6 +181,8 @@ def change_ration(PLAYER):
         PLAYER.rations = "meager"
     elif user_input == "3":
         PLAYER.rations = "bear bones"
+    PLAYER.update_rations()
+
 
 def stop_to_rest(GAME, INVENTORY, PLAYER, current_location):
     """
