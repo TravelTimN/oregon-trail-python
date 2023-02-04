@@ -7,10 +7,10 @@ class Game():
     The current in-progress game instance.
     """
     def __init__(self):
-        self.date = 0
+        self.date = datetime.datetime(1848, 3, 1)
+        self.date_string = self.date.strftime("%B %d, %Y")
         self.weather = None
         self.distance_traveled = 0
-        self.current_location_name = "Independence, Missouri"
         self.current_location_id = "L01"
 
     def set_start_date(self, month):
@@ -18,21 +18,17 @@ class Game():
         Set the start date of the game in 1848.
         March, April, May, June, or July
         """
-        self.month = month
-        self.date = datetime.datetime(1848, self.month, 1)
-        return self.date.strftime("%B %d, %Y")
+        self.date = datetime.datetime(1848, month, 1)
+        self.date_string = self.date.strftime("%B %d, %Y")
+        return self.date
 
-    # def set_start_date(month):
-    #     """
-    #     Using the player's input, set the start date of
-    #     the game in 1848 from either March, April, May, June, or July
-    #     """
-    #     date = datetime.datetime(1848, month, 1)
-    #     # date += datetime.timedelta(days=-1)  # set date back to original (-1)
-    #     # for i in range(5):
-    #     #     date += datetime.timedelta(days=1)
-    #     #     print(date.strftime("%B %d, %Y"))
-    #     return date.strftime("%B %d, %Y")
+    def add_one_day(self):
+        """
+        Increments the current date by +1 using timedelta.
+        """
+        self.date += datetime.timedelta(days=1)
+        self.date_string = self.date.strftime("%B %d, %Y")
+        return self.date
 
     def shuffle_conversations(self, conversations):
         """
