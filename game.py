@@ -185,7 +185,7 @@ def change_ration(PLAYER):
     PLAYER.update_rations()
 
 
-def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day):
+def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, n):
     """
     One day's cycle.
     - ✅ increment day on calendar
@@ -208,7 +208,7 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day):
         # visualize daily increments on calendar (only if rest day)
         generate_title_date(green, current_location["name"], GAME.date_string)
         print("")
-        print(CENT("Stopping to Rest"))
+        print(CENT(f"Stopping to Rest (day: {n+1})"))
         GAME.add_one_day()  # increment the day +1
         time.sleep(1)
     else:
@@ -246,7 +246,7 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(GAME, INVENTORY, PLAYER, True)
+        cycle_one_day(GAME, INVENTORY, PLAYER, True, n)
 
 
 def display_distance(current, miles, next):
@@ -255,7 +255,7 @@ def display_distance(current, miles, next):
     the distance and name to the next destination
     """
     # display message about upcoming journey (name/distance)
-    generate_title(yellow, "Continue on trail")
+    generate_title(yellow, "Continue on Trail")
     message = f"""
 {CENT(f"From {current},")}
 {CENT(f"it is {miles} miles")}
@@ -409,7 +409,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     # cycle one day per required day to the next destination
                     for n in range(0, days_required_to_next_destination):
                         clear()
-                        cycle_one_day(GAME, INVENTORY, PLAYER, False)
+                        cycle_one_day(GAME, INVENTORY, PLAYER, False, 0)
                     animate_wagon(GAME, INVENTORY, PLAYER)
 
                     # reset distance to next destination
