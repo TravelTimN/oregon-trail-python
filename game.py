@@ -492,10 +492,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
                     # split paths along trail (GH Issue #3)
-                    has_split = False
-                    split_choice = 0
                     if type(current_location["next_destination_id"]) == list:
-                        has_split = True
                         while True:
                             generate_title(yellow, "The trail divides here")
                             print("\tYou may:\n")
@@ -514,7 +511,6 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                             if validate_choice(user_input, choices):
 
                                 if user_input == "1":
-                                    split_choice = 0
                                     next_destination_distance = current_location["next_destination_distance"][0]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                     GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
@@ -525,7 +521,6 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                                     next_destination_id = current_location["next_destination_id"]  # noqa
                                     break
                                 elif user_input == "2":
-                                    split_choice = 1
                                     next_destination_distance = current_location["next_destination_distance"][1]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                     GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
@@ -553,10 +548,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     animate_wagon(GAME, INVENTORY, PLAYER)
 
                     # reset distance to next destination
-                    if has_split:
-                        GAME.next_destination_distance = current_location["next_destination_distance"][split_choice]  # noqa
-                    else:
-                        GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+                    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
                     # destination is not the end/Oregon
                     if current_location["category"] != "end":
