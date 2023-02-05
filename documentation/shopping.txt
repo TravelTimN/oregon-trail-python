@@ -1,0 +1,18 @@
+HAS_LIMIT:
+----------
+- Oxen (20): You may only take 20 oxen.
+
+- Food (2000): Your wagon may only carry 2000 pounds of food.
+
+- Wagon Wheels (3): Your wagon may only carry 3 wagon wheels.
+
+- Wagon Axles (3): Your wagon may only carry 3 wagon axles.
+
+- Wagon Tongues (3): Your wagon may only carry 3 wagon tongues.
+
+
+NO_LIMIT:
+----------
+- Clothing: doesn't seem to have a limit? went over 100
+
+- Bullets: doesn't seem to have a limit? went over 15,600
