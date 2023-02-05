@@ -75,6 +75,10 @@ class Inventory:
         self.axles = 0
         self.tongues = 0
 
+    def __getitem__(self, key):
+        # https://stackoverflow.com/questions/43627405/understanding-getitem-method
+        return getattr(self, key)
+
 
 class Person:
     """
