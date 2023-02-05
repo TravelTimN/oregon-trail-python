@@ -1,0 +1,47 @@
+No one wants to trade with you today. = 20%
+
+WANTS FROM YOU:
+----------------
+1 ox = 10%
+1 set of clothing = 8%
+1 wagon axle = 3%
+1 wagon tongue = 16%
+1 wagon wheel = 10%
+# pounds of food = 3% (# = pick random number between 10%-25% of player's amount?) (or if choices/ratio as well, 75% between 15-25% / 25% between 10-14%)
+# bullets = 7% (# = pick random number between 10%-25% of player's amount?) (or if choices/ratio as well, 75% between 15-25% / 25% between 10-14%)
+2 wagon tongues = 3%
+2 wagon wheels = 5%
+3 sets of clothing = 2%
+3 wagon wheels = 2%
+4 sets of clothing = 1%
+4 wagon tongues = 1%
+4 wagon wheels = 2%
+
+
+wants_choices = ["nobody", "1 ox", "1 set of clothing", "1 wagon axle", "1 wagon tongue", "1 wagon wheel", "food", "bullets", "2 wagon tongues", "2 wagon wheels", "3 sets of clothing", "3 wagon wheels", "4 sets of clothing", "4 wagon tongues", "4 wagon wheels"]
+
+want_weights = [0.2, 0.1, 0.08, 0.03, 0.16, 0.1, 0.03, 0.07, 0.03, 0.05, 0.02, 0.02, 0.01, 0.01, 0.02]
+
+------------------------------------------------------
+
+He = 75%
+She = 25%
+
+gender_choices = ["He", "She"]
+gender_weights = [0.75, 0.25]
+
+------------------------------------------------------
+
+WILL GIVE YOU:
+----------------
+1 ox = 12%
+1 set of clothing = 17%
+1 wagon axle = 3%
+1 wagon wheel = 1%
+# bullets = 17% (# = pick a random number between 45-150) (or if choices/ratio as well, 75% between 45-75 / 25% between 76-150)
+# pounds of food = 16% (# = pick a random number between 20-90) (or if choices/ratio as well, 75% between 20-50 / 25% between 51-90)
+
+
+gives_choices = ["1 ox", "1 set of clothing", "1 wagon axle", "1 wagon wheel", "bullets", "food"]
+
+gives_weights = [0.12, 0.17, 0.03, 0.01, 0.17, 0.16]
