@@ -45,7 +45,7 @@ landmarks = [
         "cost_oxen": 20.00,
         "cost_food": 0.20,
         "cost_clothing": 10.00,
-        "cost_ammunition": 2.00,
+        "cost_bullets": 2.00,
         "cost_wagon_wheels": 10.00,
         "cost_wagon_axles": 10.00,
         "cost_wagon_tongues": 10.00
@@ -187,7 +187,7 @@ landmarks = [
         "cost_oxen": 25.00,
         "cost_food": 0.25,
         "cost_clothing": 12.50,
-        "cost_ammunition": 2.50,
+        "cost_bullets": 2.50,
         "cost_wagon_wheels": 12.50,
         "cost_wagon_axles": 12.50,
         "cost_wagon_tongues": 12.50
@@ -273,7 +273,7 @@ landmarks = [
         "cost_oxen": 30.00,
         "cost_food": 0.30,
         "cost_clothing": 15.00,
-        "cost_ammunition": 3.00,
+        "cost_bullets": 3.00,
         "cost_wagon_wheels": 15.00,
         "cost_wagon_axles": 15.00,
         "cost_wagon_tongues": 15.00
@@ -441,7 +441,7 @@ landmarks = [
         "cost_oxen": 35.00,
         "cost_food": 0.35,
         "cost_clothing": 17.50,
-        "cost_ammunition": 3.50,
+        "cost_bullets": 3.50,
         "cost_wagon_wheels": 17.50,
         "cost_wagon_axles": 17.50,
         "cost_wagon_tongues": 17.50
@@ -527,7 +527,7 @@ landmarks = [
         "cost_oxen": 40.00,
         "cost_food": 0.40,
         "cost_clothing": 20.00,
-        "cost_ammunition": 4.00,
+        "cost_bullets": 4.00,
         "cost_wagon_wheels": 20.00,
         "cost_wagon_axles": 20.00,
         "cost_wagon_tongues": 20.00
@@ -622,7 +622,7 @@ landmarks = [
         "cost_oxen": 45.00,
         "cost_food": 0.45,
         "cost_clothing": 22.50,
-        "cost_ammunition": 4.50,
+        "cost_bullets": 4.50,
         "cost_wagon_wheels": 22.50,
         "cost_wagon_axles": 22.50,
         "cost_wagon_tongues": 22.50
@@ -709,7 +709,7 @@ landmarks = [
         "cost_oxen": 50.00,
         "cost_food": 0.50,
         "cost_clothing": 25.00,
-        "cost_ammunition": 5.00,
+        "cost_bullets": 5.00,
         "cost_wagon_wheels": 25.00,
         "cost_wagon_axles": 25.00,
         "cost_wagon_tongues": 25.00
