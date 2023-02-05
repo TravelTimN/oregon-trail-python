@@ -189,7 +189,7 @@ class Fort(Landmark):
         self.cost_oxen = 0
         self.cost_food = 0
         self.cost_clothing = 0
-        self.cost_ammunition = 0
+        self.cost_bullets = 0
         self.cost_wagon_wheels = 0
         self.cost_wagon_axles = 0
         self.cost_wagon_tongues = 0
