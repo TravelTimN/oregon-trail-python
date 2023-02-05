@@ -255,14 +255,42 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
 def attempt_to_trade(GAME, INVENTORY, PLAYER):
     """
-    Using ratios to calculate randomized trades.
+    Using weighted ratios to calculate randomized trades.
     """
+    # using weighted ratios, grab one of each wants/gender/gives
     wants = random.choices(trades.wants_choices, trades.want_weights)
     gender = random.choices(trades.gender_choices, trades.gender_weights)
     gives = random.choices(trades.gives_choices, trades.gives_weights)
 
+    # only if someone does want to trade
+    if wants[0]["item"] != "nobody":
+        # make sure emigrant doesn't give back same thing they want
+        while True:
+            if gives[0]["inventory_name"] == wants[0]["inventory_name"]:
+                gives = random.choices(trades.gives_choices, trades.gives_weights)  # noqa
+            else:
+                break
+
+        # handle emigrant wanting random amounts of bullets/food
+        if wants[0]["item"] == "bullets" or wants[0]["item"] == "pounds of food":  # noqa
+            # 75% of the time, want 100-300 bullets/pounds of food
+            # 25% of the time, want 301-400 bullets/pounds of food
+            wants_qty_choices = [random.randint(301, 400), random.randint(100, 300)]  # noqa
+            wants_qty_weights = [0.25, 0.75]
+            wants[0]["qty"] = random.choices(wants_qty_choices, wants_qty_weights)[0]  # noqa
+        wanted = f"""{wants[0]["qty"]} {wants[0]["item"]}"""
+
+        # handle emigrant giving random amounts of bullets/food
+        if gives[0]["item"] == "bullets" or gives[0]["item"] == "pounds of food":  # noqa
+            # 75% of the time, gives 20-70 bullets/pounds of food
+            # 25% of the time, want 71-100 bullets/pounds of food
+            gives_qty_choices = [random.randint(71, 100), random.randint(20, 70)]  # noqa
+            gives_qty_weights = [0.25, 0.75]
+            gives[0]["qty"] = random.choices(gives_qty_choices, gives_qty_weights)[0]  # noqa
+        trading = f"""{gives[0]["qty"]} {gives[0]["item"]}"""
+
     while True:
-        generate_title(yellow, "Your Supplies")
+        generate_title(yellow, "Attempt to Trade: Your Supplies")
         print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
         time.sleep(0.05)
         print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")
@@ -284,7 +312,7 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
         print("")
         time.sleep(0.05)
 
-        # nobody wants to trade with you (20%)
+        # nobody wants to trade with you (20% of the time)
         if wants[0]["item"] == "nobody":
             print(CENT("No one wants to trade with you today."))
             time.sleep(0.05)
@@ -294,26 +322,8 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
             time.sleep(0.05)
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
             break
-        else:
-            # someone wants to trade
 
-            # handle emigrant wanting random amounts of bullets/food
-            if wants[0]["item"] == "bullets" or wants[0]["item"] == "pounds of food":  # noqa
-                # 75% of the time, want 100-300 bullets/pounds of food
-                # 25% of the time, want 301-400 bullets/pounds of food
-                qty_choices = [random.randint(301, 400), random.randint(100, 300)]  # noqa
-                qty_weights = [0.25, 0.75]
-                wants[0]["qty"] = random.choices(qty_choices, qty_weights)[0]
-
-            # handle emigrant giving random amounts of bullets/food
-            if gives[0]["item"] == "bullets" or gives[0]["item"] == "pounds of food":  # noqa
-                # 75% of the time, want 100-300 bullets/pounds of food
-                # 25% of the time, want 301-400 bullets/pounds of food
-                qty_choices = [random.randint(301, 400), random.randint(100, 300)]  # noqa
-                qty_weights = [0.25, 0.75]
-                wants[0]["qty"] = random.choices(qty_choices, qty_weights)[0]
-
-            wanted = f"""{wants[0]["qty"]} {wants[0]["item"]}"""
+        else:  # someone wants to trade
             print(CENT(f"""You meet another emigrant who wants {wanted}."""))
             time.sleep(0.05)
 
@@ -330,8 +340,8 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
                 input(f'{grey(CENT("Press ENTER to continue"))}\n')
                 break
             else:
-                # player does have enough to trade
-                print(CENT(f"""{gender[0]} will trade you {gives[0]}."""))
+                # player has enough to trade
+                print(CENT(f"""{gender[0]} will trade you {trading}."""))
                 time.sleep(0.05)
                 print("")
                 time.sleep(0.05)
@@ -339,7 +349,35 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
 
                 # validate if the user selected a valid option
                 if validate_yes_no(user_input):
-                    break
+
+                    # user does want to confirm this trade
+                    if user_input[0].lower() == "y":
+                        # inventory items to give/trade
+                        inv_name_in = gives[0]["inventory_name"]
+                        inv_name_out = wants[0]["inventory_name"]
+                        # increment item being given
+                        current_qty_in = INVENTORY[inv_name_in]
+                        new_qty_in = int(current_qty_in) + int(gives[0]["qty"])
+                        setattr(INVENTORY, inv_name_in, new_qty_in)
+                        # decrement item being traded away
+                        current_qty_out = INVENTORY[inv_name_out]
+                        new_qty_out = int(current_qty_out) - int(wants[0]["qty"])  # noqa
+                        setattr(INVENTORY, inv_name_out, new_qty_out)
+                        # redisplay supplies
+                        generate_title(yellow, "Attempt to Trade: Your Supplies")  # noqa
+                        print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
+                        print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")  # noqa
+                        print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
+                        print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
+                        print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
+                        print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")  # noqa
+                        print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+                        print("")
+                        print(yellow(LINE))
+                        input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                        break
+                    else:  # user does not want to trade
+                        break
 
     # cycle a normal day (deduct food) without showing the static ox/wagon
     cycle_one_day(GAME, INVENTORY, PLAYER, False, False, 0)
