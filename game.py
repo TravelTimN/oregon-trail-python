@@ -4,7 +4,6 @@ import sys
 import time
 from animation import animate_wagon, static_wagon
 from colors import green, grey, pink, red, yellow
-from landmarks import landmarks
 from learn import learn_about_pace
 import trades
 from utils import CENT, clear, generate_title, generate_title_date, LINE
@@ -187,7 +186,7 @@ def change_ration(PLAYER):
     PLAYER.update_rations()
 
 
-def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, show_wagon, n):
+def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, is_trade_day, show_wagon, n):  # noqa
     """
     One day's cycle.
     - ✅ increment day on calendar
@@ -214,8 +213,10 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, show_wagon, n):
         print(CENT(f"Stopping to Rest (day: {n+1})"))
         GAME.add_one_day()  # increment the day +1
         time.sleep(1)
+    elif is_trade_day:
+        GAME.add_one_day()  # increment the day +1
     else:
-        # not a rest day, so increment miles traveled
+        # not a rest/trade day, so increment miles traveled
         GAME.distance_traveled += PLAYER.pace_miles_per_day
         # deduct miles until next destination
         GAME.next_destination_distance -= PLAYER.pace_miles_per_day
@@ -250,7 +251,7 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(GAME, INVENTORY, PLAYER, True, True, n)
+        cycle_one_day(GAME, INVENTORY, PLAYER, True, False, True, n)
 
 
 def attempt_to_trade(GAME, INVENTORY, PLAYER):
@@ -380,7 +381,7 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
                         break
 
     # cycle a normal day (deduct food) without showing the static ox/wagon
-    cycle_one_day(GAME, INVENTORY, PLAYER, False, False, 0)
+    cycle_one_day(GAME, INVENTORY, PLAYER, False, True, False, 0)
 
 
 def display_distance(current, miles, next):
@@ -491,7 +492,10 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
                     # split paths along trail (GH Issue #3)
+                    has_split = False
+                    split_choice = 0
                     if type(current_location["next_destination_id"]) == list:
+                        has_split = True
                         while True:
                             generate_title(yellow, "The trail divides here")
                             print("\tYou may:\n")
@@ -510,6 +514,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                             if validate_choice(user_input, choices):
 
                                 if user_input == "1":
+                                    split_choice = 0
                                     next_destination_distance = current_location["next_destination_distance"][0]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                     GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
@@ -520,6 +525,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                                     next_destination_id = current_location["next_destination_id"]  # noqa
                                     break
                                 elif user_input == "2":
+                                    split_choice = 1
                                     next_destination_distance = current_location["next_destination_distance"][1]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                                     GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
@@ -543,11 +549,14 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     # cycle one day per required day to the next destination
                     for n in range(0, days_required_to_next_destination):
                         clear()
-                        cycle_one_day(GAME, INVENTORY, PLAYER, False, True, n)
+                        cycle_one_day(GAME, INVENTORY, PLAYER, False, False, True, n)  # noqa
                     animate_wagon(GAME, INVENTORY, PLAYER)
 
                     # reset distance to next destination
-                    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+                    if has_split:
+                        GAME.next_destination_distance = current_location["next_destination_distance"][split_choice]  # noqa
+                    else:
+                        GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
                     # destination is not the end/Oregon
                     if current_location["category"] != "end":
