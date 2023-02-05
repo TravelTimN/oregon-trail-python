@@ -30,6 +30,8 @@ def validate_yes_no(user_input):
     Checks if the user input is valid (yes/no)
     """
     try:
+        if len(user_input) == 0:
+            raise ValueError
         if user_input[0].lower() != "y" and user_input[0].lower() != "n":
             raise ValueError
     except ValueError:
