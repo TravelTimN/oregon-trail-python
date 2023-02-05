@@ -424,7 +424,9 @@ def look_around(destination):
 
 
 def continue_on_trail(GAME, INVENTORY, PLAYER, current_location, next_destination_id):  # noqa
-    """"""
+    """
+    Player has left previous landmark, en route to next one.
+    """
     next_destination_distance = current_location["next_destination_distance"]  # noqa
     current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
 
@@ -488,6 +490,14 @@ def continue_on_trail(GAME, INVENTORY, PLAYER, current_location, next_destinatio
     GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
     return current_location
+
+
+def buy_supplies():
+    """
+    Player is at a fort (or Independence still, after leaving Matt's).
+    The option to buy [more] supplies is available.
+    """
+    pass
 
 
 def start_cycle(GAME, INVENTORY, PLAYER):
@@ -614,6 +624,5 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     break
 
                 elif user_input == "9":  # buy supplies
-                    print("Buy supplies")
-                    input("pause")
+                    buy_supplies()
                     break
