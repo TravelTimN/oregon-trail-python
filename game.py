@@ -1,10 +1,12 @@
 import math
+import random
 import sys
 import time
 from animation import animate_wagon, static_wagon
 from colors import green, grey, pink, red, yellow
 from landmarks import landmarks
 from learn import learn_about_pace
+import trades
 from utils import CENT, clear, generate_title, generate_title_date, LINE
 from validators import validate_choice, validate_yes_no
 
@@ -185,7 +187,7 @@ def change_ration(PLAYER):
     PLAYER.update_rations()
 
 
-def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, n):
+def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, show_wagon, n):
     """
     One day's cycle.
     - ✅ increment day on calendar
@@ -196,7 +198,8 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, n):
     - ❌ decrement health (?)
     """
     current_location = GAME.get_current_location()
-    static_wagon(GAME, INVENTORY, PLAYER)
+    if show_wagon:
+        static_wagon(GAME, INVENTORY, PLAYER)
 
     # deduct food rations
     INVENTORY.food -= PLAYER.rations_pounds_per_day
@@ -226,7 +229,8 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, n):
             GAME.distance_traveled -= negative_miles
 
         GAME.add_one_day()  # increment the day +1
-        time.sleep(1)
+        if show_wagon:
+            time.sleep(1)
 
 
 def stop_to_rest(GAME, INVENTORY, PLAYER):
@@ -246,7 +250,99 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(GAME, INVENTORY, PLAYER, True, n)
+        cycle_one_day(GAME, INVENTORY, PLAYER, True, True, n)
+
+
+def attempt_to_trade(GAME, INVENTORY, PLAYER):
+    """
+    Using ratios to calculate randomized trades.
+    """
+    wants = random.choices(trades.wants_choices, trades.want_weights)
+    gender = random.choices(trades.gender_choices, trades.gender_weights)
+    gives = random.choices(trades.gives_choices, trades.gives_weights)
+
+    while True:
+        generate_title(yellow, "Your Supplies")
+        print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")
+        time.sleep(0.05)
+        print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+        time.sleep(0.05)
+        print("")
+        time.sleep(0.05)
+        print(yellow(LINE))
+        time.sleep(0.05)
+        print("")
+        time.sleep(0.05)
+
+        # nobody wants to trade with you (20%)
+        if wants[0]["item"] == "nobody":
+            print(CENT("No one wants to trade with you today."))
+            time.sleep(0.05)
+            print("")
+            time.sleep(0.05)
+            print(yellow(LINE))
+            time.sleep(0.05)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+            break
+        else:
+            # someone wants to trade
+
+            # handle emigrant wanting random amounts of bullets/food
+            if wants[0]["item"] == "bullets" or wants[0]["item"] == "pounds of food":  # noqa
+                # 75% of the time, want 100-300 bullets/pounds of food
+                # 25% of the time, want 301-400 bullets/pounds of food
+                qty_choices = [random.randint(301, 400), random.randint(100, 300)]  # noqa
+                qty_weights = [0.25, 0.75]
+                wants[0]["qty"] = random.choices(qty_choices, qty_weights)[0]
+
+            # handle emigrant giving random amounts of bullets/food
+            if gives[0]["item"] == "bullets" or gives[0]["item"] == "pounds of food":  # noqa
+                # 75% of the time, want 100-300 bullets/pounds of food
+                # 25% of the time, want 301-400 bullets/pounds of food
+                qty_choices = [random.randint(301, 400), random.randint(100, 300)]  # noqa
+                qty_weights = [0.25, 0.75]
+                wants[0]["qty"] = random.choices(qty_choices, qty_weights)[0]
+
+            wanted = f"""{wants[0]["qty"]} {wants[0]["item"]}"""
+            print(CENT(f"""You meet another emigrant who wants {wanted}."""))
+            time.sleep(0.05)
+
+            # check to see if player has this in their inventory
+            inv_name = wants[0]["inventory_name"]
+            if int(wants[0]["qty"]) > int(INVENTORY[inv_name]):
+                # player doesn't have enough to trade
+                print(CENT("You don't have this."))
+                time.sleep(0.05)
+                print("")
+                time.sleep(0.05)
+                print(yellow(LINE))
+                time.sleep(0.05)
+                input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                break
+            else:
+                # player does have enough to trade
+                print(CENT(f"""{gender[0]} will trade you {gives[0]}."""))
+                time.sleep(0.05)
+                print("")
+                time.sleep(0.05)
+                user_input = input(f"\n\t\tAre you willing to trade? {yellow('[yes/no]')} ")  # noqa
+
+                # validate if the user selected a valid option
+                if validate_yes_no(user_input):
+                    break
+
+    # cycle a normal day (deduct food) without showing the static ox/wagon
+    cycle_one_day(GAME, INVENTORY, PLAYER, False, False, 0)
 
 
 def display_distance(current, miles, next):
@@ -409,7 +505,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     # cycle one day per required day to the next destination
                     for n in range(0, days_required_to_next_destination):
                         clear()
-                        cycle_one_day(GAME, INVENTORY, PLAYER, False, 0)
+                        cycle_one_day(GAME, INVENTORY, PLAYER, False, True, n)
                     animate_wagon(GAME, INVENTORY, PLAYER)
 
                     # reset distance to next destination
@@ -451,8 +547,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     break
 
                 elif user_input == "7":  # attempt to trade
-                    print("Attempt to trade")
-                    input("pause")
+                    attempt_to_trade(GAME, INVENTORY, PLAYER)
                     break
 
                 elif user_input == "8":  # talk to people
