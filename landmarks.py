@@ -50,6 +50,9 @@ landmarks = [
         "cost_wagon_axles": 10.00,
         "cost_wagon_tongues": 10.00
     },
+
+
+
     {
         "id": "L02",
         "name": "Kansas River crossing",
@@ -59,8 +62,8 @@ landmarks = [
         "next_destination_distance": 82,
         "can_hire_ferry": True,
         "can_hire_indian": False,
-        "depth_min": 0,
-        "depth_max": 0,
+        "depth_min": 2.2,
+        "depth_max": 7.4,
         "width_min": 0,
         "width_max": 0,
         "swiftness": 0,
@@ -99,6 +102,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L03",
         "name": "Big Blue River crossing",
@@ -146,6 +152,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L04",
         "name": "Fort Kearney",
@@ -192,6 +201,9 @@ landmarks = [
         "cost_wagon_axles": 12.50,
         "cost_wagon_tongues": 12.50
     },
+
+
+
     {
         "id": "L05",
         "name": "Chimney Rock",
@@ -231,6 +243,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L06",
         "name": "Fort Laramie",
@@ -278,6 +293,9 @@ landmarks = [
         "cost_wagon_axles": 15.00,
         "cost_wagon_tongues": 15.00
     },
+
+
+
     {
         "id": "L07",
         "name": "Independence Rock",
@@ -316,6 +334,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L08",
         "name": "South Pass",
@@ -354,6 +375,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L09",
         "name": "Green River crossing",
@@ -401,6 +425,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L10",
         "name": "Fort Bridger",
@@ -446,6 +473,9 @@ landmarks = [
         "cost_wagon_axles": 17.50,
         "cost_wagon_tongues": 17.50
     },
+
+
+
     {
         "id": "L11",
         "name": "Soda Springs",
@@ -486,6 +516,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L12",
         "name": "Fort Hall",
@@ -532,6 +565,9 @@ landmarks = [
         "cost_wagon_axles": 20.00,
         "cost_wagon_tongues": 20.00
     },
+
+
+
     {
         "id": "L13",
         "name": "Snake River crossing",
@@ -580,6 +616,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L14",
         "name": "Fort Boise",
@@ -627,6 +666,9 @@ landmarks = [
         "cost_wagon_axles": 22.50,
         "cost_wagon_tongues": 22.50
     },
+
+
+
     {
         "id": "L15",
         "name": "Blue Mountains",
@@ -667,6 +709,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L16",
         "name": "Fort Walla Walla",
@@ -714,6 +759,9 @@ landmarks = [
         "cost_wagon_axles": 25.00,
         "cost_wagon_tongues": 25.00
     },
+
+
+
     {
         "id": "L17",
         "name": "The Dalles",
@@ -753,6 +801,9 @@ landmarks = [
             }
         ]
     },
+
+
+
     {
         "id": "L18",
         "name": "Willamette Valley, Oregon",
