@@ -26,26 +26,26 @@ def end_game():
     sys.exit()
 
 
-def check_supplies(INVENTORY, PLAYER):
+def check_supplies(Inventory, Player):
     """
     Displays the user's oxen, clothes, bullets, spare parts, food, and cash.
     """
     generate_title(yellow, "Your Supplies")
-    print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
+    print(f"\t\t\t{'oxen':<24}{Inventory.oxen}")
     time.sleep(0.05)
-    print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")
+    print(f"\t\t\t{'sets of clothing':<24}{Inventory.clothing}")
     time.sleep(0.05)
-    print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
+    print(f"\t\t\t{'bullets':<24}{Inventory.bullets}")
     time.sleep(0.05)
-    print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
+    print(f"\t\t\t{'wagon wheels':<24}{Inventory.wheels}")
     time.sleep(0.05)
-    print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
+    print(f"\t\t\t{'wagon axles':<24}{Inventory.axles}")
     time.sleep(0.05)
-    print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")
+    print(f"\t\t\t{'wagon tongues':<24}{Inventory.tongues}")
     time.sleep(0.05)
-    print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+    print(f"\t\t\t{'pounds of food':<24}{Inventory.food}")
     time.sleep(0.05)
-    print(f"\t\t\t{'money left':<24}${PLAYER.cash:.2f}")
+    print(f"\t\t\t{'money left':<24}${Player.cash:.2f}")
     time.sleep(0.05)
     print("")
     time.sleep(0.05)
@@ -104,7 +104,7 @@ def show_map():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
-def change_pace(PLAYER):
+def change_pace(Player):
     """
     Allows player to change their pace.
     Options: steady || strenuous || grueling
@@ -112,7 +112,7 @@ def change_pace(PLAYER):
     while True:
         generate_title(green, "Change Pace")
 
-        print(f"\tCurrent Pace: {green(PLAYER.pace)}\n")
+        print(f"\tCurrent Pace: {green(Player.pace)}\n")
         time.sleep(0.05)
         print("\tThe pace at which you travel can change.")
         time.sleep(0.05)
@@ -134,22 +134,22 @@ def change_pace(PLAYER):
         if validate_choice(user_input, choices):
 
             if user_input == "1":
-                PLAYER.pace = "steady"
-                PLAYER.update_pace()
+                Player.pace = "steady"
+                Player.update_pace()
                 break
             elif user_input == "2":
-                PLAYER.pace = "strenuous"
-                PLAYER.update_pace()
+                Player.pace = "strenuous"
+                Player.update_pace()
                 break
             elif user_input == "3":
-                PLAYER.pace = "grueling"
-                PLAYER.update_pace()
+                Player.pace = "grueling"
+                Player.update_pace()
                 break
             elif user_input == "4":
                 learn_about_pace()
 
 
-def change_ration(PLAYER):
+def change_ration(Player):
     """
     Allows player to change their food rations.
     Options: filling || meager || bear bones
@@ -157,7 +157,7 @@ def change_ration(PLAYER):
     while True:
         generate_title(green, "Change Food Rations")
 
-        print(f"\tCurrent Rations: {green(PLAYER.rations)}\n")
+        print(f"\tCurrent Rations: {green(Player.rations)}\n")
         time.sleep(0.05)
         print("\tThe amount of food the people in your party eat each day can change.")  # noqa
         time.sleep(0.05)
@@ -178,15 +178,15 @@ def change_ration(PLAYER):
             break
 
     if user_input == "1":
-        PLAYER.rations = "filling"
+        Player.rations = "filling"
     elif user_input == "2":
-        PLAYER.rations = "meager"
+        Player.rations = "meager"
     elif user_input == "3":
-        PLAYER.rations = "bear bones"
-    PLAYER.update_rations()
+        Player.rations = "bear bones"
+    Player.update_rations()
 
 
-def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, is_trade_day, show_wagon, n):  # noqa
+def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon, n):  # noqa
     """
     One day's cycle.
     - ✅ increment day on calendar
@@ -196,45 +196,45 @@ def cycle_one_day(GAME, INVENTORY, PLAYER, is_rest_day, is_trade_day, show_wagon
     - ❌ misfortunes / accidents
     - ❌ decrement health (?)
     """
-    current_location = GAME.get_current_location()
+    current_location = Game.get_current_location()
     if show_wagon:
-        static_wagon(GAME, INVENTORY, PLAYER)
+        static_wagon(Game, Inventory, Player)
 
     # deduct food rations
-    INVENTORY.food -= PLAYER.rations_pounds_per_day
-    if INVENTORY.food <= 0:
+    Inventory.food -= Player.rations_pounds_per_day
+    if Inventory.food <= 0:
         # never get into negative food rations
-        INVENTORY.food = 0
+        Inventory.food = 0
 
     if is_rest_day:
         # visualize daily increments on calendar (only if rest day)
-        generate_title_date(green, current_location["name"], GAME.date_string)
+        generate_title_date(green, current_location["name"], Game.date_string)
         print("")
         print(CENT(f"Stopping to Rest (day: {n+1})"))
-        GAME.add_one_day()  # increment the day +1
+        Game.add_one_day()  # increment the day +1
         time.sleep(1)
     elif is_trade_day:
-        GAME.add_one_day()  # increment the day +1
+        Game.add_one_day()  # increment the day +1
     else:
         # not a rest/trade day, so increment miles traveled
-        GAME.distance_traveled += PLAYER.pace_miles_per_day
+        Game.distance_traveled += Player.pace_miles_per_day
         # deduct miles until next destination
-        GAME.next_destination_distance -= PLAYER.pace_miles_per_day
-        if GAME.next_destination_distance < 0:
+        Game.next_destination_distance -= Player.pace_miles_per_day
+        if Game.next_destination_distance < 0:
             # if arriving before day's end,
             # get the absolute abs() value of remaining miles
-            negative_miles = abs(GAME.next_destination_distance)
+            negative_miles = abs(Game.next_destination_distance)
             # set next destination hard-coded to 0 remaining
-            GAME.next_destination_distance = 0
+            Game.next_destination_distance = 0
             # deduct the abs() miles from total distance traveled
-            GAME.distance_traveled -= negative_miles
+            Game.distance_traveled -= negative_miles
 
-        GAME.add_one_day()  # increment the day +1
+        Game.add_one_day()  # increment the day +1
         if show_wagon:
             time.sleep(1)
 
 
-def stop_to_rest(GAME, INVENTORY, PLAYER):
+def stop_to_rest(Game, Inventory, Player):
     """
     Allows player to stop to rest between 1-9 day(s).
     Normal daily cycles/deductions resume.
@@ -251,10 +251,10 @@ def stop_to_rest(GAME, INVENTORY, PLAYER):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(GAME, INVENTORY, PLAYER, True, False, True, n)
+        cycle_one_day(Game, Inventory, Player, True, False, True, n)
 
 
-def attempt_to_trade(GAME, INVENTORY, PLAYER):
+def attempt_to_trade(Game, Inventory, Player):
     """
     Using weighted ratios to calculate randomized trades.
     """
@@ -292,19 +292,19 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
 
     while True:
         generate_title(yellow, "Attempt to Trade: Your Supplies")
-        print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
+        print(f"\t\t\t{'oxen':<24}{Inventory.oxen}")
         time.sleep(0.05)
-        print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")
+        print(f"\t\t\t{'sets of clothing':<24}{Inventory.clothing}")
         time.sleep(0.05)
-        print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
+        print(f"\t\t\t{'bullets':<24}{Inventory.bullets}")
         time.sleep(0.05)
-        print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
+        print(f"\t\t\t{'wagon wheels':<24}{Inventory.wheels}")
         time.sleep(0.05)
-        print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
+        print(f"\t\t\t{'wagon axles':<24}{Inventory.axles}")
         time.sleep(0.05)
-        print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")
+        print(f"\t\t\t{'wagon tongues':<24}{Inventory.tongues}")
         time.sleep(0.05)
-        print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+        print(f"\t\t\t{'pounds of food':<24}{Inventory.food}")
         time.sleep(0.05)
         print("")
         time.sleep(0.05)
@@ -330,7 +330,7 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
 
             # check to see if player has this in their inventory
             inv_name = wants[0]["inventory_name"]
-            if int(wants[0]["qty"]) > int(INVENTORY[inv_name]):
+            if int(wants[0]["qty"]) > int(Inventory[inv_name]):
                 # player doesn't have enough to trade
                 print(CENT("You don't have this."))
                 time.sleep(0.05)
@@ -357,22 +357,22 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
                         inv_name_in = gives[0]["inventory_name"]
                         inv_name_out = wants[0]["inventory_name"]
                         # increment item being given
-                        current_qty_in = INVENTORY[inv_name_in]
+                        current_qty_in = Inventory[inv_name_in]
                         new_qty_in = int(current_qty_in) + int(gives[0]["qty"])
-                        setattr(INVENTORY, inv_name_in, new_qty_in)
+                        setattr(Inventory, inv_name_in, new_qty_in)
                         # decrement item being traded away
-                        current_qty_out = INVENTORY[inv_name_out]
+                        current_qty_out = Inventory[inv_name_out]
                         new_qty_out = int(current_qty_out) - int(wants[0]["qty"])  # noqa
-                        setattr(INVENTORY, inv_name_out, new_qty_out)
+                        setattr(Inventory, inv_name_out, new_qty_out)
                         # redisplay supplies
                         generate_title(yellow, "Attempt to Trade: Your Supplies")  # noqa
-                        print(f"\t\t\t{'oxen':<24}{INVENTORY.oxen}")
-                        print(f"\t\t\t{'sets of clothing':<24}{INVENTORY.clothing}")  # noqa
-                        print(f"\t\t\t{'bullets':<24}{INVENTORY.bullets}")
-                        print(f"\t\t\t{'wagon wheels':<24}{INVENTORY.wheels}")
-                        print(f"\t\t\t{'wagon axles':<24}{INVENTORY.axles}")
-                        print(f"\t\t\t{'wagon tongues':<24}{INVENTORY.tongues}")  # noqa
-                        print(f"\t\t\t{'pounds of food':<24}{INVENTORY.food}")
+                        print(f"\t\t\t{'oxen':<24}{Inventory.oxen}")
+                        print(f"\t\t\t{'sets of clothing':<24}{Inventory.clothing}")  # noqa
+                        print(f"\t\t\t{'bullets':<24}{Inventory.bullets}")
+                        print(f"\t\t\t{'wagon wheels':<24}{Inventory.wheels}")
+                        print(f"\t\t\t{'wagon axles':<24}{Inventory.axles}")
+                        print(f"\t\t\t{'wagon tongues':<24}{Inventory.tongues}")  # noqa
+                        print(f"\t\t\t{'pounds of food':<24}{Inventory.food}")
                         print("")
                         print(yellow(LINE))
                         input(f'{grey(CENT("Press ENTER to continue"))}\n')
@@ -381,7 +381,7 @@ def attempt_to_trade(GAME, INVENTORY, PLAYER):
                         break
 
     # cycle a normal day (deduct food) without showing the static ox/wagon
-    cycle_one_day(GAME, INVENTORY, PLAYER, False, True, False, 0)
+    cycle_one_day(Game, Inventory, Player, False, True, False, 0)
 
 
 def display_distance(current, miles, next):
@@ -423,22 +423,22 @@ def look_around(destination):
         return False
 
 
-def continue_on_trail(GAME, INVENTORY, PLAYER, current_location, next_destination_id):  # noqa
+def continue_on_trail(Game, Inventory, Player, current_location, next_destination_id):  # noqa
     """
     Player has left previous landmark, en route to next one.
     """
     pass
 
 
-def buy_item(GAME, PLAYER, INVENTORY, item, cost, text, question, min, max):
+def buy_item(Game, Player, Inventory, item, cost, text, question, min, max):
     """
     Helper function to buy items at forts,
     or Independence, if the player hasn't left yet.
     """
     while True:
-        generate_title_date(red, GAME.current_location["name"], GAME.date_string)  # noqa
+        generate_title_date(red, Game.current_location["name"], Game.date_string)  # noqa
         print(text)
-        print(CENT(f"You have ${PLAYER.cash:.2f} to spend."))
+        print(CENT(f"You have ${Player.cash:.2f} to spend."))
         print("")
 
         if max <= 0:
@@ -459,21 +459,21 @@ def buy_item(GAME, PLAYER, INVENTORY, item, cost, text, question, min, max):
             else:
                 # ensure player can afford the full value
                 total_cost = int(item_qty) * cost
-                if PLAYER.cash - total_cost >= 0:
+                if Player.cash - total_cost >= 0:
                     # player has enough money remaining to make purchase
 
                     # deduct the payment from their cash
-                    new_cash = PLAYER.cash - total_cost
-                    setattr(PLAYER, "cash", new_cash)
+                    new_cash = Player.cash - total_cost
+                    setattr(Player, "cash", new_cash)
 
                     # increment item, on top of any existing for this item
-                    curr_inv_qty = getattr(INVENTORY, item)
+                    curr_inv_qty = getattr(Inventory, item)
                     if item == "bullets":
                         new_inv_qty = int(curr_inv_qty) + (int(item_qty) * 20)
                     else:
                         new_inv_qty = int(curr_inv_qty) + int(item_qty)
                     # update inventory amounts
-                    setattr(INVENTORY, item, new_inv_qty)
+                    setattr(Inventory, item, new_inv_qty)
 
                 else:
                     # player cannot afford the full transaction
@@ -483,12 +483,12 @@ def buy_item(GAME, PLAYER, INVENTORY, item, cost, text, question, min, max):
                 break
 
 
-def buy_supplies(GAME, INVENTORY, PLAYER):
+def buy_supplies(Game, Inventory, Player):
     """
     Player is at a fort (or Independence still, after leaving Matt's).
     The option to buy [more] supplies is available.
     """
-    current_location = GAME.current_location
+    current_location = Game.current_location
     cost_oxen = current_location["cost_oxen"]
     cost_food = current_location["cost_food"]
     cost_clothing = current_location["cost_clothing"]
@@ -498,7 +498,7 @@ def buy_supplies(GAME, INVENTORY, PLAYER):
     cost_wagon_tongues = current_location["cost_wagon_tongues"]
 
     while True:
-        generate_title_date(red, GAME.current_location["name"], GAME.date_string)  # noqa
+        generate_title_date(red, Game.current_location["name"], Game.date_string)  # noqa
         time.sleep(0.05)
         print("\t\tYou may buy:\n")
         time.sleep(0.05)
@@ -520,7 +520,7 @@ def buy_supplies(GAME, INVENTORY, PLAYER):
         time.sleep(0.05)
         print(red(LINE))
         time.sleep(0.05)
-        print(CENT(f"""You have ${PLAYER.cash:>2.2f} to spend."""))
+        print(CENT(f"""You have ${Player.cash:>2.2f} to spend."""))
         time.sleep(0.05)
 
         user_input = input(f"\n\t\t\tWhich number? {red('[1-8]')} ")
@@ -531,100 +531,100 @@ def buy_supplies(GAME, INVENTORY, PLAYER):
 
             if user_input == "1":  # oxen
                 cost = cost_oxen
-                curr_qty = INVENTORY.oxen
+                curr_qty = Inventory.oxen
                 max_qty = 20
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} oxen.")}
-{CENT(f"Currently you have {INVENTORY.oxen}.")}
+{CENT(f"Currently you have {Inventory.oxen}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per ox: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many oxen? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "oxen", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "oxen", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "2":  # clothing
                 cost = cost_clothing
-                curr_qty = INVENTORY.clothing
+                curr_qty = Inventory.clothing
                 max_qty = 200
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} sets of clothing.")}
-{CENT(f"Currently you have {INVENTORY.clothing}.")}
+{CENT(f"Currently you have {Inventory.clothing}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per set: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many sets? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "clothing", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "clothing", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "3":  # bullets
                 cost = cost_bullets
-                curr_qty = INVENTORY.bullets
+                curr_qty = Inventory.bullets
                 max_qty = 10000
                 max_buy = int((max_qty - curr_qty) / 20)
                 text = (f"""
 {CENT(f"You may only take {max_qty} bullets.")}
-{CENT(f"Currently you have {INVENTORY.bullets}.")}
+{CENT(f"Currently you have {Inventory.bullets}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per box: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many boxes? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "bullets", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "bullets", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "4":  # wagon wheels
                 cost = cost_wagon_wheels
-                curr_qty = INVENTORY.wheels
+                curr_qty = Inventory.wheels
                 max_qty = 3
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} wagon wheels.")}
-{CENT(f"Currently you have {INVENTORY.wheels}.")}
+{CENT(f"Currently you have {Inventory.wheels}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per wagon wheel: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many wheels? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "wheels", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "wheels", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "5":  # wagon axles
                 cost = cost_wagon_axles
-                curr_qty = INVENTORY.axles
+                curr_qty = Inventory.axles
                 max_qty = 3
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} wagon axles.")}
-{CENT(f"Currently you have {INVENTORY.axles}.")}
+{CENT(f"Currently you have {Inventory.axles}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per wagon axle: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many axles? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "axles", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "axles", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "6":  # wagon tongues
                 cost = cost_wagon_tongues
-                curr_qty = INVENTORY.tongues
+                curr_qty = Inventory.tongues
                 max_qty = 3
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} wagon tongues.")}
-{CENT(f"Currently you have {INVENTORY.tongues}.")}
+{CENT(f"Currently you have {Inventory.tongues}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per wagon tongue: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many tongues? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "tongues", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "tongues", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "7":  # food
                 cost = cost_food
-                curr_qty = INVENTORY.food
+                curr_qty = Inventory.food
                 max_qty = 2000
                 max_buy = max_qty - curr_qty
                 text = (f"""
 {CENT(f"You may only take {max_qty} pounds of food.")}
-{CENT(f"Currently you have {INVENTORY.food}.")}
+{CENT(f"Currently you have {Inventory.food}.")}
 {CENT(f"That means you can buy a maximum of {max_buy}.")}
 
 {CENT(f"Cost per pound: ${cost:.2f}")}""")
                 question = f"\t\t\tHow many pounds? {red(f'[0-{max_buy}]')} "  # noqa
-                buy_item(GAME, PLAYER, INVENTORY, "food", cost, text, question, 0, max_buy)  # noqa
+                buy_item(Game, Player, Inventory, "food", cost, text, question, 0, max_buy)  # noqa
             elif user_input == "8":
                 break
 
 
-def start_cycle(GAME, INVENTORY, PLAYER):
+def start_cycle(Game, Inventory, Player):
     """
     Starts the main game play in Independence.
     """
@@ -632,20 +632,20 @@ def start_cycle(GAME, INVENTORY, PLAYER):
     talked_to_people = False
     convos = []
 
-    current_location = GAME.get_current_location()
+    current_location = Game.get_current_location()
     next_destination_id = current_location["next_destination_id"]
-    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+    Game.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
     while True:
-        generate_title_date(green, current_location["name"], GAME.date_string)
+        generate_title_date(green, current_location["name"], Game.date_string)
 
-        print(f"\t\t\t{'Weather:':<24}{GAME.weather}")
+        print(f"\t\t\t{'Weather:':<24}{Game.weather}")
         time.sleep(0.05)
-        print(f"\t\t\t{'Health:':<24}{PLAYER.health}")
+        print(f"\t\t\t{'Health:':<24}{Player.health}")
         time.sleep(0.05)
-        print(f"\t\t\t{'Pace:':<24}{PLAYER.pace}")
+        print(f"\t\t\t{'Pace:':<24}{Player.pace}")
         time.sleep(0.05)
-        print(f"\t\t\t{'Rations:':<24}{PLAYER.rations}")
+        print(f"\t\t\t{'Rations:':<24}{Player.rations}")
         time.sleep(0.05)
         print(green(LINE))
         time.sleep(0.05)
@@ -690,7 +690,11 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                 if user_input == "1":  # continue on trail
                     talked_to_people = False  # reset conversation shuffle
                     next_destination_distance = current_location["next_destination_distance"]  # noqa
-                    current_pace = PLAYER.pace_miles_per_day  # 18 || 30 || 36
+                    current_pace = Player.pace_miles_per_day  # 18 || 30 || 36
+
+                    # river crossings
+                    if current_location["category"] == "river":
+                        river_crossing()
 
                     # split paths along trail (GH Issue #3)
                     if type(current_location["next_destination_id"]) == list:
@@ -714,21 +718,21 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                                 if user_input == "1":
                                     next_destination_distance = current_location["next_destination_distance"][0]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
-                                    GAME.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
-                                    display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][0])  # noqa
+                                    Game.next_destination_distance = current_location["next_destination_distance"][0]  # noqa
+                                    display_distance(current_location["name"], Game.next_destination_distance, current_location["next_destination_name"][0])  # noqa
                                     # set next destination as current
-                                    GAME.current_location_id = next_destination_id[0]  # noqa
-                                    current_location = GAME.get_current_location()  # noqa
+                                    Game.current_location_id = next_destination_id[0]  # noqa
+                                    current_location = Game.get_current_location()  # noqa
                                     next_destination_id = current_location["next_destination_id"]  # noqa
                                     break
                                 elif user_input == "2":
                                     next_destination_distance = current_location["next_destination_distance"][1]  # noqa
                                     days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
-                                    GAME.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
-                                    display_distance(current_location["name"], GAME.next_destination_distance, current_location["next_destination_name"][1])  # noqa
+                                    Game.next_destination_distance = current_location["next_destination_distance"][1]  # noqa
+                                    display_distance(current_location["name"], Game.next_destination_distance, current_location["next_destination_name"][1])  # noqa
                                     # set next destination as current
-                                    GAME.current_location_id = next_destination_id[1]  # noqa
-                                    current_location = GAME.get_current_location()  # noqa
+                                    Game.current_location_id = next_destination_id[1]  # noqa
+                                    current_location = Game.get_current_location()  # noqa
                                     next_destination_id = current_location["next_destination_id"]  # noqa
                                     break
                                 elif user_input == "3":
@@ -738,23 +742,23 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                         days_required_to_next_destination = math.ceil(next_destination_distance / current_pace)  # noqa
                         display_distance(current_location["name"], next_destination_distance, current_location["next_destination_name"])  # noqa
                         # set next destination as current
-                        GAME.current_location_id = next_destination_id
-                        current_location = GAME.get_current_location()
+                        Game.current_location_id = next_destination_id
+                        current_location = Game.get_current_location()
                         next_destination_id = current_location["next_destination_id"]  # noqa
 
                     # cycle one day per required day to the next destination
                     for n in range(0, days_required_to_next_destination):
                         clear()
-                        cycle_one_day(GAME, INVENTORY, PLAYER, False, False, True, n)  # noqa
-                    animate_wagon(GAME, INVENTORY, PLAYER)
+                        cycle_one_day(Game, Inventory, Player, False, False, True, n)  # noqa
+                    animate_wagon(Game, Inventory, Player)
 
                     # reset distance to next destination
-                    GAME.next_destination_distance = current_location["next_destination_distance"]  # noqa
+                    Game.next_destination_distance = current_location["next_destination_distance"]  # noqa
 
                     # destination is not the end/Oregon
                     if current_location["category"] != "end":
                         # arrived at next destination - look around?
-                        look = look_around(GAME.current_location["name"])
+                        look = look_around(Game.current_location["name"])
                         if not look:
                             # skip stopping at this destination
                             continue
@@ -767,7 +771,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                         break
 
                 elif user_input == "2":  # check supplies
-                    check_supplies(INVENTORY, PLAYER)
+                    check_supplies(Inventory, Player)
                     break
 
                 elif user_input == "3":  # look at map
@@ -775,19 +779,19 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     break
 
                 elif user_input == "4":  # change pace
-                    change_pace(PLAYER)
+                    change_pace(Player)
                     break
 
                 elif user_input == "5":  # change food rations
-                    change_ration(PLAYER)
+                    change_ration(Player)
                     break
 
                 elif user_input == "6":  # stop to rest
-                    stop_to_rest(GAME, INVENTORY, PLAYER)
+                    stop_to_rest(Game, Inventory, Player)
                     break
 
                 elif user_input == "7":  # attempt to trade
-                    attempt_to_trade(GAME, INVENTORY, PLAYER)
+                    attempt_to_trade(Game, Inventory, Player)
                     break
 
                 elif user_input == "8":  # talk to people
@@ -795,7 +799,7 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     # first time talking to people, randomize conversations
                     if not talked_to_people:
                         convos = []  # reset
-                        shuffle_conversations = GAME.shuffle_conversations(current_location["conversations"])  # noqa
+                        shuffle_conversations = Game.shuffle_conversations(current_location["conversations"])  # noqa
                         talked_to_people = True
                         convos.extend(shuffle_conversations)
 
@@ -804,9 +808,9 @@ def start_cycle(GAME, INVENTORY, PLAYER):
                     print("")
                     print(pink(LINE))
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
-                    GAME.talk_to_people(convos)  # pop + append convo to end
+                    Game.talk_to_people(convos)  # pop + append convo to end
                     break
 
                 elif user_input == "9":  # buy supplies
-                    buy_supplies(GAME, INVENTORY, PLAYER)
+                    buy_supplies(Game, Inventory, Player)
                     break
