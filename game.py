@@ -624,6 +624,14 @@ def buy_supplies(Game, Inventory, Player):
                 break
 
 
+def river_crossing():
+    """
+    River crossing are an essential part of the game mechanics.
+    There are variable outcomes, from uneventful, to completely deadly.
+    """
+    input("at river")
+
+
 def start_cycle(Game, Inventory, Player):
     """
     Starts the main game play in Independence.
