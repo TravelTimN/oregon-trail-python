@@ -1,20 +1,13 @@
 import time
-# import pyfiglet
+from art import welcome_art
 from colors import orange
 from credits import credits
 from game import end_game
 from independence import pick_profession
-# from landmarks import landmarks
 from leaderboard import leaderboard_menu
 from learn import learn_about_trail
 from utils import clear, generate_title
 from validators import validate_choice
-
-
-# f = pyfiglet.FigletFont.getFonts()
-# for a in f[:10]:
-#     print(a)
-#     print(pyfiglet.figlet_format("The Oregon Trail", font=a))
 
 
 def main_menu():
@@ -36,19 +29,6 @@ def main_menu():
         time.sleep(0.05)
         print(f'\t\t{orange("5. ")}{"End"}')
         time.sleep(0.05)
-
-        # ------------------------------------
-        # testing f-string alignment
-        # https://stackoverflow.com/a/67540888
-        # https://docs.python.org/3/library/string.html#format-specification-mini-language
-        # ------------------------------------
-        # print("\n")
-        # a = "123456789 123456789 123456789 "
-        # print(f'\t{"1234567890 ":.<40} {orange(500)}')
-        # print(f'\t{"12345678901234567890 ":.<40} {orange(50)}')
-        # print(f'\t{a:.<40} {orange(555)}')
-        # print("\n")
-        # ------------------------------------
 
         user_input = input(f"\n\t\tWhat is your choice? {orange('[1-5]')} ")
         choices = ["1", "2", "3", "4", "5"]
@@ -72,9 +52,9 @@ def main_menu():
 
 if __name__ == "__main__":
     clear()
+    welcome_art()
+    main_menu()
 
     # for name in dir():
     #     if not name.startswith("_"):
     #         del globals()[name]
-
-    main_menu()
