@@ -36,6 +36,27 @@ YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 ```
 
+Additionally, I used a [larger version](https://media.mathstodon.xyz/media_attachments/files/000/723/954/original/4b0b8f7eafb15e10.png) for the "welcome" art.
+
+![ascii ox & wagon](documentation/ascii-ox-wagon.png)
+
+```
+                                  .::::::::::-.                     .::::::-
+                                .hmMMMMMMMMMMNddds\...//M\\.../hddddmMMMMMMNo
+                                 :NM-/NMMMMMMMMMMMMM$$NMMMMm&&MMMMMMMMMMMMMMy
+                                 .sm/`-yMMMMMMMMMMMM$$MMMMMN&&MMMMMMMMMMMMMh`
+                                  -Nd`  :MMMMMMMMMMM$$MMMMMN&&MMMMMMMMMMMMh`
+                                   -Nh` .yMMMMMMMMMM$$MMMMMN&&MMMMMMMMMMMm/
+    `oo/``-hd:  ``                 .sNd  :MMMMMMMMMM$$MMMMMN&&MMMMMMMMMMm/
+      .yNmMMh//+syysso-``````       -mh` :MMMMMMMMMM$$MMMMMN&&MMMMMMMMMMd
+    .shMMMMN//dmNMMMMMMMMMMMMs`     `:```-o++++oooo+:/ooooo+:+o+++oooo++/
+    `///omh//dMMMMMMMMMMMMMMMN/:::::/+ooso--/ydh//+s+/ossssso:--syN///os:
+          /MMMMMMMMMMMMMMMMMMd.     `/++-.-yy/...osydh/-+oo:-`o//...oyodh+
+          -hMMmssddd+:dMMmNMMh.     `.-=mmk.//^^^\\.^^`:++:^^o://^^^\\`::
+          .sMMmo.    -dMd--:mN/`           ||--X--||          ||--X--||
+........../yddy/:...+hmo-...hdd:............\\=v=//............\\=v=//.........
+```
+
 ## Objects / Classes
 
 ### **Player**
@@ -770,7 +791,8 @@ arriving in Oregon as a carpenter, and **triple** points for arriving as a farme
 | --- | --- |
 | [fontspace](https://www.fontspace.com/category/oregon-trail) | The Oregon Trail logo |
 | [Wikimedia](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png) | Python logo |
-| [text-image](https://www.text-image.com/convert/ascii.html) | ASCII ox/wagon |
+| [text-image](https://www.text-image.com/convert/ascii.html) | ASCII ox/wagon (small) |
+| [mathstodon](https://media.mathstodon.xyz/media_attachments/files/000/723/954/original/4b0b8f7eafb15e10.png) | ASCII ox/wagon (large) |
 | [StackOverflow](https://stackoverflow.com/a/45391019) | Centering text 80-wide |
 | [StackOverflow](https://stackoverflow.com/a/2084628) | Clearing the terminal |
 | [StackOverflow](https://stackoverflow.com/a/44423183) | Alignment with decimal points |
