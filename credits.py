@@ -14,7 +14,7 @@ def credits():
     time.sleep(0.05)
     print("")
     time.sleep(0.05)
-    print(f'\t{"Co-Author:":<15}{aqua("Chris Quinn")}')
+    print(f'\t{"Assistance:":<15}{aqua("Chris Quinn")}')
     time.sleep(0.05)
     print(f'\t{"":<15}{blue("https://github.com/10xOXR")}')
     time.sleep(0.05)
