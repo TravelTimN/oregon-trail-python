@@ -2,7 +2,7 @@ import math
 import random
 import sys
 import time
-from animation import animate_wagon, static_wagon
+from art import animate_wagon, static_wagon
 from colors import green, grey, pink, red, yellow
 from learn import learn_about_pace
 import trades
