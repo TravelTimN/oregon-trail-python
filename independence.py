@@ -112,6 +112,9 @@ def confirm_names():
             PLAYER.family[int(update_name) - 2].name = ask_name(f"What is the correct name for {aqua(PLAYER.family[int(update_name) - 2].name)}? ")  # noqa
         confirm_names()
 
+    # update the total number of persons alive
+    PLAYER.get_persons_alive()
+
 
 def pick_start_month():
     """
@@ -486,7 +489,31 @@ def start_game(profession):
     print("")
     time.sleep(0.05)
     print(green(LINE))
-    time.sleep(0.05)
     time.sleep(5)
     # start the game cycle
+    start_cycle(GAME, INVENTORY, PLAYER)
+
+
+def konami():
+    """
+    This is used for faster testing while in development mode.
+    TODO: update this to perhaps only give the player a cash bonus?
+    """
+    GAME = Game()
+    INVENTORY = Inventory()
+    PLAYER = Player("banker", "Tim")
+    PLAYER.profession_starter_cash()
+    for i in range(0, 4):
+        family_member = Person(None)
+        family_member.name = family_member.get_random_name()
+        PLAYER.family.append(family_member)
+    GAME.date = GAME.set_start_date(3)
+    INVENTORY.oxen = 18
+    INVENTORY.food = 2000
+    INVENTORY.clothing = 50
+    INVENTORY.bullets = 200
+    INVENTORY.wheels = 3
+    INVENTORY.axles = 3
+    INVENTORY.tongues = 3
+    PLAYER.cash = 230.00
     start_cycle(GAME, INVENTORY, PLAYER)
