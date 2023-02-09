@@ -516,4 +516,6 @@ def konami():
     INVENTORY.axles = 3
     INVENTORY.tongues = 3
     PLAYER.cash = 230.00
+    GAME.get_current_location()
+    GAME.get_current_weather()
     start_cycle(GAME, INVENTORY, PLAYER)
