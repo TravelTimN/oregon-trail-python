@@ -11,7 +11,7 @@ class Game():
     def __init__(self):
         self.date = datetime.datetime(1848, 3, 1)
         self.date_string = self.date.strftime("%B %d, %Y")
-        self.weather = None
+        self.weather = None  # very hot | hot | cool | warm | cold | very cold
         self.rand_temp = None
         self.next_destination_distance = 0
         self.distance_traveled = 0
@@ -61,7 +61,6 @@ class Game():
             self.weather = "cold"
         elif random_temp <= 10:
             self.weather = "very cold"
-        print(random_temp, self.weather)
 
     def get_current_location(self):
         """
@@ -119,7 +118,6 @@ class Person:
     def __init__(self, name):
         self.name = name
         self.is_alive = True
-        self.health = "good"
         self.illness = None
         self.days_until_healthy = 0  # diseases take 10 days to heal
         self.injury = None
@@ -146,13 +144,14 @@ class Player(Person):
         self.profession = profession
         self.family = []
         self.persons_alive = 0
+        self.health = "good"  # good | fair | poor | very poor | dead
         self.health_points = 0
         self.cash = float(0.00)
         self.bill = float(0.00)
-        self.pace = "steady"  # steady || strenuous || grueling
-        self.pace_miles_per_day = 18  # 18 || 30 || 36
-        self.rations = "filling"  # filling || meager || bear bones
-        self.rations_pounds_per_day = 15  # 15 || 10 || 5
+        self.pace = "steady"  # steady | strenuous | grueling
+        self.pace_miles_per_day = 18  # 18 | 30 | 36
+        self.rations = "filling"  # filling | meager | bear bones
+        self.rations_pounds_per_day = 15  # 15 | 10 | 5
 
     def profession_starter_cash(self):
         """
@@ -171,6 +170,20 @@ class Player(Person):
         """
         persons_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
         self.persons_alive = len(persons_alive) + 1  # +1 is the player
+
+    def update_health(self):
+        """
+        Updates the player's health based on total amount of points.
+        """
+        self.health_points = round(self.health_points, 1)
+        if self.health_points <= 34:
+            self.health = "good"
+        elif self.health_points >= 35 and self.health_points <= 78:
+            self.health = "fair"
+        elif self.health_points >= 79 and self.health_points <= 104:
+            self.health = "poor"
+        elif self.health_points >= 105:
+            self.health = "very poor"
 
     def update_pace(self):
         """
@@ -222,7 +235,7 @@ class River(Landmark):
         self.width_min = 0
         self.width_max = 0
         self.swiftness = 0
-        self.bottom_type = None  # smooth and firm || muddy || rocky and uneven
+        self.bottom_type = None  # smooth and firm | muddy | rocky and uneven
 
 
 class Fort(Landmark):
