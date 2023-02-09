@@ -507,6 +507,7 @@ def konami():
         family_member = Person(None)
         family_member.name = family_member.get_random_name()
         PLAYER.family.append(family_member)
+    PLAYER.get_persons_alive()
     GAME.date = GAME.set_start_date(3)
     INVENTORY.oxen = 18
     INVENTORY.food = 2000
