@@ -12,6 +12,7 @@ class Game():
         self.date = datetime.datetime(1848, 3, 1)
         self.date_string = self.date.strftime("%B %d, %Y")
         self.weather = None
+        self.rand_temp = None
         self.next_destination_distance = 0
         self.distance_traveled = 0
         self.current_location_id = "L01"
@@ -37,8 +38,30 @@ class Game():
     def get_current_weather(self):
         """
         Calculates the current weather based on averages from 6 zones.
+        Gets the average monthly weather based on the current month.
+        Grabs a random number between -20 and +20 from that month's average.
+        Using the random number, the "textual" weather value is used.
         """
-        weather_data = next(filter(lambda zone: landmark["id"] == self.current_location_id, weather))  # noqa
+        weather_data = next(filter(lambda zone: zone["zone"] == self.current_location["weather_zone"], weather))  # noqa
+        month = self.date.month
+        avg_in_month = weather_data["temp"][month-1]  # -1 for 0-indexing
+        min_weather = avg_in_month - 20
+        max_weather = avg_in_month + 20
+        random_temp = random.randint(min_weather, max_weather)
+        self.rand_temp = random_temp
+        if random_temp > 90:
+            self.weather = "very hot"
+        elif random_temp > 70 and random_temp <= 90:
+            self.weather = "hot"
+        elif random_temp > 50 and random_temp <= 70:
+            self.weather = "warm"
+        elif random_temp > 30 and random_temp <= 50:
+            self.weather = "cool"
+        elif random_temp > 10 and random_temp <= 30:
+            self.weather = "cold"
+        elif random_temp <= 10:
+            self.weather = "very cold"
+        print(random_temp, self.weather)
 
     def get_current_location(self):
         """
