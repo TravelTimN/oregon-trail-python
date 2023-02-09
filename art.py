@@ -4,6 +4,9 @@ from utils import clear, CENT
 
 
 def welcome_art():
+    """
+    Welcome page art of the ox and wagon.
+    """
     print(f"""
                                   .::::::::::-.                     .::::::-
                                 .hmMMMMMMMMMMNddds\...//M\\\\.../hddddmMMMMMMNo
