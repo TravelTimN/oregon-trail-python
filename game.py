@@ -198,12 +198,50 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     """
     current_location = Game.get_current_location()
 
+    # each day, health value is improved by 10% naturally
+    Player.health_points -= round(Player.health_points * 0.1, 1)
+
     # 50% chance that the weather stays the same as previous day's weather
     change_weather_choices = ["yes", "no"]
     weather_weights = [0.5, 0.5]
     change_weather = random.choices(change_weather_choices, weather_weights)
     if change_weather[0] == "yes":
         Game.get_current_weather()  # update weather
+
+    # weather plays a big part on the player's health points
+    if Game.weather == "very hot":
+        Player.health_points += 2
+    elif Game.weather == "hot":
+        Player.health_points += 1
+    elif Game.weather == "cold":
+        # add 0 if 2+ sets of clothing per person
+        # add 2 if 0 sets of clothing per person
+        # apply sliding scale between 0-2 sets per person
+        sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
+        if sets_per_person >= 2:
+            Player.health_points += 0
+        elif sets_per_person == 0:
+            Player.health_points += 2
+        else:
+            Player.health_points += sets_per_person
+    elif Game.weather == "very cold":
+        # add 0 if 4+ sets of clothing per person
+        # add 4 if 0 sets of clothing per person
+        # apply sliding scale between 0-4 sets per person
+        sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
+        if sets_per_person >= 4:
+            Player.health_points += 0
+        elif sets_per_person == 0:
+            Player.health_points += 4
+        elif sets_per_person == 3:
+            Player.health_points += 1
+        elif sets_per_person == 2:
+            Player.health_points += 2
+        else:
+            Player.health_points += 3
+
+    # update overall health based on health points value
+    Player.update_health()
 
     if show_wagon:
         static_wagon(Game, Inventory, Player)
