@@ -3,7 +3,7 @@ from art import welcome_art
 from colors import orange
 from credits import credits
 from game import end_game
-from independence import pick_profession
+from independence import pick_profession, konami
 from leaderboard import leaderboard_menu
 from learn import learn_about_trail
 from utils import clear, generate_title
@@ -31,7 +31,7 @@ def main_menu():
         time.sleep(0.05)
 
         user_input = input(f"\n\t\tWhat is your choice? {orange('[1-5]')} ")
-        choices = ["1", "2", "3", "4", "5"]
+        choices = ["1", "2", "3", "4", "5", "uuddlrlrba"]
 
         # validate if the user selected a valid option
         if validate_choice(user_input, choices):
@@ -48,6 +48,8 @@ def main_menu():
                 credits()
             elif user_input == "5":  # ends the game
                 end_game()
+            elif user_input == "uuddlrlrba":  # konami easter egg for testing
+                konami()
 
 
 if __name__ == "__main__":
