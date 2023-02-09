@@ -1,6 +1,7 @@
 import datetime
 import random
 from landmarks import landmarks
+from weather import weather
 
 
 class Game():
@@ -32,6 +33,12 @@ class Game():
         self.date += datetime.timedelta(days=1)
         self.date_string = self.date.strftime("%B %d, %Y")
         return self.date
+
+    def get_current_weather(self):
+        """
+        Calculates the current weather based on averages from 6 zones.
+        """
+        weather_data = next(filter(lambda zone: landmark["id"] == self.current_location_id, weather))  # noqa
 
     def get_current_location(self):
         """
@@ -88,10 +95,12 @@ class Person:
 
     def __init__(self, name):
         self.name = name
-        self.illness = None
-        self.accident = None
-        self.health = "good"
         self.is_alive = True
+        self.health = "good"
+        self.illness = None
+        self.days_until_healthy = 0  # diseases take 10 days to heal
+        self.injury = None
+        self.days_until_uninjured = 0  # injuries take 30 days to heal
 
     def get_random_name(self):
         """
@@ -113,6 +122,8 @@ class Player(Person):
         super().__init__(name)
         self.profession = profession
         self.family = []
+        self.persons_alive = 0
+        self.health_points = 0
         self.cash = float(0.00)
         self.bill = float(0.00)
         self.pace = "steady"  # steady || strenuous || grueling
@@ -131,6 +142,13 @@ class Player(Person):
         elif self.profession == "farmer":
             self.cash = float(400.00)
 
+    def get_persons_alive(self):
+        """
+        Filters the number of people still alive.
+        """
+        persons_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
+        self.persons_alive = len(persons_alive) + 1  # +1 is the player
+
     def update_pace(self):
         """
         Updates the pace (miles per day) based on user selection.
@@ -144,14 +162,17 @@ class Player(Person):
 
     def update_rations(self):
         """
-        Updates the rations (pounds per day) based on user selection.
+        Updates the rations (lbs per person, per day) based on user selection.
         """
         if self.rations == "filling":
-            self.rations_pounds_per_day = 15
+            # 3 pounds per person, per day (max 15)
+            self.rations_pounds_per_day = 3 * self.persons_alive
         elif self.rations == "meager":
-            self.rations_pounds_per_day = 10
+            # 2 pounds per person, per day (max 10)
+            self.rations_pounds_per_day = 2 * self.persons_alive
         elif self.rations == "bear bones":
-            self.rations_pounds_per_day = 5
+            # 1 pound per person, per day (max 5)
+            self.rations_pounds_per_day = 1 * self.persons_alive
 
 
 class Landmark():
