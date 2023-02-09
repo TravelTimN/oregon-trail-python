@@ -197,6 +197,14 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     - ❌ decrement health (?)
     """
     current_location = Game.get_current_location()
+
+    # 50% chance that the weather stays the same as previous day's weather
+    change_weather_choices = ["yes", "no"]
+    weather_weights = [0.5, 0.5]
+    change_weather = random.choices(change_weather_choices, weather_weights)
+    if change_weather[0] == "yes":
+        Game.get_current_weather()  # update weather
+
     if show_wagon:
         static_wagon(Game, Inventory, Player)
 
@@ -643,11 +651,12 @@ def start_cycle(Game, Inventory, Player):
     current_location = Game.get_current_location()
     next_destination_id = current_location["next_destination_id"]
     Game.next_destination_distance = current_location["next_destination_distance"]  # noqa
+    Game.get_current_weather()  # set the starter weather
 
     while True:
         generate_title_date(green, current_location["name"], Game.date_string)
 
-        print(f"\t\t\t{'Weather:':<24}{Game.weather}")
+        print(f"\t\t\t{'Weather:':<24}{Game.weather} ({Game.rand_temp}°F)")
         time.sleep(0.05)
         print(f"\t\t\t{'Health:':<24}{Player.health}")
         time.sleep(0.05)
