@@ -192,9 +192,9 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     - ✅ increment day on calendar
     - ✅ deduct food rations
     - ✅ travel N-miles (if not resting)
-    - ❌ weather cycle
+    - ✅ weather cycle
     - ❌ misfortunes / accidents
-    - ❌ decrement health (?)
+    - ✅❌ decrement health (in progress - accidents/diseases TBC)
     """
     current_location = Game.get_current_location()
 
@@ -208,7 +208,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     if change_weather[0] == "yes":
         Game.get_current_weather()  # update weather
 
-    # weather plays a big part on the player's health points
+    # health: based on weather
     if Game.weather == "very hot":
         Player.health_points += 2
     elif Game.weather == "hot":
@@ -239,6 +239,26 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
             Player.health_points += 2
         else:
             Player.health_points += 3
+
+    # health: based on food rations
+    if Inventory.food == 0:
+        Player.health_points += 6
+    elif Player.rations == "filling":
+        Player.health_points += 0
+    elif Player.rations == "meager":
+        Player.health_points += 2
+    elif Player.rations == "bear bones":
+        Player.health_points += 4
+
+    # health: based on pace
+    if is_rest_day:
+        Player.health_points += 0
+    elif Player.pace == "steady":
+        Player.health_points += 2
+    elif Player.pace == "strenuous":
+        Player.health_points += 4
+    elif Player.pace == "grueling":
+        Player.health_points += 6
 
     # update overall health based on health points value
     Player.update_health()
