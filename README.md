@@ -57,36 +57,6 @@ Additionally, I used a [larger version](https://media.mathstodon.xyz/media_attac
 ........../yddy/:...+hmo-...hdd:............\\=v=//............\\=v=//.........
 ```
 
-## Objects / Classes
-
-### **Player**
-* extends **Person**
-- profession (banker $1600, carpenter $800, farmer $400)
-- family members (4 others)
-- cash (int | in $)
-- food (in lbs. min: 1000 lbs / max: 2000 lbs)
-- ammunition (in boxes of 20. min: 1 box / max: 99 boxes)
-- oxen (2 per yoke. min: 1 yoke / max: 9 yokes)
-- clothing (in sets. min: 10 sets / max: 99 sets)
-- spare parts / misc supplies
-    - wagon wheels (0-3 wheels)
-    - wagon axels (0-3 axels)
-    - wagon tongues (0-3 tongues)
-
-### **Person**
-- name
-- illness
-- accidents
-- health (from: good / fair / poor / very poor)
-
-### **Landmark**
-- id
-- name
-- type (from: start / end / river / fort / misc)
-- next_landmark (some have split paths!!!)
-- distance_to_next_landmark (in miles)
-- can_buy_supplies? (bool)
-
 ---
 
 ## Stopping to Rest
@@ -194,12 +164,97 @@ You will be required to carry supplies with you to help make the arduous journey
 
 ## Health
 
-While alive, there are four (4) different health states you and your party can encounter:
+While alive, there are four (4) different health states you and your party can encounter: good / fair / poor / very poor.
 
-- good
-- fair
-- poor
-- very poor
+There's a global health points system in place, that can fluctuate drastically from many aspects of the game play.
+
+Players start with 0 points, which is the ideal health.
+
+| Health | Points |
+| :---: | :---: |
+| good | 0-34 |
+| fair | 35-78 |
+| poor | 79-104 |
+| very poor | 105-139 |
+
+Remaining party members all die in a matter of days, if the points are above 140+.
+
+Each day the health value is decremented by 10% naturally.
+
+### Health (based on Weather)
+
+The weather also causes health to fluctuate.
+
+| Weather | Points | Notes |
+| :---: | :---: | --- |
+| Very Hot | +2 | |
+| Hot | +1 | |
+| Cool | +0 | Ideal weather, no change |
+| Warm | +0 | Ideal weather, no change |
+| Cold | +0 | if at least 2+ sets of clothing per person |
+| | +1 | if at least 1 set of clothing per person |
+| | +2 | if 0 sets of clothing per person |
+| Very Cold | +0 | if at least 4+ sets of clothing per person |
+| | +1 | if at least 3 sets of clothing per person |
+| | +2 | if at least 2 sets of clothing per person |
+| | +3 | if at least 1 set of clothing per person |
+| | +4 | if 0 sets of clothing per person |
+
+### Health (based on Weather)
+
+The weather also causes health to fluctuate.
+
+| Weather | Points | Notes |
+| :---: | :---: | --- |
+| Very Hot | +2 | |
+| Hot | +1 | |
+| Cool | +0 | Ideal weather, no change |
+| Warm | +0 | Ideal weather, no change |
+| Cold | +0 | if at least 2+ sets of clothing per person |
+| | +1 | if at least 1 set of clothing per person |
+| | +2 | if 0 sets of clothing per person |
+| Very Cold | +0 | if at least 4+ sets of clothing per person |
+| | +1 | if at least 3 sets of clothing per person |
+| | +2 | if at least 2 sets of clothing per person |
+| | +3 | if at least 1 set of clothing per person |
+| | +4 | if 0 sets of clothing per person |
+
+Sliding scale: `Math.floor(sets of clothing / persons alive)`
+
+### Health (based on Food rations)
+
+The player's food rations also causes health to fluctuate.
+
+| Rations | Points |
+| :---: | :---: |
+| Filling | +0 |
+| Meager | +2 |
+| Bear Bones | +4 |
+| No Food | +6 |
+
+### Health (based on Travel Pace)
+
+The player's travel pace also causes health to fluctuate.
+
+| Pace | Points |
+| :---: | :---: |
+| Rest Day | +0 |
+| Steady | +2 |
+| Strenuous | +4 |
+| Grueling | +6 |
+
+* Note: on days where the player is prevented from traveling, the points do not increase (+0).
+
+### Health (based on Random Events)
+
+Random events can also cause health to fluctuate.
+
+| Misfortune | Points | Notes |
+| :---: | :---: | --- |
+| Bad water | +20 | |
+| Very little water | +10 | |
+| Diseased party member | +20 | only when the desease first happens |
+| Rough trail | +10 | |
 
 ---
 
@@ -219,11 +274,11 @@ During game play, you are able to adjust the pace at which your party travels to
 
 During game play, you are able to adjust the food rationing; the rate at which your party consumes food.
 
-| Ration | Amount | Consumed (pounds per day) |
+| Ration | Amount | Consumed (pounds per person, per day) |
 | --- | --- | :---: |
-| filling | meals are large and generous | 15 lbs/day |
-| meager | meals are small, but adequate | 10 lbs/day |
-| bare bones | meals are very small; everyone stays hungry | 5 lbs/day |
+| filling | meals are large and generous | 3 lbs/pp/day |
+| meager | meals are small, but adequate | 2 lbs/pp/day |
+| bare bones | meals are very small; everyone stays hungry | 1 lb/pp/day |
 
 ---
 
@@ -800,6 +855,8 @@ arriving in Oregon as a carpenter, and **triple** points for arriving as a farme
 | [StackOverflow](https://stackoverflow.com/a/2612615) | Get/Set object attributes dynamically |
 | [StackOverflow](https://stackoverflow.com/questions/17649875/why-does-random-shuffle-return-none) | random.shuffle returns None |
 | [StackOverflow](https://stackoverflow.com/a/41852266) | Trades: randomize with weights/ratios |
+| [Amazon](https://www.amazon.co.uk/You-Have-Died-Dysentery-educational-ebook/dp/B01B8JMKMC) | R. Philip Bouchard |
+| [archive.org](https://archive.org/details/msdos_Oregon_Trail_The_1990) | DOS Emulator of 1990 game |
 
 ## Reminders
 
