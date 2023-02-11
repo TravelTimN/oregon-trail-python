@@ -197,6 +197,46 @@ def daily_weather(Game):
     if change_weather[0] == "yes":
         Game.get_current_weather()  # update weather
 
+        # precipitation calculations
+        will_it_rain = ["yes", "no"]
+        rain_chance = [Game.rain_chance, (1 - Game.rain_chance)]
+        rain_today = random.choices(will_it_rain, rain_chance)
+        # it's going to rain today
+        if rain_today[0] == "yes":
+            heavy_rain = ["yes", "no"]
+            heavy_chances = [0.3, 0.7]
+            rain_heavy = random.choices(heavy_rain, heavy_chances)
+            if rain_heavy[0] == "yes":
+                # heavy rain
+                if Game.weather == "cold" or Game.weather == "very cold":
+                    # too cold to rain, so it snows (heavily) instead
+                    Game.current_snowfall += 8
+                    Game.weather = "very snowy"
+                else:
+                    # very rainy
+                    Game.current_rainfall += 0.8
+                    Game.weather = "very rainy"
+            else:
+                # regular rain (not heavy)
+                if Game.weather == "cold" or Game.weather == "very cold":
+                    # too cold to rain, so it snows instead
+                    Game.current_snowfall += 2
+                    Game.weather = "snowy"
+                else:
+                    # rainy
+                    Game.current_rainfall += 0.2
+                    Game.weather = "rainy"
+    else:
+        # weather is repeating, so handle rain/snow continuation
+        if Game.weather == "rainy":
+            Game.current_rainfall += 0.2
+        elif Game.weather == "very rainy":
+            Game.current_rainfall += 0.8
+        elif Game.weather == "snowy":
+            Game.current_snowfall += 2
+        elif Game.weather == "very snowy":
+            Game.current_snowfall += 8
+
 
 def daily_health(Game, Player, Inventory, is_rest_day):
     """
@@ -207,7 +247,7 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         Player.health_points += 2
     elif Game.weather == "hot":
         Player.health_points += 1
-    elif Game.weather == "cold":
+    elif Game.weather == "cold" or Game.weather == "snowy":
         # add 0 if 2+ sets of clothing per person
         # add 2 if 0 sets of clothing per person
         # apply sliding scale between 0-2 sets per person
@@ -218,7 +258,7 @@ def daily_health(Game, Player, Inventory, is_rest_day):
             Player.health_points += 2
         else:
             Player.health_points += sets_per_person
-    elif Game.weather == "very cold":
+    elif Game.weather == "very cold" or Game.weather == "very snowy":
         # add 0 if 4+ sets of clothing per person
         # add 4 if 0 sets of clothing per person
         # apply sliding scale between 0-4 sets per person
@@ -272,6 +312,46 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
 
     # each day, health value is improved by 10% naturally
     Player.health_points -= round(Player.health_points * 0.1, 1)
+
+    # each day, 10% of rainfall disappears naturally (unless snowing)
+    if Game.current_snowfall == 0:
+        Game.current_rainfall -= round(Game.current_rainfall * 0.1, 3)
+    if Game.current_rainfall < 0.1 and Game.current_snowfall == 0:
+        drought_messages = ["insufficient grass", "inadequate water", "bad water", "none"]  # noqa
+        drought_chances = [0.1, 0.2, 0.2, 0.5]
+        is_drought = random.choices(drought_messages, drought_chances)
+        if is_drought[0] != "none":
+            if is_drought[0] == "inadequate water":
+                # health points +10
+                Player.health_points += 10
+            elif is_drought[0] == "bad water":
+                # health points +20
+                Player.health_points += 20
+            # TODO: put on the static-wagon screen
+            if not is_rest_day:
+                input(is_drought[0])
+        # else:  # TODO: remove this after testing
+        #     input("no drought today")
+    if Game.current_rainfall < 0:
+        # rainfall cannot be below 0 (reset it)
+        Game.current_rainfall = 0.000
+
+    # each day, 3% of snowfall disappears naturally
+    if Game.weather == "very cold" or Game.weather == "cold" or Game.weather == "cool":  # noqa
+        # if very cold, cold or cool (only)
+        Game.current_snowfall -= (Game.current_snowfall * 0.03)
+    elif Game.weather == "warm" or Game.weather == "hot" or Game.weather == "very hot" or Game.weather == "very rainy":  # noqa
+        # if warm, hot, very hot, or very rainy, then snow melts 5 inches
+        # this gets converted to 0.5 inches of water
+        if Game.current_snowfall >= 5:
+            Game.current_snowfall -= 5
+            Game.current_rainfall += 0.5
+        else:
+            # less than 5 inches of existing snow (reset to 0)
+            Game.current_snowfall = 0
+    if Game.current_snowfall < 0:
+        # snowfall cannot be below 0 (reset it)
+        Game.current_snowfall = 0
 
     # handle daily weather events
     daily_weather(Game)
