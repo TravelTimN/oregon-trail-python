@@ -310,6 +310,7 @@ This includes average daily temperatures, and average monthly precipitation.
 For daily weather, the script extracts the average temperature for that month/zone combo (in Fahrenheit), and then randomly chooses a value between -20 and +20 (from that average temperature), to determine the actual temperature for that day.
 
 | Weather | Temperature |
+| --- | --- |
 | Very Hot | > 90°F |
 | Hot | 70°F-90°F |
 | Warm | 50°F-70°F |
