@@ -282,24 +282,62 @@ During game play, you are able to adjust the food rationing; the rate at which y
 
 ---
 
-## Weather
+## Climate and Weather
 
 As the player travels along the trail, each day’s weather is based on the current month,
 and the player’s current location along the trail.
 
 The simulation retrieves the corresponding average temperature, and adds or subtracts a random deviation.
 The simulation also retrieves the odds of rainfall, and then generates conditions that may be
-dry, rainy, or very rainy.
+dry, rainy, or very rainy. If the weather is very cold, then snow replaces rain.
 
-If the weather is very cold, then snow replaces rain.
+Weather can have affect many aspects of the game, including river levels, health, forward progress, random events, etc.
 
-- cool
-- hot
-- warm
-- cold
-- rainy / snowy
-- very rainy / very snowy
-- severe thunderstorm (lose 1 day)
+To be as realistic as possible to generate temperatures and rainfall, your current location on the trail, and time of year, are based on six distinct geographical zones.
+
+| Zone | Starting Landmark | Ending Landmark | Data based on... |
+| --- | --- | --- | --- |
+| 1 | Independence, MO | Fort Kearney | Kansas City, MO |
+| 2 | Fort Kearney | Fort Laramie | North Platte, NE |
+| 3 | Fort Laramie | Independence Rock | Casper, WY |
+| 4 | Independence Rock | Fort Hall | Lander, WY |
+| 5 | Fort Hall | The Dalles | Boise, ID |
+| 6 | The Dalles | Willamette Valley, OR | Portland, OR |
+
+Each of the six zones contain climate data for each of the 12 months of the year.
+This includes average daily temperatures, and average monthly precipitation.
+
+For daily weather, the script extracts the average temperature for that month/zone combo (in Fahrenheit), and then randomly chooses a value between -20 and +20 (from that average temperature), to determine the actual temperature for that day.
+
+| Weather | Temperature |
+| Very Hot | > 90°F |
+| Hot | 70°F-90°F |
+| Warm | 50°F-70°F |
+| Cool | 30°F-50°F |
+| Cold | 10°F-30°F |
+| Very Cold | < 10°F |
+
+To determine the probability of ti raining on a particular day, the script will extract the average monthly precipitation for that month/zone combo (in inches), and then is multiplied by 3%.
+
+For example, the if the average monthly rainfall in a zone was 4.8 inches, then 4.8 * 3% gives you a 14.4% chance that it will rain on any given day in that month, in that zone.
+
+Once the percentage is calculated, then there is a 30% chance that it will be a "heavy" rain (0.8 inches), and a 70% chance that it will be a "light" rain (0.2 inches).
+If the current temperature is "cold" or "very cold", then snow falls instead of rain (8 inches for heavy snow, and 2 inches for light snow).
+On rainy or snowy days, the weather is reported to the player as "rainy", "very rainy", "snowy", or "very snowy".
+
+To make the weather a bit more realistic, there's one final twist to the weather data.
+On each daily cycle, the application will decide whether to generate "new" weather, or to repeat the previous day's weather.
+There is a 50% chance of repeating the previous day's weather, and therefore a 50% chance that new weather will be generated.
+The new weather could potentially be the same as the old weather, regardless.
+
+Snowfall accumulates on the ground, and rainfall accumulates as ground and surface water.
+Each day, 10% of the accumulated rainfall disappears, and then today's rainfall (if any) is added in.
+
+If the accumulated rainfall drops below 0.2 inches, then drought occurs.
+If the accumulated rainfall drops below 0.1 inches, then the drought becomes severe, and the player is given drought messages ("insufficient grass", "inadequate water", "bad water").
+
+Each day, 3% of the accumulated snowfall disappears if the weather is very cold, cold, or cool, but not very rainy.
+If the weather is warm, hot, very hot, or very rainy, then 5 inches of snow melts, and is converted to 0.5 inches of water.
 
 ---
 
