@@ -338,28 +338,28 @@ There are three branch points in the game, where the player must decide whether 
 Consequently there are 20 trail segments in the network connecting these 18 points.
 However, in a typical game, the player passes just 16 landmarks and travels 15 trail segments.
 
-| ID | Landmark | Type | Next Landmark | Next Landmark | Buy Supplies | Hire Indian | Hire Ferry |
-| :--: | --- | :---: | --- | :---: | :---: | :---: | :---: |
-| L01 | Independence, Missouri | START | Kansas River Crossing | 102 miles | ✅ | | |
-| L02 | Kansas River Crossing | River | Big Blue River Crossing | 82 miles | | ❌ | ✅ |
-| L03 | Big Blue River Crossing | River | Fort Kearney | 118 miles | | ❌ | ❌ |
-| L04 | Fort Kearney | Fort | Chimney Rock | 250 miles | ✅ | | |
-| L05 | Chimney Rock | Misc | Fort Laramie | 86 miles | | | |
-| L06 | Fort Laramie | Fort | Independence Rock | 190 miles | ✅ | | |
-| L07 | Independence Rock | Misc | South Pass | 102 miles | | | |
-| L08 | South Pass | Misc | Green River Crossing | 57 miles | | | |
-| | | | Fort Bridger | 125 miles | | | |
-| L09 | Green River Crossing | River | Soda Springs | 143 miles | | ❌ | ✅ |
-| L10 | Fort Bridger | Fort | Soda Springs | 162 miles | ✅ | | |
-| L11 | Soda Springs | Misc | Fort Hall | 57 miles | | | |
-| L12 | Fort Hall | Fort | Snake River Crossing | 182 miles | ✅ | | |
-| L13 | Snake River Crossing | River | Fort Boise | 113 miles | | ✅ | ❌ |
-| L14 | Fort Boise | Fort | Blue Mountains | 160 miles | ✅ | | |
-| L15 | Blue Mountains | Misc | Fort Walla Walla | 55 miles | | |
-| | | | The Dalles | 125 miles | | | |
-| L16 | Fort Walla Walla | Fort | The Dalles | 120 miles | ✅ | | |
-| L17 | The Dalles | Misc | Willamette Valley, Oregon | 100 miles | | | |
-| L18 | Willamette Valley, Oregon | END | | | | | |
+| ID | Landmark | Type | Region | Next Landmark | Next Landmark | Buy Supplies | Hire Indian | Hire Ferry |
+| :--: | --- | :---: | --- | --- | :---: | :---: | :---: | :---: |
+| L01 | Independence, Missouri | START | Prairie | Kansas River Crossing | 102 miles | ✅ | | |
+| L02 | Kansas River Crossing | River | Prairie | Big Blue River Crossing | 82 miles | | ❌ | ✅ |
+| L03 | Big Blue River Crossing | River | Prairie | Fort Kearney | 118 miles | | ❌ | ❌ |
+| L04 | Fort Kearney | Fort | Prairie | Chimney Rock | 250 miles | ✅ | | |
+| L05 | Chimney Rock | Misc | Prairie | Fort Laramie | 86 miles | | | |
+| L06 | Fort Laramie | Fort | Prairie | Independence Rock | 190 miles | ✅ | | |
+| L07 | Independence Rock | Misc | Prairie | South Pass | 102 miles | | | |
+| L08 | South Pass | Misc | Mountains | Green River Crossing | 57 miles | | | |
+| | | | Mountains | Fort Bridger | 125 miles | | | |
+| L09 | Green River Crossing | River | Mountains | Soda Springs | 143 miles | | ❌ | ✅ |
+| L10 | Fort Bridger | Fort | Mountains | Soda Springs | 162 miles | ✅ | | |
+| L11 | Soda Springs | Misc | Mountains | Fort Hall | 57 miles | | | |
+| L12 | Fort Hall | Fort | Mountains | Snake River Crossing | 182 miles | ✅ | | |
+| L13 | Snake River Crossing | River | Mountains | Fort Boise | 113 miles | | ✅ | ❌ |
+| L14 | Fort Boise | Fort | Mountains | Blue Mountains | 160 miles | ✅ | | |
+| L15 | Blue Mountains | Misc | Mountains | Fort Walla Walla | 55 miles | | |
+| | | | Mountains | The Dalles | 125 miles | | | |
+| L16 | Fort Walla Walla | Fort | Mountains | The Dalles | 120 miles | ✅ | | |
+| L17 | The Dalles | Misc | Mountains | Willamette Valley, Oregon | 100 miles | | | |
+| L18 | Willamette Valley, Oregon | END | Mountains | | | | | |
 
 ### **Independence, Missouri**
 - The start of your journey to Oregon!
