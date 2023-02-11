@@ -186,21 +186,10 @@ def change_ration(Player):
     Player.update_rations()
 
 
-def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon, n):  # noqa
+def daily_weather(Game):
     """
-    One day's cycle.
-    - ✅ increment day on calendar
-    - ✅ deduct food rations
-    - ✅ travel N-miles (if not resting)
-    - ✅ weather cycle
-    - ❌ misfortunes / accidents
-    - ✅❌ decrement health (in progress - accidents/diseases TBC)
+    Handles the daily weather cycle of events.
     """
-    current_location = Game.get_current_location()
-
-    # each day, health value is improved by 10% naturally
-    Player.health_points -= round(Player.health_points * 0.1, 1)
-
     # 50% chance that the weather stays the same as previous day's weather
     change_weather_choices = ["yes", "no"]
     weather_weights = [0.5, 0.5]
@@ -208,6 +197,11 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     if change_weather[0] == "yes":
         Game.get_current_weather()  # update weather
 
+
+def daily_health(Game, Player, Inventory, is_rest_day):
+    """
+    Handles the daily health points, based on certain circumstances.
+    """
     # health: based on weather
     if Game.weather == "very hot":
         Player.health_points += 2
@@ -262,6 +256,28 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
 
     # update overall health based on health points value
     Player.update_health()
+
+
+def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon, n):  # noqa
+    """
+    One day's cycle.
+    - ✅ increment day on calendar
+    - ✅ deduct food rations
+    - ✅ travel N-miles (if not resting)
+    - ✅ weather cycle
+    - ❌ misfortunes / accidents
+    - ✅❌ decrement health (in progress - accidents/diseases TBC)
+    """
+    current_location = Game.get_current_location()
+
+    # each day, health value is improved by 10% naturally
+    Player.health_points -= round(Player.health_points * 0.1, 1)
+
+    # handle daily weather events
+    daily_weather(Game)
+
+    # handle daily health points
+    daily_health(Game, Player, Inventory, is_rest_day)
 
     if show_wagon:
         static_wagon(Game, Inventory, Player)
