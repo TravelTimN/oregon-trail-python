@@ -318,7 +318,7 @@ For daily weather, the script extracts the average temperature for that month/zo
 | Cold | 10°F-30°F |
 | Very Cold | < 10°F |
 
-To determine the probability of ti raining on a particular day, the script will extract the average monthly precipitation for that month/zone combo (in inches), and then is multiplied by 3%.
+To determine the probability of it raining on a particular day, the script will extract the average monthly precipitation for that month/zone combo (in inches), and then is multiplied by 3%.
 
 For example, the if the average monthly rainfall in a zone was 4.8 inches, then 4.8 * 3% gives you a 14.4% chance that it will rain on any given day in that month, in that zone.
 
@@ -365,8 +365,8 @@ If the weather is warm, hot, very hot, or very rainy, then 5 inches of snow melt
 | Finding an abandoned wagon | 2% | Some supplies are gained. |
 | Thief comes during the night | 2% | Some supplies are lost. |
 | Bad water | 10% | 10% chance each day in which the accumulated rainfall is below 0.1 inch. |
-| Very little water | 20% | 20% chance each day in which the accumulated rainfall is below 0.1 inch. |
-| Inadequate grass | 20% | 20% chance each day in which the accumulated rainfall is below 0.1 inch. |
+| Inadequate water | 20% | 20% chance each day in which the accumulated rainfall is below 0.1 inch. |
+| Insufficient grass | 20% | 20% chance each day in which the accumulated rainfall is below 0.1 inch. |
 | Illness | 0%-40% | Depending upon the health of the party. The person and the disease are chosen randomly. |
 
 ---
