@@ -12,7 +12,10 @@ class Game():
         self.date = datetime.datetime(1848, 3, 1)
         self.date_string = self.date.strftime("%B %d, %Y")
         self.weather = None  # very hot | hot | cool | warm | cold | very cold
-        self.rand_temp = None
+        self.rand_temp = 0
+        self.rain_chance = round(float(0.000), 3)
+        self.current_rainfall = round(float(0.5), 3)
+        self.current_snowfall = int(0)
         self.next_destination_distance = 0
         self.distance_traveled = 0
         self.current_location_id = "L01"
@@ -44,10 +47,11 @@ class Game():
         """
         weather_data = next(filter(lambda zone: zone["zone"] == self.current_location["weather_zone"], weather))  # noqa
         month = self.date.month
-        avg_in_month = weather_data["temp"][month-1]  # -1 for 0-indexing
-        min_weather = avg_in_month - 20
-        max_weather = avg_in_month + 20
-        random_temp = random.randint(min_weather, max_weather)
+        # handle temperatures
+        avg_temp = weather_data["temp"][month-1]  # -1 for 0-indexing
+        min_temp = avg_temp - 20
+        max_temp = avg_temp + 20
+        random_temp = random.randint(min_temp, max_temp)
         self.rand_temp = random_temp
         if random_temp > 90:
             self.weather = "very hot"
@@ -61,6 +65,10 @@ class Game():
             self.weather = "cold"
         elif random_temp <= 10:
             self.weather = "very cold"
+        # handle precipitation
+        avg_precip = weather_data["precip"][month-1]  # -1 for 0-indexing
+        rain_chance = avg_precip * 0.03
+        self.rain_chance = rain_chance
 
     def get_current_location(self):
         """
