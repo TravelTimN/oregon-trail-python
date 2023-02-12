@@ -27,12 +27,12 @@ EVENTS = [
     {
         "id": 6,
         "event": "Injured ox",
-        "weight": 0.275
+        "weight": 0.0275
     },
     {
         "id": 7,
         "event": "Injured party member",
-        "weight": 0.275
+        "weight": 0.0275
     },
     {
         "id": 8,
