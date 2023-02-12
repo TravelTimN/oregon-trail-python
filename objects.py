@@ -153,7 +153,9 @@ class Player(Person):
         self.family = []
         self.persons_alive = 0
         self.health = "good"  # good | fair | poor | very poor | dead
-        self.health_points = 0
+        self.health_points = float(0.0)
+        self.starving = float(0.0)
+        self.freezing = float(0.0)
         self.cash = float(0.00)
         self.bill = float(0.00)
         self.pace = "steady"  # steady | strenuous | grueling
