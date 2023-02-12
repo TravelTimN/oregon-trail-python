@@ -32,7 +32,7 @@ def welcome_art():
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
-def static_wagon(GAME, INVENTORY, PLAYER):
+def static_wagon(Game, Inventory, Player, Misfortune):
     """
     A static version of the animation below.
     This is for showing the stats as the game progresses.
@@ -48,17 +48,19 @@ def static_wagon(GAME, INVENTORY, PLAYER):
                                  {brown("7J5BB")}{red("B")}{brown("&@@@@@@@@G")}{red("^^^^7J?~?")}5?JPJ{red("J7JY?~")}J5?JPJ{red("7")}
                                     {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^")}
+{yellow(CENT(Misfortune))}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
 
 
-def animate_wagon(GAME, INVENTORY, PLAYER):
+def animate_wagon(Game, Inventory, Player):
     """
     A 2.4 second animation of the ox pulling the wagon across the screen.
     """
@@ -74,12 +76,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                                     {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -94,12 +98,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                                   {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -114,12 +120,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                                 {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -134,12 +142,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                               {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -154,12 +164,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                             {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -174,12 +186,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                           {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -194,12 +208,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                         {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -214,12 +230,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                       {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -234,12 +252,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                     {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -254,12 +274,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                   {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -274,12 +296,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
                 {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -294,12 +318,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
               {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -314,12 +340,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
             {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -334,12 +362,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
           {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -354,12 +384,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
         {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -374,12 +406,14 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
       {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
     time.sleep(0.15)
     clear()
@@ -394,10 +428,12 @@ def animate_wagon(GAME, INVENTORY, PLAYER):
     {brown(".J@@BY5Y7##&5")}    {red(":~")} ^Y?  5JY{red(".~!")} ^GJ  G5{red("G.")}
 {green("^^^^")}{brown("~G555")}{green("^^^")}{brown("JB!5&J")}{green("^^^^^^^")}7PG?PY{green("^^^^^^")}!PBJ5{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
 
-{"Date:":>39}  {GAME.date_string}
-{"Weather:":>39}  {GAME.weather} ({GAME.rand_temp}°F) [rainfall: {GAME.current_rainfall:.3f}, snowfall: {GAME.current_snowfall:.1f}]
-{"Health:":>39}  {PLAYER.health} ({PLAYER.health_points} pts)
-{"Food:":>39}  {str(INVENTORY.food) + " pounds"}
-{"Next landmark:":>39}  {str(GAME.next_destination_distance) + " miles"}
-{"Miles traveled:":>39}  {str(GAME.distance_traveled) + " miles"}
+{green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")}
+
+{"Date:":>39}  {Game.date_string}
+{"Weather:":>39}  {Game.weather} ({Game.rand_temp}°F) [rainfall: {Game.current_rainfall:.3f}, snowfall: {Game.current_snowfall:.1f}]
+{"Health:":>39}  {Player.health} ({Player.health_points} pts)
+{"Food:":>39}  {str(Inventory.food) + " pounds"}
+{"Next landmark:":>39}  {str(Game.next_destination_distance) + " miles"}
+{"Miles traveled:":>39}  {str(Game.distance_traveled) + " miles"}
     """)  # noqa
