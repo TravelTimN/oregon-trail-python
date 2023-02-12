@@ -277,12 +277,24 @@ def daily_health(Game, Player, Inventory, is_rest_day):
     # health: based on food rations
     if Inventory.food == 0:
         Player.health_points += 6
+        # starving factor: increases exponentially each passing day
+        Player.starving += 0.8
+        Player.health_points += Player.starving
+        input(Player.starving)
     elif Player.rations == "filling":
         Player.health_points += 0
     elif Player.rations == "meager":
         Player.health_points += 2
     elif Player.rations == "bear bones":
         Player.health_points += 4
+    # deduct starving factor by half, if player has food now (trading/hunting)
+    if Inventory.food > 0 and Player.starving > 0:
+        Player.starving = Player.starving / 2
+        if Player.starving > 0.8:
+            Player.health_points += Player.starving
+            input(Player.starving)
+        else:
+            Player.starving = 0  # reset to 0 if negative
 
     # health: based on pace
     if is_rest_day:
