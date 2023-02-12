@@ -308,6 +308,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     - ❌ misfortunes / accidents
     - ✅❌ decrement health (in progress - accidents/diseases TBC)
     """
+    Misfortune = ""
     current_location = Game.get_current_location()
 
     # each day, health value is improved by 10% naturally
@@ -317,21 +318,19 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     if Game.current_snowfall == 0:
         Game.current_rainfall -= round(Game.current_rainfall * 0.1, 3)
     if Game.current_rainfall < 0.1 and Game.current_snowfall == 0:
-        drought_messages = ["insufficient grass", "inadequate water", "bad water", "none"]  # noqa
+        drought_messages = ["Insufficient Grass", "Inadequate Water", "Bad Water", "none"]  # noqa
         drought_chances = [0.1, 0.2, 0.2, 0.5]
         is_drought = random.choices(drought_messages, drought_chances)
         if is_drought[0] != "none":
-            if is_drought[0] == "inadequate water":
+            if is_drought[0] == "Inadequate Water":
                 # health points +10
                 Player.health_points += 10
-            elif is_drought[0] == "bad water":
+            elif is_drought[0] == "Bad Water":
                 # health points +20
                 Player.health_points += 20
             # TODO: put on the static-wagon screen
             if not is_rest_day:
-                input(is_drought[0])
-        # else:  # TODO: remove this after testing
-        #     input("no drought today")
+                Misfortune = is_drought[0]
     if Game.current_rainfall < 0:
         # rainfall cannot be below 0 (reset it)
         Game.current_rainfall = 0.000
@@ -360,7 +359,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     daily_health(Game, Player, Inventory, is_rest_day)
 
     if show_wagon:
-        static_wagon(Game, Inventory, Player)
+        static_wagon(Game, Inventory, Player, Misfortune)
 
     # deduct food rations
     Inventory.food -= Player.rations_pounds_per_day
@@ -393,7 +392,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
 
         Game.add_one_day()  # increment the day +1
         if show_wagon:
-            time.sleep(1)
+            time.sleep(2)
 
 
 def stop_to_rest(Game, Inventory, Player):
