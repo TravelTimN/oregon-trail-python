@@ -1,7 +1,7 @@
 from utils import CENT
 
 
-landmarks = [
+LANDMARKS = [
     {
         "id": "L01",
         "name": "Independence, Missouri",

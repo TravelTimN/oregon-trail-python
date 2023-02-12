@@ -1,4 +1,4 @@
-weather = [
+WEATHER = [
     {
         "zone": 1,
         "location": "Kansas City, MO",
