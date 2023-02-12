@@ -472,7 +472,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         if Inventory.oxen == 0:
             # TODO: no oxen left! cannot continue to travel!
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
-            sys.exit()  # needs to be returned back to main menu / start
+            sys.exit()  # TODO: needs to be returned back to main menu / start
 
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
@@ -1125,7 +1125,15 @@ def start_cycle(Game, Inventory, Player):
                     else:
                         # reached Oregon!
                         # TODO: needs to break out of outer loop also!!!
-                        break
+                        # break
+                        clear()
+                        generate_title_date(green, "Arrived in Oregon", Game.date_string)  # noqa
+                        print("")
+                        print(CENT("Congratulations! You have arrived in Oregon!"))  # noqa
+                        print("")
+                        print(green(LINE))
+                        input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                        sys.exit()  # TODO: return back to main menu
 
                 elif user_input == "2":  # check supplies
                     check_supplies(Inventory, Player)
