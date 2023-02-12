@@ -1,7 +1,8 @@
 import datetime
 import random
-from landmarks import landmarks
-from weather import weather
+from events import EVENTS
+from landmarks import LANDMARKS
+from weather import WEATHER
 
 
 class Game():
@@ -14,12 +15,14 @@ class Game():
         self.weather = None  # very hot | hot | cool | warm | cold | very cold
         self.rand_temp = 0
         self.rain_chance = round(float(0.000), 3)
+        self.thunderstorm_chance = round(float(0.000), 3)
         self.current_rainfall = round(float(0.5), 3)
         self.current_snowfall = int(0)
         self.next_destination_distance = 0
         self.distance_traveled = 0
         self.current_location_id = "L01"
         self.current_location = None
+        self.random_event = None
 
     def set_start_date(self, month):
         """
@@ -45,7 +48,7 @@ class Game():
         Grabs a random number between -20 and +20 from that month's average.
         Using the random number, the "textual" weather value is used.
         """
-        weather_data = next(filter(lambda zone: zone["zone"] == self.current_location["weather_zone"], weather))  # noqa
+        weather_data = next(filter(lambda zone: zone["zone"] == self.current_location["weather_zone"], WEATHER))  # noqa
         month = self.date.month
         # handle temperatures
         avg_temp = weather_data["temp"][month-1]  # -1 for 0-indexing
@@ -69,12 +72,15 @@ class Game():
         avg_precip = weather_data["precip"][month-1]  # -1 for 0-indexing
         rain_chance = avg_precip * 0.03
         self.rain_chance = rain_chance
+        # handle thunderstorms
+        thunderstorm_chance = avg_precip * 0.015
+        self.thunderstorm_chance = thunderstorm_chance
 
     def get_current_location(self):
         """
         Helper function to get the current location data
         """
-        self.current_location = next(filter(lambda landmark: landmark["id"] == self.current_location_id, landmarks))  # noqa
+        self.current_location = next(filter(lambda landmark: landmark["id"] == self.current_location_id, LANDMARKS))  # noqa
         return self.current_location
 
     def shuffle_conversations(self, conversations):
@@ -97,6 +103,16 @@ class Game():
         conversations.pop(0)
         conversations.append(first_conversation)
         return conversations
+
+    def get_random_event(self):
+        """
+        Contains the random events, and selects one (or none) on a daily basis.
+        """
+        event_weights = []
+        for event in EVENTS:
+            event_weights.append(event["weight"])
+        random_event = random.choices(EVENTS, event_weights)
+        self.random_event = random_event[0]
 
 
 class Inventory:
