@@ -399,8 +399,48 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         if is_thunderstorm[0] == "yes":
             days_lost = 1
             for n in range(days_lost):
-                lose_one_day(Game, Inventory, Player, "Severe thunderstorm", days_lost, n)  # noqa
+                lose_one_day(Game, Inventory, Player, "Severe Thunderstorm", days_lost, n)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+    elif event_id == 3:  # Severe blizzard
+        # 15% chance when the weather is cold/very cold/snowy/very snowy.
+        # Lose 1 day.
+        blizzard_weather = ["cold", "very cold", "snowy", "very snow"]
+        if Game.weather in blizzard_weather:
+            days_lost = 1
+            for n in range(days_lost):
+                lose_one_day(Game, Inventory, Player, "Severe Blizzard", days_lost, n)  # noqa
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+    elif event_id == 4:  # Heavy fog
+        # After Fort Hall, a 6% chance of heavy fog, unless "very hot".
+        # 50% chance of losing 1 day.
+        if Game.weather != "very hot":
+            locations = ["L12", "L13", "L14", "L15", "L16", "L17"]
+            if Game.current_location_id in locations:
+                fog_choices = ["yes", "no"]
+                fog_weights = [0.5, 0.5]
+                has_fog = random.choices(fog_choices, fog_weights)
+                if has_fog[0] == "yes":
+                    days_lost = 1
+                    for n in range(days_lost):
+                        lose_one_day(Game, Inventory, Player, "Heavy Fog", days_lost, n)  # noqa
+                    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+    elif event_id == 5:  # Hail storm
+        # Before Fort Hall, a 6% chance of hail storm if weather is "very hot".
+        # 50% chance of losing 1 day.
+        if Game.weather == "very hot":
+            locations = ["L01", "L02", "L03", "L04", "L05", "L06", "L07", "L08", "L09", "L10", "L11", "L12"]  # noqa
+            if Game.current_location_id in locations:
+                hail_choices = ["yes", "no"]
+                hail_weights = [0.5, 0.5]
+                has_hail = random.choices(hail_choices, hail_weights)
+                if has_hail[0] == "yes":
+                    days_lost = 1
+                    for n in range(days_lost):
+                        lose_one_day(Game, Inventory, Player, "Hail Storm", days_lost, n)  # noqa
+                    input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
@@ -413,7 +453,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     - ❌ misfortunes / events
     - ✅❌ health (in progress - accidents/diseases TBC)
     """
-    Misfortune = ""
+    misfortune = ""
     current_location = Game.get_current_location()
 
     # each day, health value is improved by 10% naturally
@@ -435,7 +475,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
                 Player.health_points += 20
             # TODO: put on the static-wagon screen
             if not is_rest_day:
-                Misfortune = is_drought[0]
+                misfortune = is_drought[0]
     if Game.current_rainfall < 0:
         # rainfall cannot be below 0 (reset it)
         Game.current_rainfall = 0.000
@@ -470,7 +510,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
         random_event(Game, Player, Inventory, current_location, is_rest_day)
 
     if show_wagon:
-        static_wagon(Game, Inventory, Player, Misfortune)
+        static_wagon(Game, Inventory, Player, misfortune)
 
     # deduct food rations
     Inventory.food -= Player.rations_pounds_per_day
