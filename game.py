@@ -238,6 +238,28 @@ def daily_weather(Game):
             Game.current_snowfall += 8
 
 
+def thaw_factor(Player):
+    """
+    Handles the algorithm for no longer freezing, sufficient clothing/temp.
+    """
+    # deduct freezing factor by half
+    if Player.freezing > 0:
+        Player.freezing = Player.freezing / 2
+        if Player.freezing > 0.8:
+            Player.health_points += Player.freezing
+        else:
+            Player.freezing = 0  # reset to 0
+
+
+def freeze_factor(Player):
+    """
+    Handles the algorithm for freezing, if insufficient clothing in the cold.
+    """
+    # freezing factor: increases exponentially each passing day
+    Player.freezing += 0.8
+    Player.health_points += Player.freezing
+
+
 def daily_health(Game, Player, Inventory, is_rest_day):
     """
     Handles the daily health points, based on certain circumstances.
@@ -254,10 +276,15 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
         if sets_per_person >= 2:
             Player.health_points += 0
+            # sufficient clothing - start to thaw
+            thaw_factor(Player)
         elif sets_per_person == 0:
             Player.health_points += 2
         else:
             Player.health_points += sets_per_person
+        # freeze factor
+        if sets_per_person < 2:
+            freeze_factor(Player)
     elif Game.weather == "very cold" or Game.weather == "very snowy":
         # add 0 if 4+ sets of clothing per person
         # add 4 if 0 sets of clothing per person
@@ -265,6 +292,8 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
         if sets_per_person >= 4:
             Player.health_points += 0
+            # sufficient clothing - start to thaw
+            thaw_factor(Player)
         elif sets_per_person == 0:
             Player.health_points += 4
         elif sets_per_person == 3:
@@ -273,6 +302,13 @@ def daily_health(Game, Player, Inventory, is_rest_day):
             Player.health_points += 2
         else:
             Player.health_points += 3
+        # freeze factor
+        if sets_per_person < 4:
+            freeze_factor(Player)
+
+    cold_weathers = ["cold", "snowy", "very cold", "very snowy"]
+    if Game.weather not in cold_weathers:
+        thaw_factor(Player)
 
     # health: based on food rations
     if Inventory.food == 0:
@@ -280,7 +316,6 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         # starving factor: increases exponentially each passing day
         Player.starving += 0.8
         Player.health_points += Player.starving
-        input(Player.starving)
     elif Player.rations == "filling":
         Player.health_points += 0
     elif Player.rations == "meager":
@@ -292,9 +327,8 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         Player.starving = Player.starving / 2
         if Player.starving > 0.8:
             Player.health_points += Player.starving
-            input(Player.starving)
         else:
-            Player.starving = 0  # reset to 0 if negative
+            Player.starving = 0  # reset to 0
 
     # health: based on pace
     if is_rest_day:
@@ -348,10 +382,12 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
         Game.current_rainfall = 0.000
 
     # each day, 3% of snowfall disappears naturally
-    if Game.weather == "very cold" or Game.weather == "cold" or Game.weather == "cool":  # noqa
+    melt_slow = ["very cold", "cold", "cool"]
+    melt_fast = ["warm", "hot", "very hot", "very rainy"]
+    if Game.weather in melt_slow:
         # if very cold, cold or cool (only)
         Game.current_snowfall -= (Game.current_snowfall * 0.03)
-    elif Game.weather == "warm" or Game.weather == "hot" or Game.weather == "very hot" or Game.weather == "very rainy":  # noqa
+    elif Game.weather in melt_fast:
         # if warm, hot, very hot, or very rainy, then snow melts 5 inches
         # this gets converted to 0.5 inches of water
         if Game.current_snowfall >= 5:
