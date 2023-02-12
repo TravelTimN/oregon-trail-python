@@ -344,15 +344,74 @@ def daily_health(Game, Player, Inventory, is_rest_day):
     Player.update_health()
 
 
-def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon, n):  # noqa
+def lose_one_day(Game, Inventory, Player, event, days_lost, n):
+    """
+    Callable function to lose a day, similar to resting, but worse.
+    """
+    # visualize daily increments on calendar with day(s) lost and event cause
+    if days_lost > 1:
+        message = f"Lose {days_lost} days."
+    else:
+        message = f"Lose {days_lost} day."
+
+    clear()
+    cycle_one_day(Game, Inventory, Player, False, False, True, False, 0)
+    generate_title_date(red, "On the trail", Game.date_string)
+    print("")
+    print(CENT(event))
+    print(CENT(message))
+    print("")
+    print(CENT(f"Days Lost: {n+1}"))
+    print("")
+    print(red(LINE))
+    Game.add_one_day()  # increment the day +1
+    time.sleep(1)
+
+
+def random_event(Game, Player, Inventory, current_location, is_rest_day):
+    """
+    Handles a number of random events (one per day, if any).
+    """
+    # generate a random event
+    Game.get_random_event()
+    event_id = Game.random_event["id"]
+
+    if event_id == 1:  # Indians help find food
+        # If you are completely out of food,
+        # then local Indians will give you 30 pounds of food.
+        if Inventory.food == 0:
+            Inventory.food += 30
+            clear()
+            print(green(LINE))
+            time.sleep(0.05)
+            print(green(CENT("Indians help find food")))
+            time.sleep(0.05)
+            print(green(LINE))
+            time.sleep(0.05)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+    elif event_id == 2:  # Severe thunderstorm
+        # The probability is based on the average precipitation.
+        # Lose 1 day.
+        thunderstorm_choices = ["yes", "no"]
+        thunderstorm_weights = [Game.thunderstorm_chance, (1 - Game.thunderstorm_chance)]  # noqa
+        is_thunderstorm = random.choices(thunderstorm_choices, thunderstorm_weights)  # noqa
+        if is_thunderstorm[0] == "yes":
+            days_lost = 1
+            for n in range(days_lost):
+                lose_one_day(Game, Inventory, Player, "Severe thunderstorm", days_lost, n)  # noqa
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
+def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
     """
     One day's cycle.
     - ✅ increment day on calendar
     - ✅ deduct food rations
     - ✅ travel N-miles (if not resting)
     - ✅ weather cycle
-    - ❌ misfortunes / accidents
-    - ✅❌ decrement health (in progress - accidents/diseases TBC)
+    - ❌ misfortunes / events
+    - ✅❌ health (in progress - accidents/diseases TBC)
     """
     Misfortune = ""
     current_location = Game.get_current_location()
@@ -406,6 +465,10 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
     # handle daily health points
     daily_health(Game, Player, Inventory, is_rest_day)
 
+    # handle a daily event (potentially)
+    if not is_day_lost:
+        random_event(Game, Player, Inventory, current_location, is_rest_day)
+
     if show_wagon:
         static_wagon(Game, Inventory, Player, Misfortune)
 
@@ -424,6 +487,8 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, show_wagon
         time.sleep(1)
     elif is_trade_day:
         Game.add_one_day()  # increment the day +1
+    elif is_day_lost:
+        pass  # handle in lose_one_day()
     else:
         # not a rest/trade day, so increment miles traveled
         Game.distance_traveled += Player.pace_miles_per_day
@@ -460,7 +525,7 @@ def stop_to_rest(Game, Inventory, Player):
 
     # cycle the day 'n' number of times
     for n in range(0, int(user_input)):
-        cycle_one_day(Game, Inventory, Player, True, False, True, n)
+        cycle_one_day(Game, Inventory, Player, True, False, False, True, n)
 
 
 def attempt_to_trade(Game, Inventory, Player):
@@ -590,7 +655,7 @@ def attempt_to_trade(Game, Inventory, Player):
                         break
 
     # cycle a normal day (deduct food) without showing the static ox/wagon
-    cycle_one_day(Game, Inventory, Player, False, True, False, 0)
+    cycle_one_day(Game, Inventory, Player, False, True, False, False, 0)
 
 
 def display_distance(current, miles, next):
@@ -967,7 +1032,7 @@ def start_cycle(Game, Inventory, Player):
                     # cycle one day per required day to the next destination
                     for n in range(0, days_required_to_next_destination):
                         clear()
-                        cycle_one_day(Game, Inventory, Player, False, False, True, n)  # noqa
+                        cycle_one_day(Game, Inventory, Player, False, False, False, True, n)  # noqa
                     animate_wagon(Game, Inventory, Player)
 
                     # reset distance to next destination
