@@ -200,25 +200,6 @@ The weather also causes health to fluctuate.
 | | +3 | if at least 1 set of clothing per person |
 | | +4 | if 0 sets of clothing per person |
 
-### Health (based on Weather)
-
-The weather also causes health to fluctuate.
-
-| Weather | Points | Notes |
-| :---: | :---: | --- |
-| Very Hot | +2 | |
-| Hot | +1 | |
-| Cool | +0 | Ideal weather, no change |
-| Warm | +0 | Ideal weather, no change |
-| Cold | +0 | if at least 2+ sets of clothing per person |
-| | +1 | if at least 1 set of clothing per person |
-| | +2 | if 0 sets of clothing per person |
-| Very Cold | +0 | if at least 4+ sets of clothing per person |
-| | +1 | if at least 3 sets of clothing per person |
-| | +2 | if at least 2 sets of clothing per person |
-| | +3 | if at least 1 set of clothing per person |
-| | +4 | if 0 sets of clothing per person |
-
 Sliding scale: `Math.floor(sets of clothing / persons alive)`
 
 ### Health (based on Food rations)
