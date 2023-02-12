@@ -121,6 +121,7 @@ class Inventory:
     """
     def __init__(self):
         self.oxen = 0
+        self.ox_injured = False
         self.food = 0
         self.clothing = 0
         self.bullets = 0

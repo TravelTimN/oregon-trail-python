@@ -344,6 +344,19 @@ def daily_health(Game, Player, Inventory, is_rest_day):
     Player.update_health()
 
 
+def lose_no_days(Game, Inventory, Player, message):
+    """
+    Callable function for misfortunes, without losing a day.
+    """
+    clear()
+    generate_title_date(red, "On the trail", Game.date_string)
+    print("")
+    print(CENT(message))
+    print("")
+    print(red(LINE))
+    input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+
 def lose_one_day(Game, Inventory, Player, event, days_lost, n):
     """
     Callable function to lose a day, similar to resting, but worse.
@@ -442,6 +455,25 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                         lose_one_day(Game, Inventory, Player, "Hail Storm", days_lost, n)  # noqa
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
+    elif event_id == 6:  # Injured or dead ox
+        # 2% on prairie / 3.5% in mountains
+        # TODO: weight is currently 0.275 (midway between both) - needs split
+        if Inventory.oxen > 0:
+            if Inventory.ox_injured:
+                # existing ox injured - time to die!
+                Inventory.oxen -= 1
+                Inventory.ox_injured = False  # reset for next ox
+                lose_no_days(Game, Inventory, Player, "One of the oxen has died.")  # noqa
+            else:
+                # no ox injured - ouch time!
+                Inventory.ox_injured = True
+                lose_no_days(Game, Inventory, Player, "One of the oxen is injured.")  # noqa
+
+        if Inventory.oxen == 0:
+            # TODO: no oxen left! cannot continue to travel!
+            lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
+            sys.exit()  # needs to be returned back to main menu / start
+
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
     """
@@ -528,12 +560,14 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     elif is_trade_day:
         Game.add_one_day()  # increment the day +1
     elif is_day_lost:
-        pass  # handle in lose_one_day()
+        pass  # handled in lose_one_day()
     else:
-        # not a rest/trade day, so increment miles traveled
-        Game.distance_traveled += Player.pace_miles_per_day
-        # deduct miles until next destination
-        Game.next_destination_distance -= Player.pace_miles_per_day
+        # only move if there are oxen remaining
+        if Inventory.oxen > 0:
+            # not a rest/trade day, so increment miles traveled
+            Game.distance_traveled += Player.pace_miles_per_day
+            # deduct miles until next destination
+            Game.next_destination_distance -= Player.pace_miles_per_day
         if Game.next_destination_distance < 0:
             # if arriving before day's end,
             # get the absolute abs() value of remaining miles
@@ -943,7 +977,7 @@ def river_crossing():
     River crossing are an essential part of the game mechanics.
     There are variable outcomes, from uneventful, to completely deadly.
     """
-    input("at river")
+    input("Here be a river (soon) - press Enter to proceed")
 
 
 def start_cycle(Game, Inventory, Player):
