@@ -474,6 +474,71 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
             sys.exit()  # TODO: needs to be returned back to main menu / start
 
+    elif event_id == 7:  # Injured party member (broken arm/leg)
+        # 2% chance each day on the prairie; 3.5% chance in mountains.
+        # The person who gets injured is chosen randomly.
+        pass
+
+    elif event_id == 8:  # Snake bite
+        # 0.7% chance each day (no info on this one)
+        # original OREGON: lose misc. supplies/bullets; or death if no medicine
+        pass
+
+    elif event_id == 9:  # Lose trail
+        # 2% chance each day.
+        # Lose 1-5(?) days.
+        pass
+
+    elif event_id == 10:  # Wrong trail
+        # 1% chance each day.
+        # Lose 1-5(?) days.
+        pass
+
+    elif event_id == 11:  # Rough trail
+        # 2.5% chance each day, only in mountains.
+        # Lose 1-5(?) days.
+        pass
+
+    elif event_id == 12:  # Impassible trail
+        # 2.5% chance each day, only in mountains.
+        # Lose 1-9 days.
+        pass
+
+    elif event_id == 13:  # Finding wild fruit
+        # May to September only. 4% chance each day.
+        # Food supply is increased by 20 pounds.
+        pass
+
+    elif event_id == 14:  # Fire in the wagon
+        # 2% chance each day. Some supplies are lost.
+        pass
+
+    elif event_id == 15:  # Lost party member.
+        # 1% chance each day.
+        # Lose 1-5 days.
+        pass
+
+    elif event_id == 16:  # Ox wanders off.
+        # 1% chance each day.
+        # Lose 1-3 days.
+        pass
+
+    elif event_id == 17:  # Finding an abandoned wagon
+        # 2% chance each day.
+        # Some supplies are gained.
+        # Sometimes it's empty: "You find an abandoned wagon, but it's empty."
+        pass
+
+    elif event_id == 18:  # Thief comes during the night
+        # 2% chance each day.
+        # Some supplies are lost.
+        pass
+
+    elif event_id == 19:  # Illness
+        # 0% to 40% chance per day, depending on the health of the party.
+        # The person and the disease are chosen randomly.
+        pass
+
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
     """
