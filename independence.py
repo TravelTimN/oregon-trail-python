@@ -503,6 +503,7 @@ def konami():
     INVENTORY = Inventory()
     PLAYER = Player("banker", "Tim")
     PLAYER.profession_starter_cash()
+    PLAYER.health_points = 0
     for i in range(0, 4):
         family_member = Person(None)
         family_member.name = family_member.get_random_name()
