@@ -559,7 +559,10 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
     elif event_id == 16:  # Ox wanders off.
         # 1% chance each day.
         # Lose 1-3 days.
-        pass
+        days_lost = random.randint(1, 3)
+        for n in range(days_lost):
+            lose_one_day(Game, Inventory, Player, "Ox wanders off.", days_lost, n)  # noqa
+        input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 17:  # Finding an abandoned wagon
         # 2% chance each day.
