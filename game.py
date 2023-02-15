@@ -127,7 +127,7 @@ def change_pace(Player):
         print(f'\t\t{green("4. ")}{"find out what these different paces mean"}')  # noqa
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4"]
 
         # validate if the user selected a valid option
@@ -170,7 +170,7 @@ def change_ration(Player):
         print(f'\t\t{green("3. ")}{"bear bones - meals are very small; everyone stays hungry."}')  # noqa
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {green('[1-3]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-3]')} ").strip()  # noqa
         choices = ["1", "2", "3"]
 
         # validate if the user selected a valid option
@@ -471,37 +471,53 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
 
         if Inventory.oxen == 0:
             # TODO: no oxen left! cannot continue to travel!
+            # Update:
+            # -- You are unable to continue your journey.
+            # -- You have no oxen to pull your wagon.
+            # ---- returns back to "continue on trail menu"
+            # ---- you have the option of attempting to trade for oxen.
+            # ---- speed is reduced with fewer oxen.
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
             sys.exit()  # TODO: needs to be returned back to main menu / start
 
     elif event_id == 7:  # Injured party member (broken arm/leg)
+        # TODO:
         # 2% chance each day on the prairie; 3.5% chance in mountains.
         # The person who gets injured is chosen randomly.
         pass
 
     elif event_id == 8:  # Snake bite
+        # TODO:
         # 0.7% chance each day (no info on this one)
         # original OREGON: lose misc. supplies/bullets; or death if no medicine
         pass
 
     elif event_id == 9:  # Lose trail
         # 2% chance each day.
-        # Lose 1-5(?) days.
-        pass
+        # Lose trail. Lose 1-5 days.
+        days_lost = random.randint(1, 5)
+        print(days_lost)
+        for n in range(days_lost):
+            lose_one_day(Game, Inventory, Player, "Lose trail.", days_lost, n)  # noqa
+        input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 10:  # Wrong trail
         # 1% chance each day.
-        # Lose 1-5(?) days.
-        pass
+        # Lose trail. Lose 1-5 days.
+        days_lost = random.randint(1, 5)
+        print(days_lost)
+        for n in range(days_lost):
+            lose_one_day(Game, Inventory, Player, "Wrong trail.", days_lost, n)  # noqa
+        input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 11:  # Rough trail
         # 2.5% chance each day, only in mountains.
-        # Lose 1-5(?) days.
+        # +10 health points
         pass
 
     elif event_id == 12:  # Impassible trail
         # 2.5% chance each day, only in mountains.
-        # Lose 1-9 days.
+        # Lose 1-10 days.
         pass
 
     elif event_id == 13:  # Finding wild fruit
@@ -511,6 +527,15 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
 
     elif event_id == 14:  # Fire in the wagon
         # 2% chance each day. Some supplies are lost.
+        # A fire in the wagon results in the loss of:
+        # -- 1 set of clothing
+        # -- 154 bullets
+        # -- 1 wagon tongue
+        # -- 83 pounds of food
+        # ------- next time:
+        # -- 12 sets of clothing
+        # -- 1 wagon tongue
+        # -- 28 pounds of food
         pass
 
     elif event_id == 15:  # Lost party member.
@@ -527,11 +552,26 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # 2% chance each day.
         # Some supplies are gained.
         # Sometimes it's empty: "You find an abandoned wagon, but it's empty."
+        # You find an abandoned wagon with the following: 63 bullets
         pass
 
     elif event_id == 18:  # Thief comes during the night
         # 2% chance each day.
         # Some supplies are lost.
+        # A thief comes during the night and steals 46 sets of clothing.
+        # A thief comes during the night and steals 5 sets of clothing.
+        # A thief comes during the night and steals 83 bullets.
+        # A thief comes during the night and steals 31 pounds of food.
+        # A thief comes during the night and steals 44 pounds of food.
+        # A thief comes during the night and steals 14 oxen.
+        # -- I only had 14, so received:
+        # ---- You are unable to continue your journey.
+        # ---- You have no oxen to pull your wagon.
+        # -- Brought me to "continue on trail menu", where I could trade for ox
+        # -- Was able to proceed on journey once I traded for an ox.
+        # -- However!! With only 1 ox; I was only traveling 2 miles per day!
+        # -- Traded again for another ox; travel was 6 miles per day.
+        # -- 15 miles per day with 4 oxen on strenuous.
         pass
 
     elif event_id == 19:  # Illness
@@ -550,6 +590,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     - ❌ misfortunes / events
     - ✅❌ health (in progress - accidents/diseases TBC)
     """
+    # All the people in your party have died.
     misfortune = ""
     current_location = Game.get_current_location()
 
@@ -655,7 +696,7 @@ def stop_to_rest(Game, Inventory, Player):
     while True:
         generate_title(green, "Stop to Rest")
 
-        user_input = input(f"\t\tHow many days would you like to rest? {green('[1-9]')} ")  # noqa
+        user_input = input(f"\t\tHow many days would you like to rest? {green('[1-9]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
         # validate if the user selected a valid option
@@ -759,7 +800,7 @@ def attempt_to_trade(Game, Inventory, Player):
                 time.sleep(0.05)
                 print("")
                 time.sleep(0.05)
-                user_input = input(f"\n\t\tAre you willing to trade? {yellow('[yes/no]')} ")  # noqa
+                user_input = input(f"\n\t\tAre you willing to trade? {yellow('[yes/no]')} ").strip()  # noqa
 
                 # validate if the user selected a valid option
                 if validate_yes_no(user_input):
@@ -824,7 +865,7 @@ def look_around(destination):
     while True:
         generate_title(yellow, "You have arrived")
         print(CENT(f"You are now at {destination}."))
-        user_input = input(f"\n\t\tWould you like to look around? {yellow('[yes/no]')} ")  # noqa
+        user_input = input(f"\n\t\tWould you like to look around? {yellow('[yes/no]')} ").strip()  # noqa
 
         # validate if the user selected a valid option
         if validate_yes_no(user_input):
@@ -862,7 +903,7 @@ def buy_item(Game, Player, Inventory, item, cost, text, question, min, max):
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
             break
 
-        item_qty = input(question)
+        item_qty = input(question).strip()  # noqa
 
         # validate if the user selected a valid option
         if validate_minmax(item_qty, min, max):
@@ -936,7 +977,7 @@ def buy_supplies(Game, Inventory, Player):
         print(CENT(f"""You have ${Player.cash:>2.2f} to spend."""))
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\t\tWhich number? {red('[1-8]')} ")
+        user_input = input(f"\n\t\t\tWhich number? {red('[1-8]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
         # validate if the user selected a valid option
@@ -1042,6 +1083,19 @@ def river_crossing():
     River crossing are an essential part of the game mechanics.
     There are variable outcomes, from uneventful, to completely deadly.
     """
+    # You made the crossing successfully. (Kansas: ford)
+    # You become stuck in the mud. Lose 1 day. (Big Blue: ford)
+    # It was a muddy crossing, but you did not get stuck. (Big Blue: ford)
+    # The ferry got your party and wagon safely across. (Green: ferry)
+    # The Shoshoni guide will help you float your wagon across. (Snake)
+    # You had no trouble floating the wagon across. (Snake: hire Indian)
+    # The ferry broke loose from moorings. You lose:
+    # -- 3 sets of clothing
+    # -- 3 wagon wheels
+    # -- 1 wagon axle
+    # -- 1 wagon tongue
+    # -- 82 pounds of food
+    # -- 4 oxen
     input("Here be a river (soon) - press Enter to proceed")
 
 
@@ -1095,11 +1149,11 @@ def start_cycle(Game, Inventory, Player):
             print(f'\t\t{green("9. ")}{"Buy supplies"}')
             time.sleep(0.05)
 
-            user_input = input(f"\n\t\tWhat is your choice? {green('[1-9]')} ")
+            user_input = input(f"\n\t\tWhat is your choice? {green('[1-9]')} ").strip()  # noqa
             time.sleep(0.05)
             choices = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         else:
-            user_input = input(f"\n\t\tWhat is your choice? {green('[1-8]')} ")
+            user_input = input(f"\n\t\tWhat is your choice? {green('[1-8]')} ").strip()  # noqa
             time.sleep(0.05)
             choices = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
@@ -1130,7 +1184,7 @@ def start_cycle(Game, Inventory, Player):
                             time.sleep(0.05)
                             print(f'\t\t{yellow("3. ")}{"see the map"}')
                             time.sleep(0.05)
-                            user_input = input(f"\n\t\tWhat is your choice? {yellow('[1-3]')} ")  # noqa
+                            user_input = input(f"\n\t\tWhat is your choice? {yellow('[1-3]')} ").strip()  # noqa
                             time.sleep(0.05)
                             choices = ["1", "2", "3"]
 
