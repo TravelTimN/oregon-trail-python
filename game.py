@@ -533,8 +533,8 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 Inventory.food = 2000
             lose_no_days(Game, Inventory, Player, "Find wild fruit.")
 
-
     elif event_id == 14:  # Fire in the wagon
+        # TODO:
         # 2% chance each day. Some supplies are lost.
         # A fire in the wagon results in the loss of:
         # -- 1 set of clothing
@@ -549,8 +549,12 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
 
     elif event_id == 15:  # Lost party member.
         # 1% chance each day.
-        # Lose 1-5 days.
-        pass
+        # Random party member is lost. Lose 1-5 days.
+        random_person = random.choice(Player.family)
+        days_lost = random.randint(1, 5)
+        for n in range(days_lost):
+            lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n)  # noqa
+        input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 16:  # Ox wanders off.
         # 1% chance each day.
@@ -599,7 +603,8 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     - ❌ misfortunes / events
     - ✅❌ health (in progress - accidents/diseases TBC)
     """
-    # All the people in your party have died.
+    # TODO: if 0 ox, cannot move - trade menu only?
+    # TODO: (everyone dead message): All the people in your party have died.
     misfortune = ""
     current_location = Game.get_current_location()
 
@@ -1095,6 +1100,8 @@ def river_crossing():
     # You made the crossing successfully. (Kansas: ford)
     # You become stuck in the mud. Lose 1 day. (Big Blue: ford)
     # It was a muddy crossing, but you did not get stuck. (Big Blue: ford)
+    # The wagon tipped over while floating. You lose: (Big Blue: floating)
+    # -- 571 bullets / 3 wagon wheels / 291 pounds of food
     # The ferry got your party and wagon safely across. (Green: ferry)
     # The Shoshoni guide will help you float your wagon across. (Snake)
     # You had no trouble floating the wagon across. (Snake: hire Indian)
