@@ -600,32 +600,33 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
     elif event_id == 19:  # Illness
         # 0% to 40% chance per day, depending on the health of the party.
         # The person and the disease are chosen randomly.
-        ✅ diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
-        ✅ disease = random.choice(diseases)
-        ✅ persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa
-        ✅ if len(persons_alive) > 0:
-            # only if they are still alive
-            random_person = random.choice(persons_alive)
-        ✅ else:
-            # no family alive - you get lost
-            random_person = Player
-        ✅ health_choices = ["good", "fair", "poor", "very poor"]
-        ✅ health_weights = [
-            (random.uniform(0.0, 0.05)),  # good (0%-5%)
-            (random.uniform(0.06, 0.2)),  # fair (6%-20%)
-            (random.uniform(0.21, 0.3)),  # poor (21%-30%)
-            (random.uniform(0.31, 0.4))  # very poor (31%-40%)
-        ]
-        health_selected = random.choices(health_choices, health_weights)
-        input(health_selected)
-        if Player.health == "good":
-            pass
-        elif Player.health == "fair":
-            pass
-        elif Player.health == "poor":
-            pass
-        elif Player.health == "very poor":
-            pass
+        pass
+        # ✅ diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
+        # ✅ disease = random.choice(diseases)
+        # ✅ persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa
+        # ✅ if len(persons_alive) > 0:
+        #     # only if they are still alive
+        #     random_person = random.choice(persons_alive)
+        # ✅ else:
+        #     # no family alive - you get lost
+        #     random_person = Player
+        # ✅ health_choices = ["good", "fair", "poor", "very poor"]
+        # ✅ health_weights = [
+        #     (random.uniform(0.0, 0.05)),  # good (0%-5%)
+        #     (random.uniform(0.06, 0.2)),  # fair (6%-20%)
+        #     (random.uniform(0.21, 0.3)),  # poor (21%-30%)
+        #     (random.uniform(0.31, 0.4))  # very poor (31%-40%)
+        # ]
+        # health_selected = random.choices(health_choices, health_weights)
+        # input(health_selected)
+        # if Player.health == "good":
+        #     pass
+        # elif Player.health == "fair":
+        #     pass
+        # elif Player.health == "poor":
+        #     pass
+        # elif Player.health == "very poor":
+        #     pass
 
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
