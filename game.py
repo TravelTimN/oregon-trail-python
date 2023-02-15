@@ -550,7 +550,13 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
     elif event_id == 15:  # Lost party member.
         # 1% chance each day.
         # Random party member is lost. Lose 1-5 days.
-        random_person = random.choice(Player.family)
+        persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa
+        if len(persons_alive) > 0:
+            # only if they are still alive
+            random_person = random.choice(persons_alive)
+        else:
+            # no family alive - you get lost
+            random_person = Player
         days_lost = random.randint(1, 5)
         for n in range(days_lost):
             lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n)  # noqa
