@@ -76,7 +76,6 @@ def validate_choice(user_input, choices):
     Checks if the user selected a valid option from the choices provided.
     If not, it raises a value error.
     """
-
     try:
         if user_input not in choices:
             raise ValueError

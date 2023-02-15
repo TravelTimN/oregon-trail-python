@@ -30,7 +30,7 @@ def main_menu():
         print(f'\t\t{orange("5. ")}{"End"}')
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {orange('[1-5]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {orange('[1-5]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4", "5", "uuddlrlrba"]
 
         # validate if the user selected a valid option

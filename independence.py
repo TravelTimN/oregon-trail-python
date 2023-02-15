@@ -32,7 +32,7 @@ def pick_profession():
         print(f'\t\t{green("4. ")}{"Find out the differences between these choices"}')  # noqa
         # time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-4]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4"]
 
         # validate if the user selected a valid option
@@ -57,7 +57,7 @@ def ask_name(question):
     Helper function to ask for player name, and all family names
     """
     while True:
-        user_input = input(question)
+        user_input = input(question).strip()  # noqa
 
         # validate if the user selected a valid option
         if validate_name(user_input):
@@ -89,7 +89,7 @@ def confirm_names():
 
     while True:
         list_player_family()
-        user_input = input(f"Are these names correct? {green('[yes/no]')} ")
+        user_input = input(f"Are these names correct? {green('[yes/no]')} ").strip()  # noqa
 
         # validate if the user selected a valid option
         if validate_yes_no(user_input):
@@ -99,7 +99,7 @@ def confirm_names():
         # prompt for number to change
         while True:
             list_player_family()
-            update_name = input(f"Change which name? {aqua('[1-5]')} ")
+            update_name = input(f"Change which name? {aqua('[1-5]')} ").strip()  # noqa
             choices = ["1", "2", "3", "4", "5"]
 
             # validate 1-5
@@ -144,7 +144,7 @@ def pick_start_month():
         print(f'\t\t\t{green("6. ")}{"Ask for advice"}')
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {green('[1-6]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {green('[1-6]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4", "5", "6"]
 
         # validate if the user selected a valid option
@@ -187,7 +187,7 @@ def populate_family():
         print(f'\t\t{green("1. ")}{"Choose my own wagon party"}')
         print(f'\t\t{green("2. ")}{"Randomly selected wagon party"}')
 
-        choose_names = input(f"\n\t\tWhat is your choice? {green('[1-2]')} ")
+        choose_names = input(f"\n\t\tWhat is your choice? {green('[1-2]')} ").strip()  # noqa
         choices = ["1", "2"]
 
         # validate if the user selected a valid option
@@ -227,7 +227,7 @@ def matts_store_buy_item(item, cost, text, question, min, max):
         print("")
         print(CENT(f"Bill so far: ${PLAYER.bill:.2f}"))
 
-        buy_item = input(question)
+        buy_item = input(question).strip()  # noqa
 
         # validate if the user selected a valid option
         if validate_minmax(buy_item, min, max):
@@ -318,7 +318,7 @@ def matts_store_receipt():
         print(f"\t\t\t{'Amount remaining:':<26}${remaining:>2.2f}")  # noqa
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ")  # noqa
+        user_input = input(f"\n\t\t\tBuy item, or leave store? {red('[1-6]')} ").strip()  # noqa
         choices = ["1", "2", "3", "4", "5", "6"]
 
         # validate if the user selected a valid option

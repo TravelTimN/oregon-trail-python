@@ -20,7 +20,7 @@ def leaderboard_menu():
         print(f'\t\t{gold("3. ")}{"Return to the main menu"}')
         time.sleep(0.05)
 
-        user_input = input(f"\n\t\tWhat is your choice? {gold('[1-3]')} ")
+        user_input = input(f"\n\t\tWhat is your choice? {gold('[1-3]')} ").strip()  # noqa
         choices = ["1", "2", "3"]
 
         # validate if the user selected a valid option
