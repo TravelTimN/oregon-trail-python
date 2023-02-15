@@ -496,7 +496,6 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # 2% chance each day.
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
-        print(days_lost)
         for n in range(days_lost):
             lose_one_day(Game, Inventory, Player, "Lose trail.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
@@ -505,7 +504,6 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # 1% chance each day.
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
-        print(days_lost)
         for n in range(days_lost):
             lose_one_day(Game, Inventory, Player, "Wrong trail.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
@@ -513,17 +511,28 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
     elif event_id == 11:  # Rough trail
         # 2.5% chance each day, only in mountains.
         # +10 health points
-        pass
+        if current_location["region"] == "mountains":
+            Player.health_points += 10
+            lose_no_days(Game, Inventory, Player, "Rough trail.")
 
     elif event_id == 12:  # Impassible trail
         # 2.5% chance each day, only in mountains.
-        # Lose 1-10 days.
-        pass
+        # Lose 5-10 days.  # TODO: 1-10 days? or keep 5-10 days?
+        if current_location["region"] == "mountains":
+            days_lost = random.randint(5, 10)
+            for n in range(days_lost):
+                lose_one_day(Game, Inventory, Player, "Impassible trail.", days_lost, n)  # noqa
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 13:  # Finding wild fruit
         # May to September only. 4% chance each day.
         # Food supply is increased by 20 pounds.
-        pass
+        if Game.date.month >= 5 and Game.date.month <= 9:
+            Inventory.food += 20
+            if Inventory.food > 2000:
+                Inventory.food = 2000
+            lose_no_days(Game, Inventory, Player, "Find wild fruit.")
+
 
     elif event_id == 14:  # Fire in the wagon
         # 2% chance each day. Some supplies are lost.
