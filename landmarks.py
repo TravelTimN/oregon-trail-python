@@ -70,8 +70,8 @@ LANDMARKS = [
         "depth_max": 7.4,
         "width_min": 0,
         "width_max": 0,
-        "swiftness": 0,
-        "bottom_type": "",
+        "swiftness": 3,
+        "bottom_type": "smooth",
         "conversations": [
             {
                 "person": "a stranger",
@@ -124,8 +124,8 @@ LANDMARKS = [
         "depth_max": 0,
         "width_min": 0,
         "width_max": 0,
-        "swiftness": 0,
-        "bottom_type": "",
+        "swiftness": 2,
+        "bottom_type": "muddy",
         "conversations": [
             {
                 "person": "a lady, Marnie Stewart",
@@ -409,8 +409,8 @@ LANDMARKS = [
         "depth_max": 0,
         "width_min": 0,
         "width_max": 0,
-        "swiftness": 0,
-        "bottom_type": "",
+        "swiftness": 5,
+        "bottom_type": "rocky",
         "conversations": [
             {
                 "person": "Big Louie",
@@ -607,8 +607,8 @@ LANDMARKS = [
         "depth_max": 0,
         "width_min": 0,
         "width_max": 0,
-        "swiftness": 0,
-        "bottom_type": "",
+        "swiftness": 7,
+        "bottom_type": "rocky",
         "conversations": [
             {
                 "person": "Big Louie",
