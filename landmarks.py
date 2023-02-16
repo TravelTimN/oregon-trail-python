@@ -66,12 +66,12 @@ LANDMARKS = [
         "next_destination_distance": 82,
         "can_hire_ferry": True,
         "can_hire_indian": False,
-        "depth_min": 2.2,
+        "depth_min": 1.0,
         "depth_max": 7.4,
-        "width_min": 608,
+        "width_min": 600,
         "width_max": 648,
         "swiftness": 3,
-        "bottom_type": "smooth",
+        "bottom_type": 0,  # smooth and firm
         "conversations": [
             {
                 "person": "a stranger",
@@ -120,12 +120,12 @@ LANDMARKS = [
         "next_destination_distance": 118,
         "can_hire_ferry": False,
         "can_hire_indian": False,
-        "depth_min": 1.5,
+        "depth_min": 1.0,
         "depth_max": 4.8,
-        "width_min": 224,
+        "width_min": 220,
         "width_max": 248,
         "swiftness": 2,
-        "bottom_type": "muddy",
+        "bottom_type": 1,  # muddy
         "conversations": [
             {
                 "person": "a lady, Marnie Stewart",
@@ -410,7 +410,7 @@ LANDMARKS = [
         "width_min": 400,
         "width_max": 438,
         "swiftness": 5,
-        "bottom_type": "rocky",
+        "bottom_type": 2,  # rocky and uneven
         "conversations": [
             {
                 "person": "Big Louie",
@@ -608,7 +608,7 @@ LANDMARKS = [
         "width_min": 1000,
         "width_max": 1003,
         "swiftness": 7,
-        "bottom_type": "rocky",
+        "bottom_type": 2,  # rocky and uneven
         "conversations": [
             {
                 "person": "Big Louie",
