@@ -112,6 +112,15 @@ Hiring an Indian:
 
 ![river swiftness](documentation/ot-river-hire-indian.png)
 
+**Bottom Types**
+
+| River | Type | Value |
+| --- | --- | --- |
+| Kansas | Smooth and Firm | 0 |
+| Big Blue | Muddy | 1 |
+| Green | Rocky and Uneven | 2 |
+| Snake | Rocky and Uneven | 2 |
+
 ### Fording the River
 
 Unless the player is crossing an extremely shallow river, **fording** a river always has a 0% chance of success.
@@ -119,13 +128,15 @@ The chance of success can be raised using the same methods as when the player ca
 
 ```python
 if D < 2.5:
-    if BT == 0:
-        # No problems
-    elif BT == 1:
+    if BT == 0:  # smooth
+        # You made the crossing successfully.
+    elif BT == 1:  # muddy
         # 40% chance of getting stuck in mud
-        if stuck in mud:
-            # Lose 1 day getting unstuck
-    elif BT == 2:
+        if stuck_in_mud:
+            # You become stuck in the mud. Lose 1 day.
+        else:
+            # It was a muddy crossing, but you did not get stuck.
+    elif BT == 2:  # rocky
         # 16% chance of overturning
         if overturned:
             # Risk factor V between 10%-40%.
@@ -151,22 +162,72 @@ elif D >= 3:
     # you are guaranteed to lose a party member.
 ```
 
-### Floating Across
-
-
-
-### Caulking the Wagon
+### Floating Across / Caulking
 
 The chances of successfully caulking the wagon to cross a river depends on the water level,
-speed of the current, and condition of the wagon, but can be raised if the player uses pelt to seal the wagon.
-The maximum amount of pelts that can be used depends on the river being crossed.
+speed of the current, and condition of the wagon.
 Also, like the "ford" option, the player can rest before crossing the river to wait for more suitable crossing conditions.
 
-### Ferry
+```python
+if D < 1.5:
+    # The river is too shallow to float across.
+elif D >= 1.5:
+    # Spend one day (caulking, etc.)
+    if D <= 2.5:
+        # You had no trouble floating the wagon across.
+    elif D > 2.5:
+        # Risk of tipping over is (S/20)/IX.
+        if wagon_tips_over:
+            # Risk of losses is based on S.
+            # Risk of losing something in each category of supplies is (0.4+S/25)/IX.
+            # For each category in which you lose supplies, the loss is a random value between 0%-100% of that category.
+            # No oxen are lost, because they were not hitched to the wagon.
+            # The risk of losing a party member is ((S-3)/15)/IX.
+            # Therefore, if the river swiftness is >= 18,
+            # then you are guaranteed to lose someone in your party.
+```
 
-The ferry costs money to use, although it is the only method that immediately has a 100% chance of success.
-The cost of a ferry crossing starts at $5 per oxen and person, although can be lowered through haggling.
-There is also a three day interval between the player paying for the ferry, and actually crossing.
+### Taking the Ferry / Hire an Indian
+
+The ferry costs money to use, although the odds of crossing are significantly higher by using a ferry.
+The cost of a ferry crossing is $5.
+The cost of hiring an Indian is between 2-6 sets of clothing.
+Also, like the "ford" and "float" options, the player can rest before crossing the river to wait for more suitable crossing conditions.
+
+```python
+if D < 2.5:
+    # The ferry is not operating today because the river is too shallow.
+elif D >= 2.5:
+    # The ferry operator says that he will charge you $5.00 and that you will have to wait 2-6 days. Are you willing to do this?
+    if cash < 5:
+        # You do not have enough money to pay for the ferry.
+    else:
+        if S <= 5:
+            # The ferry got your party and wagon safely across.
+        elif S > 5 and S <= 10:
+            # Risk of a problem is 5%*.
+        elif S > 10:
+            # Risk of a problem is 15%*.
+
+# * Risk:
+# The ferry broke loose from moorings. You lose: (list)
+# The risk of losing something in each category of supplies is 80%.
+# For each category in which you lose supplies,
+# the loss is a random value between 0%-100% in that category.
+# The risk of losing oxen is 50% for each ox.
+# The risk of losing a party member is 20%.
+```
+
+Order of operations to display lost supplies:
+
+- clothing
+- bullets
+- wheels
+- axles
+- tongues
+- food
+- oxen
+- party members
 
 ---
 
