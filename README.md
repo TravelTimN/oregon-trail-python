@@ -160,6 +160,8 @@ elif D >= 3:
     # The risk of losing a party member is ((D-2.5)/10)/IX.
     # Therefore, if the river is >=12.5ft deep, and you try to ford it without a guide,
     # you are guaranteed to lose a party member.
+
+# NOTE: Most of these risks are reduced by 80% if you hire a Native American guide.
 ```
 
 ### Floating Across / Caulking
