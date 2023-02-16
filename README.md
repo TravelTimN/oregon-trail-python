@@ -95,6 +95,8 @@ Possible river crossing outcomes:
 
 https://www.died-of-dysentery.com/stories/crossing-rivers.html
 
+### Original Algorithms
+
 ![fording a river](documentation/ot-river-fording.png)
 
 Algorithm for fording a river:
@@ -110,6 +112,48 @@ Hiring an Indian:
 
 ![river swiftness](documentation/ot-river-hire-indian.png)
 
+### Fording the River
+
+Unless the player is crossing an extremely shallow river, **fording** a river always has a 0% chance of success.
+The chance of success can be raised using the same methods as when the player caulks the wagon.
+
+```python
+if D < 2.5:
+    if BT == 0:
+        # No problems
+    elif BT == 1:
+        # 40% chance of getting stuck in mud
+        if stuck in mud:
+            # Lose 1 day getting unstuck
+    elif BT == 2:
+        # 16% chance of overturning
+        if overturned:
+            # Risk factor V between 10%-40%.
+            # For each category of supplies that you still own,
+            # V determines the odds that you lose something in that category.
+            # For each category that you lose some supplies,
+            # your actual loss is a random value between 0%-100% for that category.
+elif D >= 2.5 and D < 3:
+    # Your supplies get wet, and you lose a day.
+    # Never gets stuck, and never overturns.
+    # (unrealistic irl, but simplifies the algorithm)
+elif D >= 3:
+    # Wagon tips over.
+    # Three different risk factors are computed.
+    # The risk of losing something in each category of supplies is (D/10)/IX,
+    # where IX=1 if you have no guide, and IX=5 if you have a guide.
+    # Therefore, if the river is >=10ft deep and you have no guide,
+    # then there is a 100% chance of loss in each category of supplies,
+    # although the actual loss in each category is a random value between 0%-100%.
+    # The risk of losing oxen is ((D-1)/10)IX for each ox.
+    # The risk of losing a party member is ((D-2.5)/10)/IX.
+    # Therefore, if the river is >=12.5ft deep, and you try to ford it without a guide,
+    # you are guaranteed to lose a party member.
+```
+
+### Floating Across
+
+
 
 ### Caulking the Wagon
 
@@ -117,11 +161,6 @@ The chances of successfully caulking the wagon to cross a river depends on the w
 speed of the current, and condition of the wagon, but can be raised if the player uses pelt to seal the wagon.
 The maximum amount of pelts that can be used depends on the river being crossed.
 Also, like the "ford" option, the player can rest before crossing the river to wait for more suitable crossing conditions.
-
-### Fording
-
-Unless the player is crossing an extremely shallow river, **fording** a river always has a 0% chance of success.
-The chance of success can be raised using the same methods as when the player caulks the wagon.
 
 ### Ferry
 
