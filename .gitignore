@@ -6,4 +6,4 @@ __pycache__/
 *.py[cod]
 node_modules/
 .github/
-*test*.py
+*test*[.py, .txt]
