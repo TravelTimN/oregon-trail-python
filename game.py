@@ -576,6 +576,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # Some supplies are gained.
         # Sometimes it's empty: "You find an abandoned wagon, but it's empty."
         # You find an abandoned wagon with the following: 63 bullets
+        # You find an abandoned wagon with the following: 1 wagon tongue
         pass
 
     elif event_id == 18:  # Thief comes during the night
@@ -586,6 +587,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # A thief comes during the night and steals 83 bullets.
         # A thief comes during the night and steals 31 pounds of food.
         # A thief comes during the night and steals 44 pounds of food.
+        # A thief comes during the night and steals 84 pounds of food.
         # A thief comes during the night and steals 14 oxen.
         # -- I only had 14, so received:
         # ---- You are unable to continue your journey.
