@@ -273,7 +273,7 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         # add 0 if 2+ sets of clothing per person
         # add 2 if 0 sets of clothing per person
         # apply sliding scale between 0-2 sets per person
-        sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
+        sets_per_person = math.floor(Inventory.clothing / len(Player.persons_alive))  # noqa
         if sets_per_person >= 2:
             Player.health_points += 0
             # sufficient clothing - start to thaw
@@ -289,7 +289,7 @@ def daily_health(Game, Player, Inventory, is_rest_day):
         # add 0 if 4+ sets of clothing per person
         # add 4 if 0 sets of clothing per person
         # apply sliding scale between 0-4 sets per person
-        sets_per_person = math.floor(Inventory.clothing / Player.persons_alive)
+        sets_per_person = math.floor(Inventory.clothing / len(Player.persons_alive))  # noqa
         if sets_per_person >= 4:
             Player.health_points += 0
             # sufficient clothing - start to thaw
@@ -389,7 +389,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
     Game.get_random_event()
     event_id = Game.random_event["id"]
 
-    if event_id == 1:  # Indians help find food
+    if event_id == 1:  # ✅ Indians help find food
         # If you are completely out of food,
         # then local Indians will give you 30 pounds of food.
         if Inventory.food == 0:
@@ -403,7 +403,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             time.sleep(0.05)
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 2:  # Severe thunderstorm
+    elif event_id == 2:  # ✅ Severe thunderstorm
         # The probability is based on the average precipitation.
         # Lose 1 day.
         thunderstorm_choices = ["yes", "no"]
@@ -415,7 +415,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 lose_one_day(Game, Inventory, Player, "Severe Thunderstorm", days_lost, n)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 3:  # Severe blizzard
+    elif event_id == 3:  # ✅ Severe blizzard
         # 15% chance when the weather is cold/very cold/snowy/very snowy.
         # Lose 1 day.
         blizzard_weather = ["cold", "very cold", "snowy", "very snow"]
@@ -425,7 +425,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 lose_one_day(Game, Inventory, Player, "Severe Blizzard", days_lost, n)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 4:  # Heavy fog
+    elif event_id == 4:  # ✅ Heavy fog
         # After Fort Hall, a 6% chance of heavy fog, unless "very hot".
         # 50% chance of losing 1 day.
         if Game.weather != "very hot":
@@ -440,7 +440,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                         lose_one_day(Game, Inventory, Player, "Heavy Fog", days_lost, n)  # noqa
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 5:  # Hail storm
+    elif event_id == 5:  # ✅ Hail storm
         # Before Fort Hall, a 6% chance of hail storm if weather is "very hot".
         # 50% chance of losing 1 day.
         if Game.weather == "very hot":
@@ -455,7 +455,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                         lose_one_day(Game, Inventory, Player, "Hail Storm", days_lost, n)  # noqa
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 6:  # Injured or dead ox
+    elif event_id == 6:  # ✅ Injured or dead ox
         # 2% on prairie / 3.5% in mountains
         # TODO: weight is currently 0.275 (midway between both) - needs split
         if Inventory.oxen > 0:
@@ -469,7 +469,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 Inventory.ox_injured = True
                 lose_no_days(Game, Inventory, Player, "One of the oxen is injured.")  # noqa
 
-        if Inventory.oxen == 0:
+        if Inventory.oxen == 0:  # ❌❌❌
             # TODO: no oxen left! cannot continue to travel!
             # Update:
             # -- You are unable to continue your journey.
@@ -480,19 +480,19 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
             sys.exit()  # TODO: needs to be returned back to main menu / start
 
-    elif event_id == 7:  # Injured party member (broken arm/leg)
+    elif event_id == 7:  # ❌ Injured party member (broken arm/leg)
         # TODO:
         # 2% chance each day on the prairie; 3.5% chance in mountains.
         # The person who gets injured is chosen randomly.
         pass
 
-    elif event_id == 8:  # Snake bite
+    elif event_id == 8:  # ❌ Snake bite
         # TODO:
         # 0.7% chance each day (no info on this one)
         # original OREGON: lose misc. supplies/bullets; or death if no medicine
         pass
 
-    elif event_id == 9:  # Lose trail
+    elif event_id == 9:  # ✅ Lose trail
         # 2% chance each day.
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
@@ -500,7 +500,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_one_day(Game, Inventory, Player, "Lose trail.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 10:  # Wrong trail
+    elif event_id == 10:  # ✅ Wrong trail
         # 1% chance each day.
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
@@ -508,23 +508,23 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_one_day(Game, Inventory, Player, "Wrong trail.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 11:  # Rough trail
+    elif event_id == 11:  # ✅ Rough trail
         # 2.5% chance each day, only in mountains.
         # +10 health points
         if current_location["region"] == "mountains":
             Player.health_points += 10
             lose_no_days(Game, Inventory, Player, "Rough trail.")
 
-    elif event_id == 12:  # Impassible trail
+    elif event_id == 12:  # ✅ Impassible trail
         # 2.5% chance each day, only in mountains.
-        # Lose 5-10 days.  # TODO: 1-10 days? or keep 5-10 days?
+        # Lose 5-10 days.
         if current_location["region"] == "mountains":
             days_lost = random.randint(5, 10)
             for n in range(days_lost):
                 lose_one_day(Game, Inventory, Player, "Impassible trail.", days_lost, n)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 13:  # Finding wild fruit
+    elif event_id == 13:  # ✅ Finding wild fruit
         # May to September only. 4% chance each day.
         # Food supply is increased by 20 pounds.
         if Game.date.month >= 5 and Game.date.month <= 9:
@@ -533,7 +533,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 Inventory.food = 2000
             lose_no_days(Game, Inventory, Player, "Find wild fruit.")
 
-    elif event_id == 14:  # Fire in the wagon
+    elif event_id == 14:  # ❌ Fire in the wagon
         # TODO:
         # 2% chance each day. Some supplies are lost.
         # A fire in the wagon results in the loss of:
@@ -547,13 +547,13 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # -- 28 pounds of food
         pass
 
-    elif event_id == 15:  # Lost party member.
+    elif event_id == 15:  # ✅ Lost party member.
         # 1% chance each day.
         # Random party member is lost. Lose 1-5 days.
-        persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa
-        if len(persons_alive) > 0:
-            # only if they are still alive
-            random_person = random.choice(persons_alive)
+        family_alive = Player.family_alive
+        if len(family_alive) > 0:
+            # only if someone else is still alive
+            random_person = random.choice(family_alive)
         else:
             # no family alive - you get lost
             random_person = Player
@@ -562,7 +562,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 16:  # Ox wanders off.
+    elif event_id == 16:  # ✅ Ox wanders off.
         # 1% chance each day.
         # Lose 1-3 days.
         days_lost = random.randint(1, 3)
@@ -570,7 +570,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             lose_one_day(Game, Inventory, Player, "Ox wanders off.", days_lost, n)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 17:  # Finding an abandoned wagon
+    elif event_id == 17:  # ❌ Finding an abandoned wagon
         # TODO:
         # 2% chance each day.
         # Some supplies are gained.
@@ -579,9 +579,10 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # You find an abandoned wagon with the following: 1 wagon tongue
         pass
 
-    elif event_id == 18:  # Thief comes during the night
+    elif event_id == 18:  # ❌ Thief comes during the night
         # 2% chance each day.
         # Some supplies are lost.
+        # TODO:
         # A thief comes during the night and steals 46 sets of clothing.
         # A thief comes during the night and steals 5 sets of clothing.
         # A thief comes during the night and steals 83 bullets.
@@ -599,21 +600,21 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # -- 15 miles per day with 4 oxen on strenuous.
         pass
 
-    elif event_id == 19:  # Illness
+    elif event_id == 19:  # ❌ Illness
         # 0% to 40% chance per day, depending on the health of the party.
         # The person and the disease are chosen randomly.
         pass
-        # ✅ diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
-        # ✅ disease = random.choice(diseases)
-        # ✅ persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa
-        # ✅ if len(persons_alive) > 0:
+        # diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa ✅
+        # disease = random.choice(diseases)  # ✅
+        # persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa ✅
+        # if len(persons_alive) > 0:  # ✅
         #     # only if they are still alive
         #     random_person = random.choice(persons_alive)
-        # ✅ else:
+        # else:  # ✅
         #     # no family alive - you get lost
         #     random_person = Player
-        # ✅ health_choices = ["good", "fair", "poor", "very poor"]
-        # ✅ health_weights = [
+        # health_choices = ["good", "fair", "poor", "very poor"]  # ✅
+        # health_weights = [  # ✅
         #     (random.uniform(0.0, 0.05)),  # good (0%-5%)
         #     (random.uniform(0.06, 0.2)),  # fair (6%-20%)
         #     (random.uniform(0.21, 0.3)),  # poor (21%-30%)
