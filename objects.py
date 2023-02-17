@@ -168,7 +168,8 @@ class Player(Person):
         super().__init__(name)
         self.profession = profession
         self.family = []
-        self.persons_alive = 0
+        self.persons_alive = []
+        self.family_alive = []
         self.health = "good"  # good | fair | poor | very poor | dead
         self.health_points = float(0.0)
         self.starving = float(0.0)
@@ -193,10 +194,20 @@ class Player(Person):
 
     def get_persons_alive(self):
         """
-        Filters the number of people still alive.
+        Filters the number of people still alive (including Player).
         """
         persons_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
-        self.persons_alive = len(persons_alive) + 1  # +1 is the player
+        for person in persons_alive:
+            self.persons_alive.append(person)
+        self.persons_alive.append(self)
+
+    def get_family_alive(self):
+        """
+        Filters the number of family members still alive (excluding Player).
+        """
+        family_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
+        for person in family_alive:
+            self.family_alive.append(person)
 
     def update_health(self):
         """
@@ -229,13 +240,13 @@ class Player(Person):
         """
         if self.rations == "filling":
             # 3 pounds per person, per day (max 15)
-            self.rations_pounds_per_day = 3 * self.persons_alive
+            self.rations_pounds_per_day = 3 * len(self.persons_alive)
         elif self.rations == "meager":
             # 2 pounds per person, per day (max 10)
-            self.rations_pounds_per_day = 2 * self.persons_alive
+            self.rations_pounds_per_day = 2 * len(self.persons_alive)
         elif self.rations == "bear bones":
             # 1 pound per person, per day (max 5)
-            self.rations_pounds_per_day = 1 * self.persons_alive
+            self.rations_pounds_per_day = 1 * len(self.persons_alive)
 
 
 class Landmark():
