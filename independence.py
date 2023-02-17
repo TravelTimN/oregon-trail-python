@@ -114,6 +114,7 @@ def confirm_names():
 
     # update the total number of persons alive
     PLAYER.get_persons_alive()
+    PLAYER.get_family_alive()
 
 
 def pick_start_month():
@@ -509,6 +510,7 @@ def konami():
         family_member.name = family_member.get_random_name()
         PLAYER.family.append(family_member)
     PLAYER.get_persons_alive()
+    PLAYER.get_family_alive()
     GAME.date = GAME.set_start_date(3)
     INVENTORY.oxen = 18
     INVENTORY.food = 2000
