@@ -601,35 +601,55 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         pass
 
     elif event_id == 19:  # ❌ Illness
+        # TODO: this shouldn't be in random events!
+        # TODO: this should be part of daily cycle
         # 0% to 40% chance per day, depending on the health of the party.
         # The person and the disease are chosen randomly.
-        pass
-        # diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa ✅
-        # disease = random.choice(diseases)  # ✅
-        # persons_alive = list(filter(lambda persons: persons.is_alive == True, Player.family))  # noqa ✅
-        # if len(persons_alive) > 0:  # ✅
-        #     # only if they are still alive
-        #     random_person = random.choice(persons_alive)
-        # else:  # ✅
-        #     # no family alive - you get lost
-        #     random_person = Player
-        # health_choices = ["good", "fair", "poor", "very poor"]  # ✅
-        # health_weights = [  # ✅
-        #     (random.uniform(0.0, 0.05)),  # good (0%-5%)
-        #     (random.uniform(0.06, 0.2)),  # fair (6%-20%)
-        #     (random.uniform(0.21, 0.3)),  # poor (21%-30%)
-        #     (random.uniform(0.31, 0.4))  # very poor (31%-40%)
-        # ]
-        # health_selected = random.choices(health_choices, health_weights)
-        # input(health_selected)
-        # if Player.health == "good":
-        #     pass
-        # elif Player.health == "fair":
-        #     pass
-        # elif Player.health == "poor":
-        #     pass
-        # elif Player.health == "very poor":
-        #     pass
+
+        # randomly select if someone will get ill today
+        ill_choices = ["yes", "no"]
+        if Player.health == "good":  # good (0%-5%)
+            ill_chance = random.uniform(0.0, 0.05)
+        elif Player.health == "fair":  # fair (6%-20%)
+            ill_chance = random.uniform(0.06, 0.2)
+        elif Player.health == "poor":  # poor (21%-30%)
+            ill_chance = random.uniform(0.21, 0.3)
+        elif Player.health == "very poor":  # very poor (31%-40%)
+            ill_chance = random.uniform(0.31, 0.4)
+        ill_weights = [ill_chance, (1 - ill_chance)]
+        get_ill = random.choices(ill_choices, ill_weights)
+
+        if get_ill[0] == "yes":
+            # diseases
+            diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
+            disease = random.choice(diseases)
+
+            # unlucky person getting sick
+            family_alive = Player.family_alive
+            if len(family_alive) > 0:
+                # only if someone else is still alive
+                random_person = random.choice(family_alive)
+            else:
+                # no family alive - you get disease
+                random_person = Player
+
+            if random_person.illness is None:
+                # person doesn't already have an illness
+                random_person.illness = disease
+                random_person.days_until_healthy = 10
+                print(f"{random_person.name} has {random_person.illness}\n")  # noqa
+                # TODO: each day, loop through players alive, and reduce their health days
+                input("Press Enter to Continue")
+            else:
+                # person already sick, so kill them
+                random_person.is_alive = False
+                Player.get_persons_alive()
+                Player.get_family_alive()
+                print(f"{random_person.name} has died of {random_person.illness}\n")  # noqa
+                input("Press Enter to Continue")
+        if not Player.is_alive:
+            print("You have died! Game Over!")
+            sys.exit()
 
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
