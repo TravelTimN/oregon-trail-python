@@ -196,7 +196,8 @@ class Player(Person):
         """
         Filters the number of people still alive (including Player).
         """
-        persons_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
+        self.persons_alive = []  # reset each time
+        persons_alive = list(filter(lambda person: person.is_alive == True, self.family))  # noqa
         for person in persons_alive:
             self.persons_alive.append(person)
         self.persons_alive.append(self)
@@ -205,7 +206,8 @@ class Player(Person):
         """
         Filters the number of family members still alive (excluding Player).
         """
-        family_alive = list(filter(lambda count: self.is_alive == True, self.family))  # noqa
+        self.family_alive = []  # reset each time
+        family_alive = list(filter(lambda person: person.is_alive == True, self.family))  # noqa
         for person in family_alive:
             self.family_alive.append(person)
 
