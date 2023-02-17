@@ -264,6 +264,32 @@ You will be required to carry supplies with you to help make the arduous journey
 
 ---
 
+## Hunting
+
+### Sounds
+
+Onomatopoeia words for gunfire/shots:
+
+- bang
+- pow
+- wham
+- pew pew
+- boom
+- kablam
+- kaboom
+
+### Animals
+
+| Animal | Speed | Location | Weight |
+| --- | --- | --- | --- |
+| Bison | slow | plains | 852-991 lbs |
+| Bear | slow | mountains | 104-170 lbs |
+| Deer | medium | anywhere | 54-74 lbs |
+| Rabbit | fast | anywhere | 2lbs |
+| Squirrel | fast | anywhere | 1lb |
+
+---
+
 ## Health
 
 While alive, there are four (4) different health states you and your party can encounter: good / fair / poor / very poor.
