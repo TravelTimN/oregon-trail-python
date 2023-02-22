@@ -383,7 +383,7 @@ def lose_one_day(Game, Inventory, Player, event, days_lost, n, random_person):
         time.sleep(1)
 
 
-def handle_illnesses(Player):
+def handle_illnesses(Player, Game):
     """
     - 0% to 40% chance per day, depending on the health of the party.
     - The person and the disease are chosen randomly.
@@ -419,18 +419,37 @@ def handle_illnesses(Player):
             # person doesn't already have an illness
             random_person.illness = disease
             random_person.days_until_healthy = 10
-            print(f"{random_person.name} has {random_person.illness}\n")  # noqa
-            input("Press Enter to Continue")
+            # add 20 when diseased party member first gets disease
+            Player.health_points += 20
+            event = f"{random_person.name} has {random_person.illness}"
+            generate_title_date(red, "On the trail", Game.date_string)
+            print("")
+            print(CENT(event))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
         else:
             # person already sick, so kill them
             random_person.is_alive = False
             Player.get_persons_alive()
             Player.get_family_alive()
-            print(f"{random_person.name} has died of {random_person.illness}\n")  # noqa
-            input("Press Enter to Continue")
+            event = f"{random_person.name} has died of {random_person.illness}"
+            generate_title_date(red, "On the trail", Game.date_string)
+            print("")
+            print(CENT(event))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
     if not Player.is_alive:
         # TODO: bring back to main menu (?)
-        print("You have died! Game Over!")
+        generate_title_date(red, "You Have Died", Game.date_string)
+        print("")
+        print(CENT("You have died! Game Over!"))
+        print("")
+        print(red(LINE))
+        time.sleep(1)
         sys.exit()
 
 
@@ -690,7 +709,6 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
             elif is_drought[0] == "Bad Water":
                 # health points +20
                 Player.health_points += 20
-            # TODO: put on the static-wagon screen
             if not is_rest_day:
                 misfortune = is_drought[0]
     if Game.current_rainfall < 0:
@@ -723,7 +741,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     daily_health(Game, Player, Inventory, is_rest_day)
 
     # handle a daily event (potentially)
-    if not is_day_lost:
+    if not is_day_lost and not is_rest_day:
         random_event(Game, Player, Inventory, current_location, is_rest_day)
 
     # anyone with an illness takes 10 days to heal
@@ -731,10 +749,15 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     if len(persons_alive) > 0:
         for person in persons_alive:
             if person.days_until_healthy > 0:
+                # for each sick/injured person, add 1 health point
+                Player.health_points += 1
+                # player heals each day
                 person.days_until_healthy -= 1
                 if person.days_until_healthy == 0:
+                    # person is healed now, no illness
                     person.illness = None
-    handle_illnesses(Player)
+    if not is_rest_day:
+        handle_illnesses(Player, Game)
 
     if show_wagon:
         static_wagon(Game, Inventory, Player, misfortune)
