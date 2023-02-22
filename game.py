@@ -357,7 +357,7 @@ def lose_no_days(Game, Inventory, Player, message):
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
-def lose_one_day(Game, Inventory, Player, event, days_lost, n):
+def lose_one_day(Game, Inventory, Player, event, days_lost, n, random_person):
     """
     Callable function to lose a day, similar to resting, but worse.
     """
@@ -369,16 +369,69 @@ def lose_one_day(Game, Inventory, Player, event, days_lost, n):
 
     clear()
     cycle_one_day(Game, Inventory, Player, False, False, True, False, 0)
-    generate_title_date(red, "On the trail", Game.date_string)
-    print("")
-    print(CENT(event))
-    print(CENT(message))
-    print("")
-    print(CENT(f"Days Lost: {n+1}"))
-    print("")
-    print(red(LINE))
-    Game.add_one_day()  # increment the day +1
-    time.sleep(1)
+    # only if they're still alive, or no random_person available
+    if random_person is None or random_person.is_alive:
+        generate_title_date(red, "On the trail", Game.date_string)
+        print("")
+        print(CENT(event))
+        print(CENT(message))
+        print("")
+        print(CENT(f"Days Lost: {n+1}"))
+        print("")
+        print(red(LINE))
+        Game.add_one_day()  # increment the day +1
+        time.sleep(1)
+
+
+def handle_illnesses(Player):
+    """
+    - 0% to 40% chance per day, depending on the health of the party.
+    - The person and the disease are chosen randomly.
+    """
+    # randomly select if someone will get ill today
+    ill_choices = ["yes", "no"]
+    if Player.health == "good":  # good (0%-5%)
+        ill_chance = random.uniform(0.0, 0.05)
+    elif Player.health == "fair":  # fair (6%-20%)
+        ill_chance = random.uniform(0.06, 0.2)
+    elif Player.health == "poor":  # poor (21%-30%)
+        ill_chance = random.uniform(0.21, 0.3)
+    elif Player.health == "very poor":  # very poor (31%-40%)
+        ill_chance = random.uniform(0.31, 0.4)
+    ill_weights = [ill_chance, (1 - ill_chance)]
+    get_ill = random.choices(ill_choices, ill_weights)
+
+    if get_ill[0] == "yes":
+        # diseases
+        diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
+        disease = random.choice(diseases)
+
+        # unlucky person getting sick
+        family_alive = Player.family_alive
+        if len(family_alive) > 0:
+            # only if someone else is still alive
+            random_person = random.choice(family_alive)
+        else:
+            # no family alive - you get disease
+            random_person = Player
+
+        if random_person.illness is None:
+            # person doesn't already have an illness
+            random_person.illness = disease
+            random_person.days_until_healthy = 10
+            print(f"{random_person.name} has {random_person.illness}\n")  # noqa
+            input("Press Enter to Continue")
+        else:
+            # person already sick, so kill them
+            random_person.is_alive = False
+            Player.get_persons_alive()
+            Player.get_family_alive()
+            print(f"{random_person.name} has died of {random_person.illness}\n")  # noqa
+            input("Press Enter to Continue")
+    if not Player.is_alive:
+        # TODO: bring back to main menu (?)
+        print("You have died! Game Over!")
+        sys.exit()
 
 
 def random_event(Game, Player, Inventory, current_location, is_rest_day):
@@ -412,7 +465,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         if is_thunderstorm[0] == "yes":
             days_lost = 1
             for n in range(days_lost):
-                lose_one_day(Game, Inventory, Player, "Severe Thunderstorm", days_lost, n)  # noqa
+                lose_one_day(Game, Inventory, Player, "Severe Thunderstorm", days_lost, n, None)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 3:  # ✅ Severe blizzard
@@ -422,7 +475,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         if Game.weather in blizzard_weather:
             days_lost = 1
             for n in range(days_lost):
-                lose_one_day(Game, Inventory, Player, "Severe Blizzard", days_lost, n)  # noqa
+                lose_one_day(Game, Inventory, Player, "Severe Blizzard", days_lost, n, None)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 4:  # ✅ Heavy fog
@@ -437,7 +490,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 if has_fog[0] == "yes":
                     days_lost = 1
                     for n in range(days_lost):
-                        lose_one_day(Game, Inventory, Player, "Heavy Fog", days_lost, n)  # noqa
+                        lose_one_day(Game, Inventory, Player, "Heavy Fog", days_lost, n, None)  # noqa
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 5:  # ✅ Hail storm
@@ -452,7 +505,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
                 if has_hail[0] == "yes":
                     days_lost = 1
                     for n in range(days_lost):
-                        lose_one_day(Game, Inventory, Player, "Hail Storm", days_lost, n)  # noqa
+                        lose_one_day(Game, Inventory, Player, "Hail Storm", days_lost, n, None)  # noqa
                     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 6:  # ✅ Injured or dead ox
@@ -497,7 +550,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
         for n in range(days_lost):
-            lose_one_day(Game, Inventory, Player, "Lose trail.", days_lost, n)  # noqa
+            lose_one_day(Game, Inventory, Player, "Lose trail.", days_lost, n, None)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 10:  # ✅ Wrong trail
@@ -505,7 +558,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # Lose trail. Lose 1-5 days.
         days_lost = random.randint(1, 5)
         for n in range(days_lost):
-            lose_one_day(Game, Inventory, Player, "Wrong trail.", days_lost, n)  # noqa
+            lose_one_day(Game, Inventory, Player, "Wrong trail.", days_lost, n, None)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 11:  # ✅ Rough trail
@@ -521,7 +574,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         if current_location["region"] == "mountains":
             days_lost = random.randint(5, 10)
             for n in range(days_lost):
-                lose_one_day(Game, Inventory, Player, "Impassible trail.", days_lost, n)  # noqa
+                lose_one_day(Game, Inventory, Player, "Impassible trail.", days_lost, n, None)  # noqa
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 13:  # ✅ Finding wild fruit
@@ -559,7 +612,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
             random_person = Player
         days_lost = random.randint(1, 5)
         for n in range(days_lost):
-            lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n)  # noqa
+            lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n, random_person)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 16:  # ✅ Ox wanders off.
@@ -567,7 +620,7 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         # Lose 1-3 days.
         days_lost = random.randint(1, 3)
         for n in range(days_lost):
-            lose_one_day(Game, Inventory, Player, "Ox wanders off.", days_lost, n)  # noqa
+            lose_one_day(Game, Inventory, Player, "Ox wanders off.", days_lost, n, None)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 17:  # ❌ Finding an abandoned wagon
@@ -601,55 +654,8 @@ def random_event(Game, Player, Inventory, current_location, is_rest_day):
         pass
 
     elif event_id == 19:  # ❌ Illness
-        # TODO: this shouldn't be in random events!
-        # TODO: this should be part of daily cycle
-        # 0% to 40% chance per day, depending on the health of the party.
-        # The person and the disease are chosen randomly.
-
-        # randomly select if someone will get ill today
-        ill_choices = ["yes", "no"]
-        if Player.health == "good":  # good (0%-5%)
-            ill_chance = random.uniform(0.0, 0.05)
-        elif Player.health == "fair":  # fair (6%-20%)
-            ill_chance = random.uniform(0.06, 0.2)
-        elif Player.health == "poor":  # poor (21%-30%)
-            ill_chance = random.uniform(0.21, 0.3)
-        elif Player.health == "very poor":  # very poor (31%-40%)
-            ill_chance = random.uniform(0.31, 0.4)
-        ill_weights = [ill_chance, (1 - ill_chance)]
-        get_ill = random.choices(ill_choices, ill_weights)
-
-        if get_ill[0] == "yes":
-            # diseases
-            diseases = ["exhaustion", "typhoid", "cholera", "measles", "dysentery", "a fever"]  # noqa
-            disease = random.choice(diseases)
-
-            # unlucky person getting sick
-            family_alive = Player.family_alive
-            if len(family_alive) > 0:
-                # only if someone else is still alive
-                random_person = random.choice(family_alive)
-            else:
-                # no family alive - you get disease
-                random_person = Player
-
-            if random_person.illness is None:
-                # person doesn't already have an illness
-                random_person.illness = disease
-                random_person.days_until_healthy = 10
-                print(f"{random_person.name} has {random_person.illness}\n")  # noqa
-                # TODO: each day, loop through players alive, and reduce their health days
-                input("Press Enter to Continue")
-            else:
-                # person already sick, so kill them
-                random_person.is_alive = False
-                Player.get_persons_alive()
-                Player.get_family_alive()
-                print(f"{random_person.name} has died of {random_person.illness}\n")  # noqa
-                input("Press Enter to Continue")
-        if not Player.is_alive:
-            print("You have died! Game Over!")
-            sys.exit()
+        # handled daily now as part of handle_illness()
+        pass
 
 
 def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_lost, show_wagon, n):  # noqa
@@ -719,6 +725,16 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     # handle a daily event (potentially)
     if not is_day_lost:
         random_event(Game, Player, Inventory, current_location, is_rest_day)
+
+    # anyone with an illness takes 10 days to heal
+    persons_alive = Player.persons_alive
+    if len(persons_alive) > 0:
+        for person in persons_alive:
+            if person.days_until_healthy > 0:
+                person.days_until_healthy -= 1
+                if person.days_until_healthy == 0:
+                    person.illness = None
+    handle_illnesses(Player)
 
     if show_wagon:
         static_wagon(Game, Inventory, Player, misfortune)
