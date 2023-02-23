@@ -758,7 +758,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     daily_health(Game, Player, Inventory, is_rest_day)
 
     # handle a daily event (potentially)
-    if not is_day_lost and not is_rest_day:
+    if not is_day_lost and not is_rest_day and not is_trade_day:
         random_event(Game, Player, Inventory, current_location)
 
     # anyone with an illness takes 10 days to heal
@@ -766,13 +766,21 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     if len(persons_alive) > 0:
         for person in persons_alive:
             if person.days_until_healthy > 0:
-                # for each sick/injured person, add 1 health point
+                # for each sick person, add 1 health point
                 Player.health_points += 1
                 # player heals each day
                 person.days_until_healthy -= 1
                 if person.days_until_healthy == 0:
                     # person is healed now, no illness
                     person.illness = None
+            if person.days_until_uninjured > 0:
+                # for each injured person, add 1 health point
+                Player.health_points += 1
+                # player heals each day
+                person.days_until_uninjured -= 1
+                if person.days_until_uninjured == 0:
+                    # person is healed now, no injury
+                    person.injury = None
     if not is_rest_day:
         handle_illnesses(Player, Game)
 
