@@ -649,7 +649,8 @@ def random_event(Game, Player, Inventory, current_location):
         days_lost = random.randint(1, 5)
         for n in range(days_lost):
             lose_one_day(Game, Inventory, Player, f"{random_person.name} is lost.", days_lost, n, random_person)  # noqa
-        input(f'{grey(CENT("Press ENTER to continue"))}\n')
+        if random_person.is_alive:
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 16:  # ✅ Ox wanders off.
         # 1% chance each day.
@@ -797,7 +798,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
         # visualize daily increments on calendar (only if rest day)
         generate_title_date(green, current_location["name"], Game.date_string)
         print("")
-        print(CENT(f"Health Points: {Player.health_points} pts"))  # TODO: remove this
+        print(CENT(f"Health: {Player.health} / Points: {Player.health_points} pts"))  # TODO: remove this
         print(CENT(f"Stopping to Rest (day: {n+1})"))
         Game.add_one_day()  # increment the day +1
         time.sleep(1)
