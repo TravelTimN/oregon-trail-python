@@ -993,23 +993,48 @@ def attempt_to_trade(Game, Inventory, Player):
                         # increment item being given
                         current_qty_in = Inventory[inv_name_in]
                         new_qty_in = int(current_qty_in) + int(gives[0]["qty"])
-                        setattr(Inventory, inv_name_in, new_qty_in)
-                        # decrement item being traded away
-                        current_qty_out = Inventory[inv_name_out]
-                        new_qty_out = int(current_qty_out) - int(wants[0]["qty"])  # noqa
-                        setattr(Inventory, inv_name_out, new_qty_out)
-                        # redisplay supplies
-                        generate_title(yellow, "Attempt to Trade: Your Supplies")  # noqa
-                        print(f"\t\t\t{'oxen':<24}{Inventory.oxen}")
-                        print(f"\t\t\t{'sets of clothing':<24}{Inventory.clothing}")  # noqa
-                        print(f"\t\t\t{'bullets':<24}{Inventory.bullets}")
-                        print(f"\t\t\t{'wagon wheels':<24}{Inventory.wheels}")
-                        print(f"\t\t\t{'wagon axles':<24}{Inventory.axles}")
-                        print(f"\t\t\t{'wagon tongues':<24}{Inventory.tongues}")  # noqa
-                        print(f"\t\t\t{'pounds of food':<24}{Inventory.food}")
-                        print("")
-                        print(yellow(LINE))
-                        input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                        # set maximum quantities for each supply
+                        if inv_name_in == "oxen":
+                            max_count = 20
+                        elif inv_name_in == "food":
+                            max_count = 2000
+                        elif inv_name_in == "clothing":
+                            max_count = 100
+                        elif inv_name_in == "bullets":
+                            max_count = 2000
+                        elif inv_name_in == "wheels":
+                            max_count = 3
+                        elif inv_name_in == "axles":
+                            max_count = 3
+                        elif inv_name_in == "tongues":
+                            max_count = 3
+                        # do not trade if player cannot carry everything
+                        if new_qty_in > max_count:
+                            new_qty_in = max_count
+                            generate_title(red, "Not Enough Space")
+                            print(CENT(f"You can only carry a maximum of {max_count} {inv_name_in}."))  # noqa
+                            print("")
+                            print(red(LINE))
+                            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+                        else:
+                            # player can carry everything; proceed with trade
+                            setattr(Inventory, inv_name_in, new_qty_in)
+                            # decrement item being traded away
+                            current_qty_out = Inventory[inv_name_out]
+                            new_qty_out = int(current_qty_out) - int(wants[0]["qty"])  # noqa
+                            setattr(Inventory, inv_name_out, new_qty_out)
+                            # redisplay supplies
+                            generate_title(yellow, "Attempt to Trade: Your Supplies")  # noqa
+                            print(f"\t\t\t{'oxen':<24}{Inventory.oxen}")
+                            print(f"\t\t\t{'sets of clothing':<24}{Inventory.clothing}")  # noqa
+                            print(f"\t\t\t{'bullets':<24}{Inventory.bullets}")
+                            print(f"\t\t\t{'wagon wheels':<24}{Inventory.wheels}")  # noqa
+                            print(f"\t\t\t{'wagon axles':<24}{Inventory.axles}")  # noqa
+                            print(f"\t\t\t{'wagon tongues':<24}{Inventory.tongues}")  # noqa
+                            print(f"\t\t\t{'pounds of food':<24}{Inventory.food}")  # noqa
+                            print("")
+                            print(yellow(LINE))
+                            input(f'{grey(CENT("Press ENTER to continue"))}\n')
                         break
                     else:  # user does not want to trade
                         break
