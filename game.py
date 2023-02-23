@@ -622,19 +622,61 @@ def random_event(Game, Player, Inventory, current_location):
                 Inventory.food = 2000
             lose_no_days(Game, Inventory, Player, "Find wild fruit.")
 
-    elif event_id == 14:  # ❌ Fire in the wagon
-        # TODO:
+    elif event_id == 14:  # ✅ Fire in the wagon
         # 2% chance each day. Some supplies are lost.
-        # A fire in the wagon results in the loss of:
-        # -- 1 set of clothing
-        # -- 154 bullets
-        # -- 1 wagon tongue
-        # -- 83 pounds of food
-        # ------- next time:
-        # -- 12 sets of clothing
-        # -- 1 wagon tongue
-        # -- 28 pounds of food
-        pass
+        supplies = ["clothing", "bullets", "wheels", "axles", "tongues", "food"]  # noqa
+        bool_choices = ["yes", "no"]
+        lost_items = []
+        for supply in supplies:
+            chance_of_loss = random.uniform(0.1, 0.4)  # 10%-40%
+            bool_weights = [chance_of_loss, (1-chance_of_loss)]
+            lose_supply = random.choices(bool_choices, bool_weights)
+            if lose_supply[0] == "yes":
+                # supply has losses, but how much?
+                percent_loss = random.uniform(0, 1)  # 0%-100%
+                existing_supply_qty = getattr(Inventory, supply)
+                if existing_supply_qty > 0:  # only if this supply exists
+                    qty_to_lose = math.ceil(existing_supply_qty * percent_loss)
+                    new_qty = existing_supply_qty - qty_to_lose
+                    # handle pluralization
+                    if supply == "clothing":
+                        if qty_to_lose == 1:
+                            item_lost = "1 set of clothing"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} sets of clothing"
+                    elif supply == "bullets":
+                        if qty_to_lose == 1:
+                            item_lost = "1 bullet"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} bullets"
+                    elif supply == "wheels":
+                        if qty_to_lose == 1:
+                            item_lost = "1 wagon wheel"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} wagon wheels"
+                    elif supply == "axles":
+                        if qty_to_lose == 1:
+                            item_lost = "1 wagon axle"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} wagon axles"
+                    elif supply == "tongues":
+                        if qty_to_lose == 1:
+                            item_lost = "1 wagon tongue"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} wagon tongues"
+                    elif supply == "food":
+                        if qty_to_lose == 1:
+                            item_lost = "1 pound of food"
+                        elif qty_to_lose > 1:
+                            item_lost = f"{qty_to_lose} pounds of food"
+                    lost_items.append(f"{item_lost}\n")  # append to lost_items
+                    setattr(Inventory, supply, new_qty)  # update inventory qty
+        # display message to player
+        if len(lost_items) > 0:
+            message = "\t\tA fire in the wagon results in the loss of:\n\n"
+            for item in lost_items:
+                message += f"\t\t\t-   {item}"
+            lose_no_days(Game, Inventory, Player, message)
 
     elif event_id == 15:  # ✅ Lost party member.
         # 1% chance each day.
