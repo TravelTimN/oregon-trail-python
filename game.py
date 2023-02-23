@@ -552,11 +552,28 @@ def random_event(Game, Player, Inventory, current_location):
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
             sys.exit()  # TODO: needs to be returned back to main menu / start
 
-    elif event_id == 7:  # ❌ Injured party member (broken arm/leg)
-        # TODO:
+    elif event_id == 7:  # ✅ Injured party member (broken arm/leg)
         # 2% chance each day on the prairie; 3.5% chance in mountains.
         # The person who gets injured is chosen randomly.
-        pass
+        injuries = ["arm", "leg"]
+        injury = random.choice(injuries)
+
+        # unlucky person getting injured
+        persons_alive = Player.persons_alive
+        random_person = random.choice(persons_alive)
+
+        if random_person.injury is None:
+            # person doesn't already have an injury
+            random_person.injury = injury
+            random_person.days_until_uninjured = 30
+            event = f"{random_person.name} has a broken {random_person.injury}"
+            generate_title_date(red, "On the trail", Game.date_string)
+            print("")
+            print(CENT(event))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
     elif event_id == 8:  # ❌ Snake bite
         # TODO:
