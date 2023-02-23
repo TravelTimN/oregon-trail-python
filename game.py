@@ -444,9 +444,9 @@ def handle_illnesses(Player, Game):
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
     if not Player.is_alive:
         # TODO: bring back to main menu (?)
-        generate_title_date(red, "You Have Died", Game.date_string)
+        generate_title_date(red, "Game Over", Game.date_string)
         print("")
-        print(CENT("You have died! Game Over!"))
+        print(CENT("All the people in your party have died."))
         print("")
         print(red(LINE))
         time.sleep(1)
@@ -748,7 +748,6 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     - ✅❌ health (in progress - accidents/diseases TBC)
     """
     # TODO: if 0 ox, cannot move - trade menu only?
-    # TODO: (everyone dead message): All the people in your party have died.
     misfortune = ""
     current_location = Game.get_current_location()
 
