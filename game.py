@@ -453,7 +453,7 @@ def handle_illnesses(Player, Game):
         sys.exit()
 
 
-def random_event(Game, Player, Inventory, current_location, is_rest_day):
+def random_event(Game, Player, Inventory, current_location):
     """
     Handles a number of random events (one per day, if any).
     """
@@ -703,14 +703,14 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
         drought_chances = [0.1, 0.2, 0.2, 0.5]
         is_drought = random.choices(drought_messages, drought_chances)
         if is_drought[0] != "none":
-            if is_drought[0] == "Inadequate Water":
-                # health points +10
-                Player.health_points += 10
-            elif is_drought[0] == "Bad Water":
-                # health points +20
-                Player.health_points += 20
             if not is_rest_day:
                 misfortune = is_drought[0]
+                if is_drought[0] == "Inadequate Water":
+                    # health points +10
+                    Player.health_points += 10
+                elif is_drought[0] == "Bad Water":
+                    # health points +20
+                    Player.health_points += 20
     if Game.current_rainfall < 0:
         # rainfall cannot be below 0 (reset it)
         Game.current_rainfall = 0.000
@@ -742,7 +742,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
 
     # handle a daily event (potentially)
     if not is_day_lost and not is_rest_day:
-        random_event(Game, Player, Inventory, current_location, is_rest_day)
+        random_event(Game, Player, Inventory, current_location)
 
     # anyone with an illness takes 10 days to heal
     persons_alive = Player.persons_alive
@@ -772,6 +772,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
         # visualize daily increments on calendar (only if rest day)
         generate_title_date(green, current_location["name"], Game.date_string)
         print("")
+        print(CENT(f"Health Points: {Player.health_points} pts"))  # TODO: remove this
         print(CENT(f"Stopping to Rest (day: {n+1})"))
         Game.add_one_day()  # increment the day +1
         time.sleep(1)
@@ -1231,7 +1232,7 @@ def start_cycle(Game, Inventory, Player):
 
         print(f"\t\t\t{'Weather:':<24}{Game.weather} ({Game.rand_temp}°F)")
         time.sleep(0.05)
-        print(f"\t\t\t{'Health:':<24}{Player.health}")
+        print(f"\t\t\t{'Health:':<24}{Player.health} ({Player.health_points} pts)")  # TODO: remove points
         time.sleep(0.05)
         print(f"\t\t\t{'Pace:':<24}{Player.pace}")
         time.sleep(0.05)
