@@ -543,6 +543,7 @@ def random_event(Game, Player, Inventory, current_location):
 
         if Inventory.oxen == 0:  # ❌❌❌
             # TODO: no oxen left! cannot continue to travel!
+            # TODO: this is repeat from another function
             # Update:
             # -- You are unable to continue your journey.
             # -- You have no oxen to pull your wagon.
@@ -550,7 +551,9 @@ def random_event(Game, Player, Inventory, current_location):
             # ---- you have the option of attempting to trade for oxen.
             # ---- speed is reduced with fewer oxen.
             lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
+            Inventory.ox_injured = False
             sys.exit()  # TODO: needs to be returned back to main menu / start
+            # TODO: or menu to trade?
 
     elif event_id == 7:  # ✅ Injured party member (broken arm/leg)
         # 2% chance each day on the prairie; 3.5% chance in mountains.
@@ -711,16 +714,10 @@ def random_event(Game, Player, Inventory, current_location):
         # You find an abandoned wagon with the following: 1 wagon tongue
         pass
 
-    elif event_id == 18:  # ❌ Thief comes during the night
+    elif event_id == 18:  # ✅❓ Thief comes during the night
         # 2% chance each day.
         # Some supplies are lost.
-        # TODO:
-        # A thief comes during the night and steals 46 sets of clothing.
-        # A thief comes during the night and steals 5 sets of clothing.
-        # A thief comes during the night and steals 83 bullets.
-        # A thief comes during the night and steals 31 pounds of food.
-        # A thief comes during the night and steals 44 pounds of food.
-        # A thief comes during the night and steals 84 pounds of food.
+
         # A thief comes during the night and steals 14 oxen.
         # -- I only had 14, so received:
         # ---- You are unable to continue your journey.
@@ -730,7 +727,88 @@ def random_event(Game, Player, Inventory, current_location):
         # -- However!! With only 1 ox; I was only traveling 2 miles per day!
         # -- Traded again for another ox; travel was 6 miles per day.
         # -- 15 miles per day with 4 oxen on strenuous.
-        pass
+
+        # TODO: function called daily to check number of oxen
+
+        all_supplies = ["clothing", "bullets", "wheels", "axles", "tongues", "food", "oxen"]  # noqa
+        supplies = []
+        for item in all_supplies:
+            if getattr(Inventory, item) > 0:  # only if this supply exists
+                supplies.append(item)
+        if len(supplies) > 0:
+            # which supply will be stolen?
+            supply = random.choice(supplies)
+            # how much does the player currently have?
+            existing_qty = getattr(Inventory, supply)
+            # how much will be stolen?
+            if supply == "food" or supply == "bullets":  # 1-99
+                total_loss = random.randint(10, 99)
+            else:  # up to maximum amount player has
+                total_loss = random.randint(1, existing_qty)
+            # thief cannot steal more than you have (food/bullets)
+            if total_loss > existing_qty:
+                total_loss = existing_qty
+            # the new amount the player will end-up with
+            new_qty = existing_qty - total_loss
+            qty_to_lose = total_loss
+            # avoid negative quantity
+            if new_qty < 0:
+                new_qty = 0
+            # handle pluralization
+            # TODO: can this be a utility/helper function?
+            if supply == "clothing":
+                if qty_to_lose == 1:
+                    item_lost = "1 set of clothing"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} sets of clothing"
+            elif supply == "bullets":
+                if qty_to_lose == 1:
+                    item_lost = "1 bullet"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} bullets"
+            elif supply == "wheels":
+                if qty_to_lose == 1:
+                    item_lost = "1 wagon wheel"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} wagon wheels"
+            elif supply == "axles":
+                if qty_to_lose == 1:
+                    item_lost = "1 wagon axle"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} wagon axles"
+            elif supply == "tongues":
+                if qty_to_lose == 1:
+                    item_lost = "1 wagon tongue"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} wagon tongues"
+            elif supply == "food":
+                if qty_to_lose == 1:
+                    item_lost = "1 pound of food"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} pounds of food"
+            elif supply == "oxen":
+                if qty_to_lose == 1:
+                    item_lost = "1 ox"
+                elif qty_to_lose > 1:
+                    item_lost = f"{qty_to_lose} oxen"
+            setattr(Inventory, supply, new_qty)  # update inventory qty
+            # display message to player
+            message = f"A thief comes during the night and steals {item_lost}"
+            lose_no_days(Game, Inventory, Player, message)
+
+            if Inventory.oxen == 0:  # ❌❌❌
+                # TODO: no oxen left! cannot continue to travel!
+                # TODO: this is repeat from another function
+                # Update:
+                # -- You are unable to continue your journey.
+                # -- You have no oxen to pull your wagon.
+                # ---- returns back to "continue on trail menu"
+                # ---- you have the option of attempting to trade for oxen.
+                # ---- speed is reduced with fewer oxen.
+                lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
+                Inventory.ox_injured = False
+                sys.exit()  # TODO: needs to be returned back to main menu / start
+                # TODO: or menu to trade?
 
     elif event_id == 19:  # ❌ Illness
         # handled daily now as part of handle_illness()
