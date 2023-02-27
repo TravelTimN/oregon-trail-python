@@ -344,16 +344,16 @@ def daily_health(Game, Player, Inventory, is_rest_day):
     Player.update_health()
 
 
-def lose_no_days(Game, Inventory, Player, message):
+def lose_no_days(color, Game, Inventory, Player, message):
     """
     Callable function for misfortunes, without losing a day.
     """
     clear()
-    generate_title_date(red, "On the trail", Game.date_string)
+    generate_title_date(color, "On the trail", Game.date_string)
     print("")
     print(CENT(message))
     print("")
-    print(red(LINE))
+    print(color(LINE))
     input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
 
@@ -535,11 +535,11 @@ def random_event(Game, Player, Inventory, current_location):
                 # existing ox injured - time to die!
                 Inventory.oxen -= 1
                 Inventory.ox_injured = False  # reset for next ox
-                lose_no_days(Game, Inventory, Player, "One of the oxen has died.")  # noqa
+                lose_no_days(red, Game, Inventory, Player, "One of the oxen has died.")  # noqa
             else:
                 # no ox injured - ouch time!
                 Inventory.ox_injured = True
-                lose_no_days(Game, Inventory, Player, "One of the oxen is injured.")  # noqa
+                lose_no_days(red, Game, Inventory, Player, "One of the oxen is injured.")  # noqa
 
         if Inventory.oxen == 0:  # ❌❌❌
             # TODO: no oxen left! cannot continue to travel!
@@ -550,7 +550,7 @@ def random_event(Game, Player, Inventory, current_location):
             # ---- returns back to "continue on trail menu"
             # ---- you have the option of attempting to trade for oxen.
             # ---- speed is reduced with fewer oxen.
-            lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
+            lose_no_days(red, Game, Inventory, Player, "You have no oxen left")  # noqa
             Inventory.ox_injured = False
             sys.exit()  # TODO: needs to be returned back to main menu / start
             # TODO: or menu to trade?
@@ -605,7 +605,7 @@ def random_event(Game, Player, Inventory, current_location):
         # +10 health points
         if current_location["region"] == "mountains":
             Player.health_points += 10
-            lose_no_days(Game, Inventory, Player, "Rough trail.")
+            lose_no_days(red, Game, Inventory, Player, "Rough trail.")
 
     elif event_id == 12:  # ✅ Impassible trail
         # 2.5% chance each day, only in mountains.
@@ -623,7 +623,7 @@ def random_event(Game, Player, Inventory, current_location):
             Inventory.food += 20
             if Inventory.food > 2000:
                 Inventory.food = 2000
-            lose_no_days(Game, Inventory, Player, "Find wild fruit.")
+            lose_no_days(green, Game, Inventory, Player, "Find wild fruit.")
 
     elif event_id == 14:  # ✅ Fire in the wagon
         # 2% chance each day. Some supplies are lost.
@@ -679,7 +679,7 @@ def random_event(Game, Player, Inventory, current_location):
             message = "\t\tA fire in the wagon results in the loss of:\n\n"
             for item in lost_items:
                 message += f"\t\t\t-   {item}"
-            lose_no_days(Game, Inventory, Player, message)
+            lose_no_days(red, Game, Inventory, Player, message)
 
     elif event_id == 15:  # ✅ Lost party member.
         # 1% chance each day.
@@ -705,14 +705,90 @@ def random_event(Game, Player, Inventory, current_location):
             lose_one_day(Game, Inventory, Player, "Ox wanders off.", days_lost, n, None)  # noqa
         input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 17:  # ❌ Finding an abandoned wagon
-        # TODO:
+    elif event_id == 17:  # ✅ Finding an abandoned wagon
         # 2% chance each day.
         # Some supplies are gained.
-        # Sometimes it's empty: "You find an abandoned wagon, but it's empty."
-        # You find an abandoned wagon with the following: 63 bullets
-        # You find an abandoned wagon with the following: 1 wagon tongue
-        pass
+        supplies = ["clothing", "bullets", "wheels", "axles", "tongues"]  # noqa
+        bool_choices = ["yes", "no"]
+        empty_wagon = random.choices(bool_choices, [0.35, 0.65])
+
+        # empty abandoned wagon
+        if empty_wagon[0] == "yes":
+            message = "You find an abandoned wagon, but it is empty."
+            lose_no_days(green, Game, Inventory, Player, message)
+            return
+
+        # wagon has supplies to be found
+        gained_items = []
+        for supply in supplies:
+            chance_of_gain = random.uniform(0.1, 0.4)  # 10%-40%
+            bool_weights = [chance_of_gain, (1-chance_of_gain)]
+            gain_supply = random.choices(bool_choices, bool_weights)
+            if gain_supply[0] == "yes":
+                # supply will be gained, but how much?
+                if supply == "clothing":
+                    max_qty = 200
+                    max_gain = 10
+                elif supply == "bullets":
+                    max_qty = 10000
+                    max_gain = 99
+                elif supply == "wheels":
+                    max_qty = 3
+                    max_gain = 1
+                elif supply == "axles":
+                    max_qty = 3
+                    max_gain = 1
+                elif supply == "tongues":
+                    max_qty = 3
+                    max_gain = 1
+
+                if supply == "bullets":
+                    qty_gain = random.randint(10, max_gain)
+                else:
+                    qty_gain = random.randint(1, max_gain)
+                # cannot carry more than maximum per supply
+                existing_qty = getattr(Inventory, supply)
+                if (existing_qty + qty_gain) > max_qty:
+                    qty_gain = (max_qty - existing_qty)
+                # set the new inventory quantity
+                new_qty = existing_qty + qty_gain
+
+                # handle pluralization
+                if supply == "clothing":
+                    if qty_gain == 1:
+                        item_gain = "1 set of clothing"
+                    elif qty_gain > 1:
+                        item_gain = f"{qty_gain} sets of clothing"
+                elif supply == "bullets":
+                    if qty_gain == 1:
+                        item_gain = "1 bullet"
+                    elif qty_gain > 1:
+                        item_gain = f"{qty_gain} bullets"
+                elif supply == "wheels":
+                    if qty_gain == 1:
+                        item_gain = "1 wagon wheel"
+                    elif qty_gain > 1:
+                        item_gain = f"{qty_gain} wagon wheels"
+                elif supply == "axles":
+                    if qty_gain == 1:
+                        item_gain = "1 wagon axle"
+                    elif qty_gain > 1:
+                        item_gain = f"{qty_gain} wagon axles"
+                elif supply == "tongues":
+                    if qty_gain == 1:
+                        item_gain = "1 wagon tongue"
+                    elif qty_gain > 1:
+                        item_gain = f"{qty_gain} wagon tongues"
+                # only display if not already at max_qty
+                if qty_gain > 0:
+                    gained_items.append(f"{item_gain}\n")  # append item
+                    setattr(Inventory, supply, new_qty)  # update inventory qty
+        # display message to player
+        if len(gained_items) > 0:
+            message = "\t\tYou find an abandoned wagon with the following:\n\n"
+            for item in gained_items:
+                message += f"\t\t\t-   {item}"
+            lose_no_days(green, Game, Inventory, Player, message)
 
     elif event_id == 18:  # ✅❓ Thief comes during the night
         # 2% chance each day.
@@ -794,7 +870,7 @@ def random_event(Game, Player, Inventory, current_location):
             setattr(Inventory, supply, new_qty)  # update inventory qty
             # display message to player
             message = f"A thief comes during the night and steals {item_lost}"
-            lose_no_days(Game, Inventory, Player, message)
+            lose_no_days(red, Game, Inventory, Player, message)
 
             if Inventory.oxen == 0:  # ❌❌❌
                 # TODO: no oxen left! cannot continue to travel!
@@ -805,7 +881,7 @@ def random_event(Game, Player, Inventory, current_location):
                 # ---- returns back to "continue on trail menu"
                 # ---- you have the option of attempting to trade for oxen.
                 # ---- speed is reduced with fewer oxen.
-                lose_no_days(Game, Inventory, Player, "You have no oxen left")  # noqa
+                lose_no_days(red, Game, Inventory, Player, "You have no oxen left")  # noqa
                 Inventory.ox_injured = False
                 sys.exit()  # TODO: needs to be returned back to main menu / start
                 # TODO: or menu to trade?
@@ -1077,9 +1153,9 @@ def attempt_to_trade(Game, Inventory, Player):
                         elif inv_name_in == "food":
                             max_count = 2000
                         elif inv_name_in == "clothing":
-                            max_count = 100
+                            max_count = 200
                         elif inv_name_in == "bullets":
-                            max_count = 2000
+                            max_count = 10000
                         elif inv_name_in == "wheels":
                             max_count = 3
                         elif inv_name_in == "axles":
