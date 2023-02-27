@@ -218,13 +218,15 @@ class Player(Person):
         Updates the player's health based on total amount of points.
         """
         self.health_points = round(self.health_points, 1)
-        if self.health_points <= 34:
+        # original on page #382 in e-book
+        # good (0-34) / fair (35-65) / poor (70-104) / very poor (105-139)
+        if self.health_points <= 49:
             self.health = "good"
-        elif self.health_points >= 35 and self.health_points <= 78:
+        elif self.health_points >= 50 and self.health_points <= 99:
             self.health = "fair"
-        elif self.health_points >= 79 and self.health_points <= 104:
+        elif self.health_points >= 100 and self.health_points <= 139:
             self.health = "poor"
-        elif self.health_points >= 105:
+        elif self.health_points >= 140:
             self.health = "very poor"
 
     def update_pace(self):

@@ -390,14 +390,14 @@ def handle_illnesses(Player, Game):
     """
     # randomly select if someone will get ill today
     ill_choices = ["yes", "no"]
-    if Player.health == "good":  # good (0%-5%)
-        ill_chance = random.uniform(0.0, 0.05)
-    elif Player.health == "fair":  # fair (6%-20%)
-        ill_chance = random.uniform(0.06, 0.2)
-    elif Player.health == "poor":  # poor (21%-30%)
-        ill_chance = random.uniform(0.21, 0.3)
-    elif Player.health == "very poor":  # very poor (31%-40%)
-        ill_chance = random.uniform(0.31, 0.4)
+    if Player.health == "good":  # good (0%-2%)
+        ill_chance = random.uniform(0.0, 0.02)
+    elif Player.health == "fair":  # fair (5%-10%)
+        ill_chance = random.uniform(0.05, 0.1)
+    elif Player.health == "poor":  # poor (20%-25%)
+        ill_chance = random.uniform(0.2, 0.25)
+    elif Player.health == "very poor":  # very poor (30%-40%)
+        ill_chance = random.uniform(0.30, 0.4)
     ill_weights = [ill_chance, (1 - ill_chance)]
     get_ill = random.choices(ill_choices, ill_weights)
 
