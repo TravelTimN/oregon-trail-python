@@ -254,10 +254,10 @@ You will be required to carry supplies with you to help make the arduous journey
 | Resource | Min | Max | Notes |
 | --- | :---: | :---: | --- |
 | wagon | 1 | 1 | |
-| oxen yoke | 1 | 9 | 1 yoke = 2 oxen |
+| oxen yoke | 1 | 10 | 1 yoke = 2 oxen |
 | food | 1,000 | 2,000 | pounds of food |
-| clothing | 10 | 99 | sets of clothing |
-| ammunition | 1 | 99 | 1 box = 20 bullets |
+| clothing | 10 | 200 | sets of clothing |
+| ammunition | 1 | 10,000 | 1 box = 20 bullets |
 | wagon wheel | 0 | 3 | |
 | wagon axel | 0 | 3 | |
 | wagon tongue | 0 | 3 | |
