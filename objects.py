@@ -147,6 +147,8 @@ class Person:
         self.days_until_healthy = 0  # diseases take 10 days to heal
         self.injury = None
         self.days_until_uninjured = 0  # injuries take 30 days to heal
+        self.has_snakebite = False
+        self.days_until_antivenom = 0  # snakebite takes 10 days to heal
 
     def get_random_name(self):
         """
