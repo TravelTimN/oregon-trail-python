@@ -443,6 +443,7 @@ def handle_illnesses(Player, Game):
             time.sleep(1)
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
     if not Player.is_alive:
+        # TODO: this is used elsewhere - utility/helper function?
         # TODO: bring back to main menu (?)
         generate_title_date(red, "Game Over", Game.date_string)
         print("")
@@ -578,11 +579,56 @@ def random_event(Game, Player, Inventory, current_location):
             time.sleep(1)
             input(f'{grey(CENT("Press ENTER to continue"))}\n')
 
-    elif event_id == 8:  # ❌ Snake bite
-        # TODO:
-        # 0.7% chance each day (no info on this one)
-        # original OREGON: lose misc. supplies/bullets; or death if no medicine
-        pass
+    elif event_id == 8:  # ✅ Snakebite
+        # 0.7% chance each day
+
+        # unlucky person getting bitten
+        family_alive = Player.family_alive
+        if len(family_alive) > 0:
+            # only if someone else is still alive
+            random_person = random.choice(family_alive)
+        else:
+            # no family alive - you get snakebite
+            random_person = Player
+
+        if not random_person.has_snakebite:
+            # person doesn't already have snakebite
+            random_person.has_snakebite = True
+            random_person.days_until_antivenom = 10
+            # add 20 when person first gets bitten
+            Player.health_points += 20
+            event = f"{random_person.name} has a snakebite"
+            generate_title_date(red, "On the trail", Game.date_string)
+            print("")
+            print(CENT(event))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+        else:
+            # person already has snakebite, so kill them
+            random_person.is_alive = False
+            Player.get_persons_alive()
+            Player.get_family_alive()
+            event = f"{random_person.name} has died from a snakebite"
+            generate_title_date(red, "On the trail", Game.date_string)
+            print("")
+            print(CENT(event))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            input(f'{grey(CENT("Press ENTER to continue"))}\n')
+
+        if not Player.is_alive:
+            # TODO: this is used elsewhere - utility/helper function?
+            # TODO: bring back to main menu (?)
+            generate_title_date(red, "Game Over", Game.date_string)
+            print("")
+            print(CENT("All the people in your party have died."))
+            print("")
+            print(red(LINE))
+            time.sleep(1)
+            sys.exit()
 
     elif event_id == 9:  # ✅ Lose trail
         # 2% chance each day.
@@ -887,7 +933,7 @@ def random_event(Game, Player, Inventory, current_location):
                 # TODO: or menu to trade?
 
     elif event_id == 19:  # ❌ Illness
-        # handled daily now as part of handle_illness()
+        # handled daily now as part of handle_illnesses()
         pass
 
 
@@ -957,10 +1003,11 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
     if not is_day_lost and not is_rest_day and not is_trade_day:
         random_event(Game, Player, Inventory, current_location)
 
-    # anyone with an illness takes 10 days to heal
+    # health of party members improve daily
     persons_alive = Player.persons_alive
     if len(persons_alive) > 0:
         for person in persons_alive:
+            # person is sick
             if person.days_until_healthy > 0:
                 # for each sick person, add 1 health point
                 Player.health_points += 1
@@ -969,6 +1016,7 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
                 if person.days_until_healthy == 0:
                     # person is healed now, no illness
                     person.illness = None
+            # person is injured
             if person.days_until_uninjured > 0:
                 # for each injured person, add 1 health point
                 Player.health_points += 1
@@ -977,6 +1025,15 @@ def cycle_one_day(Game, Inventory, Player, is_rest_day, is_trade_day, is_day_los
                 if person.days_until_uninjured == 0:
                     # person is healed now, no injury
                     person.injury = None
+            # person has snakebite
+            if person.days_until_antivenom > 0:
+                # for each person bitten, add 1 health point
+                Player.health_points += 1
+                # player heals each day
+                person.days_until_antivenom -= 1
+                if person.days_until_antivenom == 0:
+                    # person is healed now, no snakebite
+                    person.has_snakebite = False
     if not is_rest_day:
         handle_illnesses(Player, Game)
 
