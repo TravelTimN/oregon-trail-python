@@ -1033,7 +1033,9 @@ arriving in Oregon as a carpenter, and **triple** points for arriving as a farme
 | [StackOverflow](https://stackoverflow.com/questions/17649875/why-does-random-shuffle-return-none) | random.shuffle returns None |
 | [StackOverflow](https://stackoverflow.com/a/41852266) | Trades: randomize with weights/ratios |
 | [Amazon](https://www.amazon.co.uk/You-Have-Died-Dysentery-educational-ebook/dp/B01B8JMKMC) | R. Philip Bouchard |
+| [archive.org](https://archive.org/details/creativecomputing-1978-05/page/n139/mode/1up?view=theater) | May 1978 "Creative Computing Magazine" Vol.4 Nr.3 |
 | [archive.org](https://archive.org/details/msdos_Oregon_Trail_The_1990) | DOS Emulator of 1990 game |
+| [Visit Oregon](https://www.visitoregon.com/the-oregon-trail-game-online) | Play the Oregeon Trail online |
 
 ## Reminders
 
